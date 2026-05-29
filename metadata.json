@@ -1,0 +1,6 @@
+{
+  "name": "Clientele RCM",
+  "description": "Specialty Revenue Cycle Management (RCM) platform powered by AI. Built for high-complexity specialties like Orthopedics, Pain Management, Anesthesia, and Therapy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charSet="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="/assets/styles-D1Y-9mcx.css" data-precedence="default"/>
+<title>Clientele AI — The Revenue Cycle Platform Built by RCM Professionals</title>
+<meta name="author" content="Lovable"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:site" content="@Lovable"/>
+<meta name="twitter:title" content="Lovable App"/>
+<meta name="twitter:description" content="Revenue Compass is an AI-powered RCM platform for specialty healthcare practices."/>
+<meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b22a8206-4184-4310-bcbf-7ab5ac66522f/id-preview-f5d83ed7--a1f36ccd-f413-41eb-b241-33ad64415231.lovable.app-1779172771426.png"/>
+<meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b22a8206-4184-4310-bcbf-7ab5ac66522f/id-preview-f5d83ed7--a1f36ccd-f413-41eb-b241-33ad64415231.lovable.app-1779172771426.png"/>
+<meta name="description" content="Clientele AI: end-to-end RCM automation built by practitioners. Module 1 (Eligibility Verification) launching May 2026. Human-Guided Automation across 6 modules + Provider &amp; Patient mobile apps."/>
+<meta property="og:title" content="Clientele AI Platform — Human-Guided RCM Automation"/>
+<meta property="og:description" content="AI handles volume. Certified humans handle complexity. Module 1 live May 2026."/>
+<link rel="modulepreload" href="/assets/index-5oFWrO-1.js"/>
+<link rel="modulepreload" href="/assets/platform-DAAhDny7.js"/>
+<link rel="modulepreload" href="/assets/Footer-BI0RPk8x.js"/>
+<link rel="modulepreload" href="/assets/users-Bb7I6thC.js"/>
+<link rel="modulepreload" href="/assets/workflow-UAjfOPyr.js"/>
+<link rel="modulepreload" href="/assets/file-check-corner-DveJiIs-.js"/>
+<link rel="modulepreload" href="/assets/chart-column-BHUNeUHW.js"/>
+<link rel="modulepreload" href="/assets/plus-CBLsM5qp.js"/>
+<link rel="modulepreload" href="/assets/circle-check-CQe7hLp9.js"/>
+<link rel="modulepreload" href="/assets/activity-Dz0IhvLK.js"/>
+<link rel="modulepreload" href="/assets/mic-B3J_uEAo.js"/>
+<style>
+	@font-face {
+		font-family: 'CameraPlainVariable';
+		src: url('https://cdn.gpteng.co/mcp-widgets/v1/fonts/CameraPlainVariable.woff2') format('woff2');
+		font-weight: 100 900;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	#lovable-badge {
+		--badge-bg: #1b1b1b;
+		--badge-text: #c5c1b9;
+		--badge-text-hover: #dcdad5;
+		--badge-radius: 6px;
+		--badge-padding: 8px;
+		--badge-gap: 6px;
+		--badge-shadow: 
+			0 0 0 1px rgba(0, 0, 0, 0.88),
+			0 1px 0 0 rgba(0, 0, 0, 0.04),
+			0 2px 2px -1px rgba(0, 0, 0, 0.08),
+			0 4px 4px -2px rgba(0, 0, 0, 0.08),
+			0 8px 8px -4px rgba(0, 0, 0, 0.08),
+			0 16px 16px -8px rgba(0, 0, 0, 0.08);
+		--badge-transition-duration: 0.2s;
+		--badge-transition-easing: cubic-bezier(0.16, 1, 0.32, 1);
+		--focus-color: #575ECF;
+		--focus-offset: 2px;
+		--focus-width: 2px;
+		
+		position: fixed;
+		bottom: 12px;
+		right: 12px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		z-index: 1000000;
+		background-color: var(--badge-bg);
+		color: var(--badge-text);
+		border-radius: var(--badge-radius);
+		box-shadow: var(--badge-shadow);
+		font-size: 12px;
+		font-family: CameraPlainVariable, "CameraPlainVariable Fallback", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-weight: 400 !important;
+		text-transform: none !important;
+		font-feature-settings: normal !important;
+		transform: translateZ(0);
+		will-change: transform, opacity;
+	}
+
+	#lovable-badge-cta {
+		display: flex;
+		align-items: center;
+		gap: var(--badge-gap);
+		padding: 0 var(--badge-padding);
+		height: 100%;
+		color: inherit;
+		text-decoration: none;
+		white-space: nowrap;
+		border-radius: var(--badge-radius) 0 0 var(--badge-radius);
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-cta:hover {
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--badge-text-hover);
+	}
+
+	#lovable-badge-cta:active {
+		transform: scale(0.98);
+	}
+
+	#lovable-badge-cta:focus {
+		outline: none;
+	}
+
+	#lovable-badge-cta:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: var(--focus-offset);
+		z-index: 1;
+	}
+
+	#lovable-badge-text {
+		line-height: 1;
+	}
+
+	#lovable-badge-divider {
+		width: 1px;
+		height: 24px;
+		background-color: rgba(255, 255, 255, 0.04);
+		flex-shrink: 0;
+	}
+
+	#lovable-badge-close {
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		min-height: 24px;
+		cursor: pointer;
+		background: none;
+		border: none;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0 var(--badge-radius) var(--badge-radius) 0;
+		flex-shrink: 0;
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-close:hover {
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	#lovable-badge-close:active {
+		transform: scale(0.92);
+	}
+
+	#lovable-badge-close:focus {
+		outline: none;
+	}
+
+	#lovable-badge-close:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: calc(var(--focus-offset) * -1);
+		z-index: 1;
+	}
+
+	#lovable-badge-close svg path {
+		fill: var(--badge-text);
+		transition: fill var(--badge-transition-duration) ease;
+	}
+
+	#lovable-badge-close:hover svg path {
+		fill: var(--badge-text-hover);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#lovable-badge-cta,
+		#lovable-badge-close,
+		#lovable-badge-close svg path {
+			transition: none;
+		}
+		
+		#lovable-badge-cta:active,
+		#lovable-badge-close:active {
+			transform: none;
+		}
+	}
+
+	@media (prefers-contrast: high) {
+		#lovable-badge {
+			--badge-bg: #000;
+			--badge-text: #fff;
+			--badge-text-hover: #fff;
+			border: 2px solid currentColor;
+		}
+		
+		#lovable-badge-cta:focus-visible,
+		#lovable-badge-close:focus-visible {
+			outline-width: 3px;
+		}
+	}
+</style>
+<script defer src="/~flock.js" data-proxy-url="/~api/analytics">
+</script>
+</head>
+<body>
+<!--$-->
+<div class="bg-background text-foreground">
+<div class="hidden md:block bg-navy-deep text-white/80 text-xs">
+<div class="max-w-7xl mx-auto px-6 py-2 flex justify-end items-center gap-6">
+<a href="tel:+18102210709" class="flex items-center gap-2 hover:text-white transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone size-3.5" aria-hidden="true">
+<path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384">
+</path>
+</svg> +1 810-221-0709</a>
+<span class="text-white/40">|</span>
+<a href="mailto:info@clientelercm.com" class="hover:text-white transition-colors">info@clientelercm.com</a>
+</div>
+</div>
+<header class="sticky top-0 z-40 transition-all duration-300 bg-background">
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-8">
+<a href="/" class="flex items-center gap-2 shrink-0">
+<div class="size-9 rounded-lg bg-navy flex items-center justify-center">
+<div class="size-4 rounded-sm bg-teal">
+</div>
+</div>
+<div class="leading-tight">
+<div class="font-display font-bold text-lg text-navy">Clientele</div>
+<div class="text-[10px] uppercase tracking-[0.18em] text-muted-foreground -mt-0.5">RCM</div>
+</div>
+</a>
+<nav class="hidden lg:flex items-center gap-7">
+<a class="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors text-foreground font-semibold" href="/platform" data-status="active" aria-current="page">Platform</a>
+<div class="relative group">
+<button class="flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-2">Services<!-- --> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down size-3.5 transition-transform group-hover:rotate-180" aria-hidden="true">
+<path d="m6 9 6 6 6-6">
+</path>
+</svg>
+</button>
+<div class="absolute left-0 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+<div class="min-w-[260px] rounded-xl bg-background border border-border shadow-card p-2">
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Front-End RCM</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Mid-Cycle Intelligence</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Back-End &amp; A/R Recovery</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Remote Patient Monitoring (RPM)</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Remote Therapeutic Monitoring (RTM)</a>
+</div>
+</div>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-2">Specialties<!-- --> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down size-3.5 transition-transform group-hover:rotate-180" aria-hidden="true">
+<path d="m6 9 6 6 6-6">
+</path>
+</svg>
+</button>
+<div class="absolute left-0 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+<div class="min-w-[260px] rounded-xl bg-background border border-border shadow-card p-2">
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Orthopedics</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Pain Management</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Anesthesia</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Comprehensive Therapy (PT / OT / ST)</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Chiropractic &amp; Rehabilitation</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Multispecialties</a>
+</div>
+</div>
+</div>
+<a href="/about" class="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">About</a>
+<a href="#why" class="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors">Why Clientele</a>
+<div class="relative group">
+<button class="flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-2">Resources<!-- --> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down size-3.5 transition-transform group-hover:rotate-180" aria-hidden="true">
+<path d="m6 9 6 6 6-6">
+</path>
+</svg>
+</button>
+<div class="absolute left-0 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+<div class="min-w-[260px] rounded-xl bg-background border border-border shadow-card p-2">
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Case Studies</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Blog &amp; Insights</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Compliance &amp; Security</a>
+<a href="#" class="block px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground/80 hover:text-foreground transition-colors">Transition &amp; Onboarding</a>
+</div>
+</div>
+</div>
+</nav>
+<div class="hidden lg:block">
+<a href="#assessment" class="inline-flex items-center gap-2 rounded-full bg-navy text-white px-5 py-2.5 text-sm font-semibold hover:bg-navy-deep transition-colors shadow-sm">Request Assessment →</a>
+</div>
+<button class="lg:hidden p-2 -mr-2" aria-label="Open menu">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu size-6" aria-hidden="true">
+<path d="M4 5h16">
+</path>
+<path d="M4 12h16">
+</path>
+<path d="M4 19h16">
+</path>
+</svg>
+</button>
+</div>
+</header>
+<main>
+<section class="relative bg-hero text-white overflow-hidden">
+<div class="absolute inset-0 mesh-glow" aria-hidden="true">
+</div>
+<div class="absolute inset-0 grid-noise opacity-[0.06]" aria-hidden="true">
+</div>
+<div class="relative max-w-7xl mx-auto px-6 pt-28 pb-24 lg:pt-32 lg:pb-28">
+<nav class="flex items-center gap-2 text-xs text-white/50 mb-10">
+<a href="/" class="hover:text-white transition-colors">Home</a>
+<span>/</span>
+<span class="text-white/80">Clientele AI Platform</span>
+</nav>
+<div class="grid lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-7">
+<div class="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-teal-glow font-semibold mb-6">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles size-3.5" aria-hidden="true">
+<path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z">
+</path>
+<path d="M20 2v4">
+</path>
+<path d="M22 4h-4">
+</path>
+<circle cx="4" cy="20" r="2">
+</circle>
+</svg> Clientele AI</div>
+<h1 class="font-display text-4xl sm:text-5xl lg:text-[3.6rem] leading-[1.05] mb-6">The revenue cycle platform built by RCM professionals.<span class="block text-white/55 italic font-normal mt-2 text-3xl sm:text-4xl lg:text-[2.4rem]">Not engineers who&#x27;ve never worked a denial.</span>
+</h1>
+<p class="text-lg text-white/70 leading-relaxed max-w-2xl mb-10">Clientele AI is an end-to-end revenue cycle automation platform designed from the inside out — by a team that spent a decade manually doing the work that intelligent automation should handle. Every module is built around a real workflow bottleneck. Every automation has a certified human in the loop for the cases that demand it.</p>
+<div class="flex flex-wrap items-center gap-3 mb-8">
+<a href="#early-access" class="inline-flex items-center gap-2 rounded-full bg-teal text-navy-deep px-7 py-3.5 text-sm font-bold hover:bg-teal-glow transition-colors shadow-glow">Request Early Access <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-4" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="m12 5 7 7-7 7">
+</path>
+</svg>
+</a>
+<a href="#modules" class="inline-flex items-center gap-2 rounded-full border border-white/20 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/5 transition-colors">Explore the Modules</a>
+</div>
+<div class="inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-full pl-2 pr-5 py-2 backdrop-blur">
+<span class="inline-flex items-center gap-2 bg-amber/20 text-amber rounded-full px-3 py-1 text-[11px] uppercase tracking-wider font-bold">
+<span class="size-1.5 rounded-full bg-amber pulse-glow">
+</span> Live May 2026</span>
+<span class="text-sm text-white/80">
+<span class="font-semibold text-white">Module 1:</span> Insurance Eligibility Verification</span>
+</div>
+</div>
+<div class="lg:col-span-5">
+<div class="relative w-full max-w-md mx-auto aspect-[4/5]">
+<div class="w-[230px] h-[460px] rounded-[2.4rem] bg-navy-deep border-[10px] border-[#0a0e1a] shadow-2xl overflow-hidden absolute left-0 top-6 -rotate-[8deg] z-10">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 bg-[#0a0e1a] rounded-full z-10">
+</div>
+<div class="relative h-full bg-gradient-to-b from-navy to-navy-deep p-4 pt-10 flex flex-col">
+<div class="flex items-center justify-between mb-5">
+<div>
+<div class="text-[9px] uppercase tracking-[0.2em] text-teal font-bold">Clientele AI</div>
+<div class="text-white text-base font-display">Provider<!-- --> App</div>
+</div>
+<div class="size-8 rounded-full bg-teal/20 flex items-center justify-center">
+<div class="size-2 rounded-full bg-teal pulse-glow">
+</div>
+</div>
+</div>
+<div class="space-y-2 flex-1">
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Daily Schedule</div>
+<div class="text-sm text-white font-medium">12 patients</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Eligibility ✓</div>
+<div class="text-sm text-white font-medium">11 / 12 verified</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Pending coding</div>
+<div class="text-sm text-white font-medium">3 claims</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">wRVU today</div>
+<div class="text-sm text-white font-medium">42.6</div>
+</div>
+</div>
+<div class="mt-3 rounded-xl bg-teal text-navy-deep py-2.5 text-center text-xs font-bold">Open <!-- -->Provider<!-- --> View</div>
+</div>
+</div>
+<div class="w-[230px] h-[460px] rounded-[2.4rem] bg-navy-deep border-[10px] border-[#0a0e1a] shadow-2xl overflow-hidden absolute right-0 bottom-0 rotate-[6deg] z-20">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 bg-[#0a0e1a] rounded-full z-10">
+</div>
+<div class="relative h-full bg-gradient-to-b from-navy to-navy-deep p-4 pt-10 flex flex-col">
+<div class="flex items-center justify-between mb-5">
+<div>
+<div class="text-[9px] uppercase tracking-[0.2em] text-amber font-bold">Clientele AI</div>
+<div class="text-white text-base font-display">Patient<!-- --> App</div>
+</div>
+<div class="size-8 rounded-full bg-amber/20 flex items-center justify-center">
+<div class="size-2 rounded-full bg-amber pulse-glow">
+</div>
+</div>
+</div>
+<div class="space-y-2 flex-1">
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Next visit</div>
+<div class="text-sm text-white font-medium">Tue 10:30</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Estimate</div>
+<div class="text-sm text-white font-medium">$45.00 copay</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Card on file</div>
+<div class="text-sm text-white font-medium">•••• 4242</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Messages</div>
+<div class="text-sm text-white font-medium">1 new</div>
+</div>
+</div>
+<div class="mt-3 rounded-xl bg-amber text-navy-deep py-2.5 text-center text-xs font-bold">Open <!-- -->Patient<!-- --> View</div>
+</div>
+</div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-12 bg-teal/20 blur-3xl rounded-full">
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-background py-24 lg:py-32">
+<div class="max-w-3xl mx-auto px-6 text-center">
+<div class="text-[11px] uppercase tracking-[0.22em] text-teal font-semibold mb-3">Why We Built This</div>
+<h2 class="font-display text-3xl lg:text-5xl text-navy-deep leading-[1.1] mb-12">Built by people who lived in the denial queue.</h2>
+<div class="space-y-6 text-foreground/75 leading-[1.85] text-left text-lg">
+<p>Most healthcare AI tools are built by software companies that mapped billing workflows from the outside. They&#x27;re technically sophisticated but operationally naive. They automate the easy parts and leave the hard parts to your staff.</p>
+<p>Clientele AI was built differently. Our team spent years inside the denial queue, working prior authorizations, posting payments, chasing underpaid claims, and navigating the modifier decisions that the wrong code selection makes catastrophically expensive. We built automation for the work we knew — because we had done it ourselves.</p>
+<p>The result is a platform where automation handles volume, speed, and pattern recognition — and where certified RCM professionals handle complexity, exceptions, and anything that requires clinical context. We call this <span class="text-navy-deep font-semibold">Human-Guided Automation</span>, and it is the only model that produces consistent results in specialty healthcare billing.</p>
+</div>
+<figure class="mt-16 relative">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-quote size-10 text-teal mx-auto mb-5 opacity-60" aria-hidden="true">
+<path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z">
+</path>
+<path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z">
+</path>
+</svg>
+<blockquote class="font-display text-2xl lg:text-3xl text-navy-deep italic leading-[1.35]">&quot;We didn&#x27;t automate RCM because the market told us to. We automated it because we knew exactly where the manual work was breaking down.&quot;</blockquote>
+</figure>
+</div>
+</section>
+<section id="modules" class="py-24 lg:py-32" style="background:linear-gradient(180deg, oklch(0.97 0.008 240), white)">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid lg:grid-cols-12 gap-12 mb-14 items-end">
+<div class="lg:col-span-8">
+<div class="text-[11px] uppercase tracking-[0.22em] text-teal font-semibold mb-3">Platform Modules</div>
+<h2 class="font-display text-3xl lg:text-5xl text-navy-deep leading-[1.08]">Six modules. One unified revenue cycle.</h2>
+</div>
+<div class="lg:col-span-4 flex flex-wrap gap-3 text-xs">
+<span class="inline-flex items-center gap-2">
+<span class="size-2 rounded-full bg-emerald-500">
+</span> Live</span>
+<span class="inline-flex items-center gap-2">
+<span class="size-2 rounded-full bg-amber">
+</span> Launching</span>
+<span class="inline-flex items-center gap-2">
+<span class="size-2 rounded-full bg-foreground/40">
+</span> Roadmap 2026</span>
+</div>
+</div>
+<div class="space-y-3">
+<article class="bg-background border rounded-2xl transition-all border-teal/40 shadow-card">
+<button class="w-full text-left p-6 lg:p-8 flex items-start gap-6">
+<div class="font-mono text-xs text-foreground/40 pt-2 hidden sm:block">01</div>
+<div class="size-12 lg:size-14 rounded-2xl flex items-center justify-center shrink-0 bg-amber/15 text-amber">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-check-corner size-6" aria-hidden="true">
+<path d="M10.5 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v6">
+</path>
+<path d="M14 2v5a1 1 0 0 0 1 1h5">
+</path>
+<path d="m14 20 2 2 4-4">
+</path>
+</svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-3 mb-2">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-amber/20 text-amber border-amber/40">
+<span class="size-1.5 rounded-full bg-amber pulse-glow">
+</span>Launching May 2026</span>
+<span class="text-[11px] uppercase tracking-wider text-foreground/40 font-semibold">Module <!-- -->01</span>
+</div>
+<h3 class="font-display text-xl lg:text-2xl text-navy-deep leading-snug">Insurance Eligibility Verification</h3>
+<p class="mt-2 text-sm lg:text-base text-foreground/65 leading-relaxed">Real-time insurance eligibility checks before every patient visit — automated, accurate, and integrated directly into your practice workflow.</p>
+</div>
+<div class="shrink-0 size-9 rounded-full border border-border flex items-center justify-center transition-transform rotate-45 bg-teal text-navy-deep border-teal">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus size-4" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="M12 5v14">
+</path>
+</svg>
+</div>
+</button>
+<div class="px-6 lg:px-8 pb-8 pt-2 grid lg:grid-cols-12 gap-8 border-t border-border/60">
+<div class="lg:col-span-7 lg:pl-[calc(3rem+1.5rem+1.5rem)]">
+<div class="text-[11px] uppercase tracking-wider text-teal font-bold mb-4 mt-6">Key Automations</div>
+<ul class="space-y-2.5">
+<li class="flex gap-3 text-sm text-foreground/75 leading-relaxed">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check size-4 text-teal shrink-0 mt-0.5" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<path d="m9 12 2 2 4-4">
+</path>
+</svg>
+<span>Real-time eligibility verification across all major payers</span>
+</li>
+<li class="flex gap-3 text-sm text-foreground/75 leading-relaxed">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check size-4 text-teal shrink-0 mt-0.5" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<path d="m9 12 2 2 4-4">
+</path>
+</svg>
+<span>Automated discrepancy detection and alert routing</span>
+</li>
+<li class="flex gap-3 text-sm text-foreground/75 leading-relaxed">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check size-4 text-teal shrink-0 mt-0.5" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<path d="m9 12 2 2 4-4">
+</path>
+</svg>
+<span>Benefits breakdown including co-pay, deductible &amp; coverage limits</span>
+</li>
+<li class="flex gap-3 text-sm text-foreground/75 leading-relaxed">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check size-4 text-teal shrink-0 mt-0.5" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<path d="m9 12 2 2 4-4">
+</path>
+</svg>
+<span>Pre-visit eligibility summary pushed to provider &amp; front-desk dashboards</span>
+</li>
+<li class="flex gap-3 text-sm text-foreground/75 leading-relaxed">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check size-4 text-teal shrink-0 mt-0.5" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<path d="m9 12 2 2 4-4">
+</path>
+</svg>
+<span>Eligibility failure flagging before the patient arrives — not after the claim bounces</span>
+</li>
+</ul>
+</div>
+<div class="lg:col-span-5 mt-6 space-y-4">
+<div class="bg-warm border border-border rounded-xl p-5">
+<div class="text-[11px] uppercase tracking-wider text-navy font-bold mb-2">Why it matters</div>
+<p class="text-sm text-foreground/70 leading-relaxed">Eligibility errors are the #1 front-end cause of claim denials. By catching coverage issues before the visit, practices eliminate an entire category of avoidable rejection.</p>
+</div>
+</div>
+</div>
+</article>
+<article class="bg-background border rounded-2xl transition-all border-border hover:border-teal/30">
+<button class="w-full text-left p-6 lg:p-8 flex items-start gap-6">
+<div class="font-mono text-xs text-foreground/40 pt-2 hidden sm:block">02</div>
+<div class="size-12 lg:size-14 rounded-2xl flex items-center justify-center shrink-0 bg-navy/5 text-navy">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list size-6" aria-hidden="true">
+<rect width="8" height="4" x="8" y="2" rx="1" ry="1">
+</rect>
+<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2">
+</path>
+<path d="M12 11h4">
+</path>
+<path d="M12 16h4">
+</path>
+<path d="M8 11h.01">
+</path>
+<path d="M8 16h.01">
+</path>
+</svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-3 mb-2">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming 2026</span>
+<span class="text-[11px] uppercase tracking-wider text-foreground/40 font-semibold">Module <!-- -->02</span>
+</div>
+<h3 class="font-display text-xl lg:text-2xl text-navy-deep leading-snug">Prior Authorization Management</h3>
+<p class="mt-2 text-sm lg:text-base text-foreground/65 leading-relaxed">End-to-end prior authorization tracking — from submission to approval — with automated status updates and add-on CPT flagging to prevent mid-procedure authorization gaps.</p>
+</div>
+<div class="shrink-0 size-9 rounded-full border border-border flex items-center justify-center transition-transform text-foreground/50">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus size-4" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="M12 5v14">
+</path>
+</svg>
+</div>
+</button>
+</article>
+<article class="bg-background border rounded-2xl transition-all border-border hover:border-teal/30">
+<button class="w-full text-left p-6 lg:p-8 flex items-start gap-6">
+<div class="font-mono text-xs text-foreground/40 pt-2 hidden sm:block">03</div>
+<div class="size-12 lg:size-14 rounded-2xl flex items-center justify-center shrink-0 bg-navy/5 text-navy">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu size-6" aria-hidden="true">
+<path d="M12 20v2">
+</path>
+<path d="M12 2v2">
+</path>
+<path d="M17 20v2">
+</path>
+<path d="M17 2v2">
+</path>
+<path d="M2 12h2">
+</path>
+<path d="M2 17h2">
+</path>
+<path d="M2 7h2">
+</path>
+<path d="M20 12h2">
+</path>
+<path d="M20 17h2">
+</path>
+<path d="M20 7h2">
+</path>
+<path d="M7 20v2">
+</path>
+<path d="M7 2v2">
+</path>
+<rect x="4" y="4" width="16" height="16" rx="2">
+</rect>
+<rect x="8" y="8" width="8" height="8" rx="1">
+</rect>
+</svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-3 mb-2">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming Q3 2026</span>
+<span class="text-[11px] uppercase tracking-wider text-foreground/40 font-semibold">Module <!-- -->03</span>
+</div>
+<h3 class="font-display text-xl lg:text-2xl text-navy-deep leading-snug">AI-Assisted ICD &amp; CPT Coding</h3>
+<p class="mt-2 text-sm lg:text-base text-foreground/65 leading-relaxed">AI-powered coding suggestions derived from clinical documentation, with AAPC-certified human review on all flagged and complex cases.</p>
+</div>
+<div class="shrink-0 size-9 rounded-full border border-border flex items-center justify-center transition-transform text-foreground/50">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus size-4" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="M12 5v14">
+</path>
+</svg>
+</div>
+</button>
+</article>
+<article class="bg-background border rounded-2xl transition-all border-border hover:border-teal/30">
+<button class="w-full text-left p-6 lg:p-8 flex items-start gap-6">
+<div class="font-mono text-xs text-foreground/40 pt-2 hidden sm:block">04</div>
+<div class="size-12 lg:size-14 rounded-2xl flex items-center justify-center shrink-0 bg-navy/5 text-navy">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-workflow size-6" aria-hidden="true">
+<rect width="8" height="8" x="3" y="3" rx="2">
+</rect>
+<path d="M7 11v4a2 2 0 0 0 2 2h4">
+</path>
+<rect width="8" height="8" x="13" y="13" rx="2">
+</rect>
+</svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-3 mb-2">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming Q3 2026</span>
+<span class="text-[11px] uppercase tracking-wider text-foreground/40 font-semibold">Module <!-- -->04</span>
+</div>
+<h3 class="font-display text-xl lg:text-2xl text-navy-deep leading-snug">Claims Creation, Scrubbing &amp; Submission</h3>
+<p class="mt-2 text-sm lg:text-base text-foreground/65 leading-relaxed">Automated claim generation from approved coding, pre-submission scrubbing against payer-specific rules, and intelligent clearinghouse routing.</p>
+</div>
+<div class="shrink-0 size-9 rounded-full border border-border flex items-center justify-center transition-transform text-foreground/50">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus size-4" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="M12 5v14">
+</path>
+</svg>
+</div>
+</button>
+</article>
+<article class="bg-background border rounded-2xl transition-all border-border hover:border-teal/30">
+<button class="w-full text-left p-6 lg:p-8 flex items-start gap-6">
+<div class="font-mono text-xs text-foreground/40 pt-2 hidden sm:block">05</div>
+<div class="size-12 lg:size-14 rounded-2xl flex items-center justify-center shrink-0 bg-navy/5 text-navy">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card size-6" aria-hidden="true">
+<rect width="20" height="14" x="2" y="5" rx="2">
+</rect>
+<line x1="2" x2="22" y1="10" y2="10">
+</line>
+</svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-3 mb-2">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming Q4 2026</span>
+<span class="text-[11px] uppercase tracking-wider text-foreground/40 font-semibold">Module <!-- -->05</span>
+</div>
+<h3 class="font-display text-xl lg:text-2xl text-navy-deep leading-snug">Payment Posting &amp; Reconciliation</h3>
+<p class="mt-2 text-sm lg:text-base text-foreground/65 leading-relaxed">Automated ERA/EOB payment posting with intelligent identification of underpaid, partially paid, and zero-pay claims — with auto-routing to the appropriate AR workflow.</p>
+</div>
+<div class="shrink-0 size-9 rounded-full border border-border flex items-center justify-center transition-transform text-foreground/50">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus size-4" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="M12 5v14">
+</path>
+</svg>
+</div>
+</button>
+</article>
+<article class="bg-background border rounded-2xl transition-all border-border hover:border-teal/30">
+<button class="w-full text-left p-6 lg:p-8 flex items-start gap-6">
+<div class="font-mono text-xs text-foreground/40 pt-2 hidden sm:block">06</div>
+<div class="size-12 lg:size-14 rounded-2xl flex items-center justify-center shrink-0 bg-navy/5 text-navy">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-column size-6" aria-hidden="true">
+<path d="M3 3v16a2 2 0 0 0 2 2h16">
+</path>
+<path d="M18 17V9">
+</path>
+<path d="M13 17V5">
+</path>
+<path d="M8 17v-3">
+</path>
+</svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-3 mb-2">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming Q4 2026</span>
+<span class="text-[11px] uppercase tracking-wider text-foreground/40 font-semibold">Module <!-- -->06</span>
+</div>
+<h3 class="font-display text-xl lg:text-2xl text-navy-deep leading-snug">Denial Management &amp; AR Recovery</h3>
+<p class="mt-2 text-sm lg:text-base text-foreground/65 leading-relaxed">Intelligent denial categorization, root cause analysis, and automated appeal workflows — with human-led resolution for complex denials.</p>
+</div>
+<div class="shrink-0 size-9 rounded-full border border-border flex items-center justify-center transition-transform text-foreground/50">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus size-4" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="M12 5v14">
+</path>
+</svg>
+</div>
+</button>
+</article>
+</div>
+</div>
+</section>
+<section class="relative bg-hero text-white overflow-hidden">
+<div class="absolute inset-0 mesh-glow opacity-60" aria-hidden="true">
+</div>
+<div class="absolute inset-0 grid-noise opacity-[0.05]" aria-hidden="true">
+</div>
+<div class="relative max-w-7xl mx-auto px-6 py-24 lg:py-32">
+<div class="text-center max-w-2xl mx-auto mb-14">
+<div class="text-[11px] uppercase tracking-[0.22em] text-teal-glow font-semibold mb-3">Clientele AI in Your Pocket</div>
+<h2 class="font-display text-3xl lg:text-5xl leading-[1.08] mb-6">Two apps. <span class="italic text-white/60">One platform.</span>
+</h2>
+<p class="text-white/65 leading-relaxed">Real, functional mobile apps for the people who actually use them — not portals dressed up as apps.</p>
+</div>
+<div class="flex justify-center mb-12">
+<div class="inline-flex bg-white/5 border border-white/10 rounded-full p-1.5 backdrop-blur">
+<button class="px-6 py-2.5 rounded-full text-sm font-semibold capitalize transition-all bg-teal text-navy-deep shadow-glow">provider<!-- --> App</button>
+<button class="px-6 py-2.5 rounded-full text-sm font-semibold capitalize transition-all text-white/70 hover:text-white">patient<!-- --> App</button>
+</div>
+</div>
+<div class="grid lg:grid-cols-12 gap-12 items-start">
+<div class="lg:col-span-5 flex justify-center">
+<div class="relative">
+<div class="w-[230px] h-[460px] rounded-[2.4rem] bg-navy-deep border-[10px] border-[#0a0e1a] shadow-2xl overflow-hidden ">
+<div class="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 bg-[#0a0e1a] rounded-full z-10">
+</div>
+<div class="relative h-full bg-gradient-to-b from-navy to-navy-deep p-4 pt-10 flex flex-col">
+<div class="flex items-center justify-between mb-5">
+<div>
+<div class="text-[9px] uppercase tracking-[0.2em] text-teal font-bold">Clientele AI</div>
+<div class="text-white text-base font-display">Provider<!-- --> App</div>
+</div>
+<div class="size-8 rounded-full bg-teal/20 flex items-center justify-center">
+<div class="size-2 rounded-full bg-teal pulse-glow">
+</div>
+</div>
+</div>
+<div class="space-y-2 flex-1">
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Next patient</div>
+<div class="text-sm text-white font-medium">M. Reyes — 9:30</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Eligibility ✓</div>
+<div class="text-sm text-white font-medium">Verified · BCBS PPO</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Ambient note</div>
+<div class="text-sm text-white font-medium">Recording…</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">wRVU today</div>
+<div class="text-sm text-white font-medium">42.6</div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 backdrop-blur">
+<div class="text-[10px] uppercase tracking-wider text-white/45 mb-0.5">Sign-offs pending</div>
+<div class="text-sm text-white font-medium">3 claims</div>
+</div>
+</div>
+<div class="mt-3 rounded-xl bg-teal text-navy-deep py-2.5 text-center text-xs font-bold">Open <!-- -->Provider<!-- --> View</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7">
+<div class="mb-6">
+<div class="text-xs uppercase tracking-[0.2em] text-teal-glow font-bold mb-2">provider<!-- --> Tagline</div>
+<p class="font-display text-xl lg:text-2xl text-white/90 italic">Everything your providers need to know before they enter the room.</p>
+</div>
+<div class="grid sm:grid-cols-2 gap-4">
+<div class="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur hover:bg-white/[0.07] transition-colors">
+<div class="size-9 rounded-lg bg-teal/15 text-teal-glow flex items-center justify-center mb-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity size-4" aria-hidden="true">
+<path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2">
+</path>
+</svg>
+</div>
+<h4 class="font-display text-base text-white mb-1.5 leading-snug">30-Second Patient Snapshot</h4>
+<p class="text-xs text-white/60 leading-relaxed">Pre-loaded summary before every visit: eligibility, insurance, balance, prior visit notes, recent labs/imaging, chief complaint — one screen, under 30 seconds.</p>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur hover:bg-white/[0.07] transition-colors">
+<div class="size-9 rounded-lg bg-teal/15 text-teal-glow flex items-center justify-center mb-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar size-4" aria-hidden="true">
+<path d="M8 2v4">
+</path>
+<path d="M16 2v4">
+</path>
+<rect width="18" height="18" x="3" y="4" rx="2">
+</rect>
+<path d="M3 10h18">
+</path>
+</svg>
+</div>
+<h4 class="font-display text-base text-white mb-1.5 leading-snug">Daily Visit Dashboard</h4>
+<p class="text-xs text-white/60 leading-relaxed">Real-time schedule with status indicators: checked-in, arrived, no-show, cancelled, rescheduled. At-a-glance visibility for the entire day.</p>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur hover:bg-white/[0.07] transition-colors">
+<div class="size-9 rounded-lg bg-teal/15 text-teal-glow flex items-center justify-center mb-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic size-4" aria-hidden="true">
+<path d="M12 19v3">
+</path>
+<path d="M19 10v2a7 7 0 0 1-14 0v-2">
+</path>
+<rect x="9" y="2" width="6" height="13" rx="3">
+</rect>
+</svg>
+</div>
+<h4 class="font-display text-base text-white mb-1.5 leading-snug">Microsoft Nuance Ambient AI</h4>
+<p class="text-xs text-white/60 leading-relaxed">Real-time progress notes generated from the provider–patient conversation. AI listens, transcribes, structures notes with medical-necessity prompts. Provider reviews, signs off. No dictation. No typing.</p>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur hover:bg-white/[0.07] transition-colors">
+<div class="size-9 rounded-lg bg-teal/15 text-teal-glow flex items-center justify-center mb-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text size-4" aria-hidden="true">
+<path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z">
+</path>
+<path d="M14 2v5a1 1 0 0 0 1 1h5">
+</path>
+<path d="M10 9H8">
+</path>
+<path d="M16 13H8">
+</path>
+<path d="M16 17H8">
+</path>
+</svg>
+</div>
+<h4 class="font-display text-base text-white mb-1.5 leading-snug">Real-Time Order Entry</h4>
+<p class="text-xs text-white/60 leading-relaxed">Order X-rays, labs, and imaging directly from mobile during or after the visit. Orders push straight to the relevant departments.</p>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur hover:bg-white/[0.07] transition-colors">
+<div class="size-9 rounded-lg bg-teal/15 text-teal-glow flex items-center justify-center mb-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check size-4" aria-hidden="true">
+<circle cx="12" cy="12" r="10">
+</circle>
+<path d="m9 12 2 2 4-4">
+</path>
+</svg>
+</div>
+<h4 class="font-display text-base text-white mb-1.5 leading-snug">Coding &amp; Billing Sign-Off</h4>
+<p class="text-xs text-white/60 leading-relaxed">Review coding suggestions, respond to coder queries, approve claims for submission — all from mobile. One-tap sign-off for standard cases.</p>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur hover:bg-white/[0.07] transition-colors">
+<div class="size-9 rounded-lg bg-teal/15 text-teal-glow flex items-center justify-center mb-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-column size-4" aria-hidden="true">
+<path d="M3 3v16a2 2 0 0 0 2 2h16">
+</path>
+<path d="M18 17V9">
+</path>
+<path d="M13 17V5">
+</path>
+<path d="M8 17v-3">
+</path>
+</svg>
+</div>
+<h4 class="font-display text-base text-white mb-1.5 leading-snug">Financial Intelligence Dashboard</h4>
+<p class="text-xs text-white/60 leading-relaxed">Provider-level analytics: visits billed, payments received, denial breakdown by payer, wRVU tracking. Performance at a glance.</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-3 mt-8">
+<div class="inline-flex items-center gap-3 bg-black/40 border border-white/15 rounded-xl px-5 py-3 text-sm">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone size-5 text-teal-glow" aria-hidden="true">
+<rect width="14" height="20" x="5" y="2" rx="2" ry="2">
+</rect>
+<path d="M12 18h.01">
+</path>
+</svg>
+<div class="leading-tight">
+<div class="text-[10px] uppercase text-white/50 tracking-wider">Coming Soon</div>
+<div class="font-semibold">App Store</div>
+</div>
+</div>
+<div class="inline-flex items-center gap-3 bg-black/40 border border-white/15 rounded-xl px-5 py-3 text-sm">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone size-5 text-teal-glow" aria-hidden="true">
+<rect width="14" height="20" x="5" y="2" rx="2" ry="2">
+</rect>
+<path d="M12 18h.01">
+</path>
+</svg>
+<div class="leading-tight">
+<div class="text-[10px] uppercase text-white/50 tracking-wider">Coming Soon</div>
+<div class="font-semibold">Google Play</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-background py-24 lg:py-32">
+<div class="max-w-7xl mx-auto px-6">
+<div class="max-w-2xl mb-14">
+<div class="text-[11px] uppercase tracking-[0.22em] text-teal font-semibold mb-3">Architecture &amp; Integrations</div>
+<h2 class="font-display text-3xl lg:text-5xl text-navy-deep leading-[1.08]">Connected to the systems you already run. Secured for the data you can&#x27;t afford to leak.</h2>
+</div>
+<div class="grid lg:grid-cols-12 gap-10">
+<div class="lg:col-span-7 space-y-8">
+<div class="relative bg-warm border border-border rounded-3xl h-72 overflow-hidden">
+<div class="absolute inset-0 grid-noise opacity-50">
+</div>
+<svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+<line x1="50" y1="50" x2="10" y2="20" stroke="oklch(0.72 0.13 195 / 0.4)" stroke-width="0.3" class="flow-line">
+</line>
+<line x1="50" y1="50" x2="85" y2="20" stroke="oklch(0.72 0.13 195 / 0.4)" stroke-width="0.3" class="flow-line">
+</line>
+<line x1="50" y1="50" x2="10" y2="80" stroke="oklch(0.72 0.13 195 / 0.4)" stroke-width="0.3" class="flow-line">
+</line>
+<line x1="50" y1="50" x2="85" y2="80" stroke="oklch(0.72 0.13 195 / 0.4)" stroke-width="0.3" class="flow-line">
+</line>
+</svg>
+<div class="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5" style="left:10%;top:20%">
+<div class="size-12 rounded-2xl bg-background border border-border shadow-card flex items-center justify-center text-navy">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database size-5" aria-hidden="true">
+<ellipse cx="12" cy="5" rx="9" ry="3">
+</ellipse>
+<path d="M3 5V19A9 3 0 0 0 21 19V5">
+</path>
+<path d="M3 12A9 3 0 0 0 21 12">
+</path>
+</svg>
+</div>
+<span class="text-[10px] uppercase tracking-wider text-foreground/60 font-semibold">EMR / PM</span>
+</div>
+<div class="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5" style="left:85%;top:20%">
+<div class="size-12 rounded-2xl bg-background border border-border shadow-card flex items-center justify-center text-navy">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network size-5" aria-hidden="true">
+<rect x="16" y="16" width="6" height="6" rx="1">
+</rect>
+<rect x="2" y="16" width="6" height="6" rx="1">
+</rect>
+<rect x="9" y="2" width="6" height="6" rx="1">
+</rect>
+<path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3">
+</path>
+<path d="M12 12V8">
+</path>
+</svg>
+</div>
+<span class="text-[10px] uppercase tracking-wider text-foreground/60 font-semibold">Clearinghouses</span>
+</div>
+<div class="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5" style="left:10%;top:80%">
+<div class="size-12 rounded-2xl bg-background border border-border shadow-card flex items-center justify-center text-navy">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check size-5" aria-hidden="true">
+<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+</path>
+<path d="m9 12 2 2 4-4">
+</path>
+</svg>
+</div>
+<span class="text-[10px] uppercase tracking-wider text-foreground/60 font-semibold">Payer Portals</span>
+</div>
+<div class="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5" style="left:85%;top:80%">
+<div class="size-12 rounded-2xl bg-background border border-border shadow-card flex items-center justify-center text-navy">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone size-5" aria-hidden="true">
+<rect width="14" height="20" x="5" y="2" rx="2" ry="2">
+</rect>
+<path d="M12 18h.01">
+</path>
+</svg>
+</div>
+<span class="text-[10px] uppercase tracking-wider text-foreground/60 font-semibold">Mobile Apps</span>
+</div>
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
+<div class="size-20 rounded-3xl bg-gradient-to-br from-navy to-navy-deep text-white flex items-center justify-center shadow-glow pulse-glow">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles size-7 text-teal-glow" aria-hidden="true">
+<path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z">
+</path>
+<path d="M20 2v4">
+</path>
+<path d="M22 4h-4">
+</path>
+<circle cx="4" cy="20" r="2">
+</circle>
+</svg>
+</div>
+<div class="text-xs font-display font-bold text-navy-deep">Clientele AI</div>
+</div>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-4">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database size-4 text-teal" aria-hidden="true">
+<ellipse cx="12" cy="5" rx="9" ry="3">
+</ellipse>
+<path d="M3 5V19A9 3 0 0 0 21 19V5">
+</path>
+<path d="M3 12A9 3 0 0 0 21 12">
+</path>
+</svg>
+<h3 class="font-display text-lg text-navy-deep">EMR &amp; Practice Management</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">eClinicalWorks</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">Meditech</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">Medisoft</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">Allscripts-Veradigm</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">Practice Fusion (Tebra)</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">Office Ally</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">AdvancedMD</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">Cerner</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">GE Centricity</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">ModMed</span>
+<span class="inline-flex items-center bg-warm border border-border rounded-full px-3.5 py-1.5 text-xs font-medium text-navy-deep">ChartPerfect</span>
+</div>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-network size-4 text-teal" aria-hidden="true">
+<rect x="16" y="16" width="6" height="6" rx="1">
+</rect>
+<rect x="2" y="16" width="6" height="6" rx="1">
+</rect>
+<rect x="9" y="2" width="6" height="6" rx="1">
+</rect>
+<path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3">
+</path>
+<path d="M12 12V8">
+</path>
+</svg>
+<h3 class="font-display text-lg text-navy-deep">Clearinghouses &amp; Payer Connections</h3>
+</div>
+<p class="text-sm text-foreground/65 leading-relaxed">Direct connections to major clearinghouses. Supports all major commercial payers, Medicare, Medicaid (multi-state), and managed care organizations across MI, IL, FL, NY, CT, NJ, and DC.</p>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-3">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles size-4 text-teal" aria-hidden="true">
+<path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z">
+</path>
+<path d="M20 2v4">
+</path>
+<path d="M22 4h-4">
+</path>
+<circle cx="4" cy="20" r="2">
+</circle>
+</svg>
+<h3 class="font-display text-lg text-navy-deep">Third-Party Integrations</h3>
+</div>
+<p class="text-sm text-foreground/65 leading-relaxed">
+<span class="text-navy-deep font-semibold">Microsoft Nuance Ambient AI</span> (progress notes) · <span class="text-navy-deep font-semibold">Google Maps</span> (patient navigation) · <span class="text-navy-deep font-semibold">Apple App Store / Google Play</span> (mobile distribution)</p>
+</div>
+</div>
+<div class="lg:col-span-5 bg-navy text-white rounded-3xl p-8 lg:p-10">
+<div class="text-[11px] uppercase tracking-[0.22em] text-teal-glow font-bold mb-3">Security &amp; Compliance</div>
+<h3 class="font-display text-2xl mb-8 leading-snug">Architected for enterprise healthcare.</h3>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-teal-glow">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock size-4" aria-hidden="true">
+<rect width="18" height="11" x="3" y="11" rx="2" ry="2">
+</rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4">
+</path>
+</svg>
+</div>
+<div>
+<div class="font-semibold text-white mb-1">HIPAA-Compliant Architecture</div>
+<div class="text-sm text-white/65 leading-relaxed">All PHI handled per HIPAA Privacy &amp; Security Rules. TLS 1.2+ in transit, AES-256 at rest. BAA executed with every client.</div>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-teal-glow">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-round size-4" aria-hidden="true">
+<path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z">
+</path>
+<circle cx="16.5" cy="7.5" r=".5" fill="currentColor">
+</circle>
+</svg>
+</div>
+<div>
+<div class="font-semibold text-white mb-1">Role-Based Access Control (RBAC)</div>
+<div class="text-sm text-white/65 leading-relaxed">Staff access scoped to role. Coders see coding workflows. Billers see billing queues. Providers see patient-facing dashboards. No cross-role data exposure.</div>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-teal-glow">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check size-4" aria-hidden="true">
+<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+</path>
+<path d="m9 12 2 2 4-4">
+</path>
+</svg>
+</div>
+<div>
+<div class="font-semibold text-white mb-1">Multi-Factor Authentication (MFA)</div>
+<div class="text-sm text-white/65 leading-relaxed">Required on all platform access points — provider app login, biller portal access, and administrative interfaces.</div>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-teal-glow">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-check-corner size-4" aria-hidden="true">
+<path d="M10.5 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v6">
+</path>
+<path d="M14 2v5a1 1 0 0 0 1 1h5">
+</path>
+<path d="m14 20 2 2 4-4">
+</path>
+</svg>
+</div>
+<div>
+<div class="font-semibold text-white mb-1">SOC2 Type II — In Progress</div>
+<div class="text-sm text-white/65 leading-relaxed">Full SOC2 Type II audit underway. Expected completion: Q3 2026. Security controls currently in place and audit-ready.</div>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="size-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-teal-glow">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scroll-text size-4" aria-hidden="true">
+<path d="M15 12h-5">
+</path>
+<path d="M15 8h-5">
+</path>
+<path d="M19 17V5a2 2 0 0 0-2-2H4">
+</path>
+<path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3">
+</path>
+</svg>
+</div>
+<div>
+<div class="font-semibold text-white mb-1">Audit Logging</div>
+<div class="text-sm text-white/65 leading-relaxed">Every action on PHI is logged, timestamped, and retrievable. Full audit trail for compliance reviews and incident response.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-warm py-24 lg:py-32">
+<div class="max-w-7xl mx-auto px-6">
+<div class="max-w-2xl mb-14">
+<div class="text-[11px] uppercase tracking-[0.22em] text-teal font-semibold mb-3">Implementation</div>
+<h2 class="font-display text-3xl lg:text-5xl text-navy-deep leading-[1.08]">From contract to go-live in weeks. <span class="italic text-foreground/70">Not months.</span>
+</h2>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 relative">
+<div class="hidden lg:block absolute top-12 left-12 right-12 h-px bg-gradient-to-r from-teal/20 via-teal/60 to-teal/20">
+</div>
+<div class="relative bg-background border border-border rounded-2xl p-6 hover:shadow-card transition-shadow">
+<div class="flex items-center gap-3 mb-5">
+<div class="size-10 rounded-xl bg-teal text-navy-deep flex items-center justify-center font-display font-bold text-lg shadow-glow">1</div>
+<span class="text-[11px] uppercase tracking-wider text-teal font-bold">Week 1</span>
+</div>
+<h3 class="font-display text-lg text-navy-deep mb-2 leading-snug">Discovery Call</h3>
+<p class="text-sm text-foreground/65 leading-relaxed">We assess your current workflows, EMR setup, payer mix, and denial patterns. No assumptions — just your data.</p>
+</div>
+<div class="relative bg-background border border-border rounded-2xl p-6 hover:shadow-card transition-shadow">
+<div class="flex items-center gap-3 mb-5">
+<div class="size-10 rounded-xl bg-teal text-navy-deep flex items-center justify-center font-display font-bold text-lg shadow-glow">2</div>
+<span class="text-[11px] uppercase tracking-wider text-teal font-bold">Week 2</span>
+</div>
+<h3 class="font-display text-lg text-navy-deep mb-2 leading-snug">Configuration</h3>
+<p class="text-sm text-foreground/65 leading-relaxed">Clientele AI is configured for your specialty, your payers, and your practice. Module 1 (Eligibility Verification) activates first — followed by additional modules per the rollout schedule.</p>
+</div>
+<div class="relative bg-background border border-border rounded-2xl p-6 hover:shadow-card transition-shadow">
+<div class="flex items-center gap-3 mb-5">
+<div class="size-10 rounded-xl bg-teal text-navy-deep flex items-center justify-center font-display font-bold text-lg shadow-glow">3</div>
+<span class="text-[11px] uppercase tracking-wider text-teal font-bold">Week 3</span>
+</div>
+<h3 class="font-display text-lg text-navy-deep mb-2 leading-snug">Integration &amp; Testing</h3>
+<p class="text-sm text-foreground/65 leading-relaxed">We connect to your EMR, validate data flows, and run test claims through the scrubbing engine. Your team is trained on the platform and mobile apps.</p>
+</div>
+<div class="relative bg-background border border-border rounded-2xl p-6 hover:shadow-card transition-shadow">
+<div class="flex items-center gap-3 mb-5">
+<div class="size-10 rounded-xl bg-teal text-navy-deep flex items-center justify-center font-display font-bold text-lg shadow-glow">4</div>
+<span class="text-[11px] uppercase tracking-wider text-teal font-bold">Week 4+</span>
+</div>
+<h3 class="font-display text-lg text-navy-deep mb-2 leading-snug">Go-Live &amp; Optimization</h3>
+<p class="text-sm text-foreground/65 leading-relaxed">Your practice goes live with full Clientele AI support and dedicated RCM team oversight. Monthly performance reviews and continuous optimization from day one.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="relative bg-hero text-white overflow-hidden">
+<div class="absolute inset-0 mesh-glow opacity-50" aria-hidden="true">
+</div>
+<div class="absolute inset-0 grid-noise opacity-[0.05]" aria-hidden="true">
+</div>
+<div class="relative max-w-7xl mx-auto px-6 py-24 lg:py-32">
+<div class="max-w-2xl mb-14">
+<div class="text-[11px] uppercase tracking-[0.22em] text-teal-glow font-semibold mb-3">Roadmap Transparency</div>
+<h2 class="font-display text-3xl lg:text-5xl leading-[1.08] mb-5">An honest roadmap. Real milestones. <span class="italic text-white/55">No vaporware.</span>
+</h2>
+<p class="text-white/65 leading-relaxed">We believe enterprise buyers deserve transparency about what&#x27;s live, what&#x27;s launching, and what&#x27;s planned. Below is our public product roadmap — updated as milestones are achieved.</p>
+</div>
+<div class="relative">
+<div class="absolute left-4 lg:left-1/2 top-2 bottom-2 w-px bg-gradient-to-b from-teal-glow/50 via-teal-glow/20 to-transparent">
+</div>
+<div class="space-y-4">
+<div class="relative grid lg:grid-cols-2 gap-4 lg:gap-12 items-center ">
+<div class="pl-12 lg:pl-0 lg:text-right lg:pr-12">
+<div class="text-xs uppercase tracking-[0.2em] text-teal-glow font-bold mb-1">May 2026</div>
+<div class="font-display text-lg lg:text-xl text-white leading-snug">Insurance Eligibility Verification</div>
+</div>
+<div class="pl-12 lg:pl-0 lg:pl-12">
+<div class="inline-block">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-amber/20 text-amber border-amber/40">
+<span class="size-1.5 rounded-full bg-amber pulse-glow">
+</span>Launching</span>
+</div>
+</div>
+<div class="absolute left-4 lg:left-1/2 top-1/2 -translate-y-1/2 lg:-translate-x-1/2 size-3 rounded-full bg-teal border-2 border-navy-deep ring-4 ring-teal/20">
+</div>
+</div>
+<div class="relative grid lg:grid-cols-2 gap-4 lg:gap-12 items-center lg:[&amp;&gt;*:first-child]:order-2">
+<div class="pl-12 lg:pl-0 lg:pl-12">
+<div class="text-xs uppercase tracking-[0.2em] text-teal-glow font-bold mb-1">Q2 2026</div>
+<div class="font-display text-lg lg:text-xl text-white leading-snug">Prior Authorization Management</div>
+</div>
+<div class="pl-12 lg:pl-0 lg:text-right lg:pr-12">
+<div class="inline-block">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming</span>
+</div>
+</div>
+<div class="absolute left-4 lg:left-1/2 top-1/2 -translate-y-1/2 lg:-translate-x-1/2 size-3 rounded-full bg-teal border-2 border-navy-deep ring-4 ring-teal/20">
+</div>
+</div>
+<div class="relative grid lg:grid-cols-2 gap-4 lg:gap-12 items-center ">
+<div class="pl-12 lg:pl-0 lg:text-right lg:pr-12">
+<div class="text-xs uppercase tracking-[0.2em] text-teal-glow font-bold mb-1">Q3 2026</div>
+<div class="font-display text-lg lg:text-xl text-white leading-snug">AI-Assisted Coding + SOC2 Type II Completion</div>
+</div>
+<div class="pl-12 lg:pl-0 lg:pl-12">
+<div class="inline-block">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming</span>
+</div>
+</div>
+<div class="absolute left-4 lg:left-1/2 top-1/2 -translate-y-1/2 lg:-translate-x-1/2 size-3 rounded-full bg-teal border-2 border-navy-deep ring-4 ring-teal/20">
+</div>
+</div>
+<div class="relative grid lg:grid-cols-2 gap-4 lg:gap-12 items-center lg:[&amp;&gt;*:first-child]:order-2">
+<div class="pl-12 lg:pl-0 lg:pl-12">
+<div class="text-xs uppercase tracking-[0.2em] text-teal-glow font-bold mb-1">Q3 2026</div>
+<div class="font-display text-lg lg:text-xl text-white leading-snug">Claims Creation, Scrubbing &amp; Submission</div>
+</div>
+<div class="pl-12 lg:pl-0 lg:text-right lg:pr-12">
+<div class="inline-block">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming</span>
+</div>
+</div>
+<div class="absolute left-4 lg:left-1/2 top-1/2 -translate-y-1/2 lg:-translate-x-1/2 size-3 rounded-full bg-teal border-2 border-navy-deep ring-4 ring-teal/20">
+</div>
+</div>
+<div class="relative grid lg:grid-cols-2 gap-4 lg:gap-12 items-center ">
+<div class="pl-12 lg:pl-0 lg:text-right lg:pr-12">
+<div class="text-xs uppercase tracking-[0.2em] text-teal-glow font-bold mb-1">Q4 2026</div>
+<div class="font-display text-lg lg:text-xl text-white leading-snug">Payment Posting &amp; Reconciliation</div>
+</div>
+<div class="pl-12 lg:pl-0 lg:pl-12">
+<div class="inline-block">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming</span>
+</div>
+</div>
+<div class="absolute left-4 lg:left-1/2 top-1/2 -translate-y-1/2 lg:-translate-x-1/2 size-3 rounded-full bg-teal border-2 border-navy-deep ring-4 ring-teal/20">
+</div>
+</div>
+<div class="relative grid lg:grid-cols-2 gap-4 lg:gap-12 items-center lg:[&amp;&gt;*:first-child]:order-2">
+<div class="pl-12 lg:pl-0 lg:pl-12">
+<div class="text-xs uppercase tracking-[0.2em] text-teal-glow font-bold mb-1">Q4 2026</div>
+<div class="font-display text-lg lg:text-xl text-white leading-snug">Denial Management &amp; AR Recovery</div>
+</div>
+<div class="pl-12 lg:pl-0 lg:text-right lg:pr-12">
+<div class="inline-block">
+<span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] uppercase tracking-wider font-bold bg-foreground/5 text-foreground/60 border-foreground/15">
+<span class="size-1.5 rounded-full bg-foreground/40 ">
+</span>Coming</span>
+</div>
+</div>
+<div class="absolute left-4 lg:left-1/2 top-1/2 -translate-y-1/2 lg:-translate-x-1/2 size-3 rounded-full bg-teal border-2 border-navy-deep ring-4 ring-teal/20">
+</div>
+</div>
+</div>
+</div>
+<p class="max-w-2xl mt-16 text-sm text-white/60 leading-relaxed border-t border-white/10 pt-8">Each module is built, tested, and validated by our internal RCM team before client deployment. We don&#x27;t ship automation that our own billing professionals haven&#x27;t stress-tested against real payer behavior.</p>
+</div>
+</section>
+<section id="early-access" class="relative bg-navy-deep text-white overflow-hidden">
+<div class="absolute inset-0 mesh-glow opacity-70" aria-hidden="true">
+</div>
+<div class="absolute -left-40 top-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full bg-teal/15 blur-3xl" aria-hidden="true">
+</div>
+<div class="relative max-w-5xl mx-auto px-6 py-24 lg:py-28 text-center">
+<div class="inline-flex items-center gap-2 bg-amber/15 border border-amber/30 text-amber rounded-full px-4 py-1.5 text-[11px] uppercase tracking-wider font-bold mb-6">
+<span class="size-1.5 rounded-full bg-amber pulse-glow">
+</span> Module 1 — Launching May 2026</div>
+<h2 class="font-display text-4xl lg:text-6xl leading-[1.05] mb-6">Module 1 is launching in May. <span class="italic text-teal-glow">Be among the first.</span>
+</h2>
+<p class="text-lg text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed">Request early access to Clientele AI&#x27;s Insurance Eligibility Verification module and get a first look at what the full platform will do for your practice&#x27;s revenue cycle.</p>
+<div class="flex flex-wrap items-center justify-center gap-3">
+<a href="#" class="inline-flex items-center gap-2 rounded-full bg-teal text-navy-deep px-8 py-4 text-sm font-bold hover:bg-teal-glow transition-colors shadow-glow">Request Early Access <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right size-4" aria-hidden="true">
+<path d="M5 12h14">
+</path>
+<path d="m12 5 7 7-7 7">
+</path>
+</svg>
+</a>
+<a href="/about" class="inline-flex items-center gap-2 rounded-full border border-white/20 text-white px-8 py-4 text-sm font-semibold hover:bg-white/5 transition-colors">Talk to Our RCM Team First</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-navy-deep text-white/80">
+<div class="max-w-7xl mx-auto px-6 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+<div>
+<div class="flex items-center gap-2 mb-4">
+<div class="size-9 rounded-lg bg-white/10 flex items-center justify-center">
+<div class="size-4 rounded-sm bg-teal">
+</div>
+</div>
+<div>
+<div class="font-display font-bold text-lg text-white">Clientele</div>
+<div class="text-[10px] uppercase tracking-[0.18em] text-white/60 -mt-0.5">RCM</div>
+</div>
+</div>
+<p class="font-display italic text-teal-glow text-lg mb-3">Where AI Meets Revenue Integrity</p>
+<p class="text-sm text-white/60 leading-relaxed">Specialty RCM powered by Clientele AI — built for Orthopedics, Pain Management, Anesthesia, and Comprehensive Therapy practices across the United States.</p>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Quick Links</h4>
+<ul class="space-y-2.5 text-sm">
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Home</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">About Clientele RCM</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Clientele AI Platform</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Who We Serve</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Case Studies</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Contact Us</a>
+</li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Our Services</h4>
+<ul class="space-y-2.5 text-sm">
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Front-End RCM</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Mid-Cycle Intelligence</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Back-End &amp; A/R Recovery</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Remote Patient Monitoring</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Remote Therapeutic Monitoring</a>
+</li>
+<li>
+<a href="#" class="hover:text-teal-glow transition-colors">Compliance &amp; Security</a>
+</li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contact</h4>
+<ul class="space-y-3 text-sm">
+<li class="flex gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin size-4 shrink-0 mt-0.5 text-teal-glow" aria-hidden="true">
+<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+</path>
+<circle cx="12" cy="10" r="3">
+</circle>
+</svg>200 Glover Ave, Norwalk, CT 06850 (USA)</li>
+<li class="flex gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin size-4 shrink-0 mt-0.5 text-teal-glow" aria-hidden="true">
+<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+</path>
+<circle cx="12" cy="10" r="3">
+</circle>
+</svg>Bangalore, Karnataka 560068 (India)</li>
+<li class="flex gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone size-4 shrink-0 mt-0.5 text-teal-glow" aria-hidden="true">
+<path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384">
+</path>
+</svg>+1 810-221-0709</li>
+<li class="flex gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail size-4 shrink-0 mt-0.5 text-teal-glow" aria-hidden="true">
+<path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7">
+</path>
+<rect x="2" y="4" width="20" height="16" rx="2">
+</rect>
+</svg>info@clientelercm.com</li>
+</ul>
+<div class="flex gap-3 mt-5">
+<a href="#" aria-label="LinkedIn" class="size-9 rounded-full bg-white/10 hover:bg-teal hover:text-navy flex items-center justify-center transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin size-4" aria-hidden="true">
+<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+</path>
+<rect width="4" height="12" x="2" y="9">
+</rect>
+<circle cx="4" cy="4" r="2">
+</circle>
+</svg>
+</a>
+<a href="#" aria-label="Twitter" class="size-9 rounded-full bg-white/10 hover:bg-teal hover:text-navy flex items-center justify-center transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter size-4" aria-hidden="true">
+<path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z">
+</path>
+</svg>
+</a>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10">
+<div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-xs text-white/50">© 2026 Clientele RCM. All Rights Reserved.</p>
+<div class="flex flex-wrap items-center gap-5 text-xs text-white/70">
+<span class="flex items-center gap-1.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check size-4 text-teal-glow" aria-hidden="true">
+<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z">
+</path>
+<path d="m9 12 2 2 4-4">
+</path>
+</svg> HIPAA Certified</span>
+<span class="flex items-center gap-1.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award size-4 text-teal-glow" aria-hidden="true">
+<path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526">
+</path>
+<circle cx="12" cy="8" r="6">
+</circle>
+</svg> HBMA Member</span>
+<span class="flex items-center gap-1.5">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock size-4 text-teal-glow" aria-hidden="true">
+<rect width="18" height="11" x="3" y="11" rx="2" ry="2">
+</rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4">
+</path>
+</svg> SOC2 Type II — In Progress</span>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<!--/$-->
+<script class="$tsr" id="$tsr-stream-barrier">(self.$R=self.$R||{})["tsr"]=[];self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]};$_TSR.router=($R=>$R[0]={manifest:$R[1]={routes:$R[2]={__root__:$R[3]={preloads:$R[4]=["/assets/index-5oFWrO-1.js"],assets:$R[5]=[$R[6]={tag:"script",attrs:$R[7]={type:"module",async:!0},children:"import(\"/assets/index-5oFWrO-1.js\")"}]},"/platform":$R[8]={preloads:$R[9]=["/assets/platform-DAAhDny7.js","/assets/Footer-BI0RPk8x.js","/assets/users-Bb7I6thC.js","/assets/workflow-UAjfOPyr.js","/assets/file-check-corner-DveJiIs-.js","/assets/chart-column-BHUNeUHW.js","/assets/plus-CBLsM5qp.js","/assets/circle-check-CQe7hLp9.js","/assets/activity-Dz0IhvLK.js","/assets/mic-B3J_uEAo.js"]}}},matches:$R[10]=[$R[11]={i:"__root__ ",u:1779549598621,s:"success",ssr:!0},$R[12]={i:" platform platform",u:1779549598621,s:"success",ssr:!0}],lastMatchId:" platform platform"})($R["tsr"]);$_TSR.e();document.currentScript.remove()</script>
+<script type="module" async="">import("/assets/index-5oFWrO-1.js")</script>
+<aside 
+	id="lovable-badge" 
+	role="complementary"
+	dir="ltr"
+	lang="en"
+	aria-label="Edit with Lovable">
+	<a 
+		id="lovable-badge-cta" 
+		target="_blank" 
+		href="https://lovable.dev/projects/a1f36ccd-f413-41eb-b241-33ad64415231?utm_source=lovable-badge"
+		rel="noopener nofollow"
+		aria-label="Edit with Lovable">
+		<span id="lovable-badge-text">Edit with</span>
+		<svg xmlns="http://www.w3.org/2000/svg" width="52" height="16" fill="none" viewBox="0 0 52 16">
+  <path fill="#FCFBF8" fill-rule="evenodd" d="M20.318 5.25c.643 0 1.206.14 1.69.418a2.81 2.81 0 0 1 1.118 1.191c.266.513.4 1.115.4 1.807s-.134 1.296-.4 1.812a2.81 2.81 0 0 1-1.118 1.193c-.484.278-1.047.418-1.69.418s-1.208-.14-1.695-.418a2.85 2.85 0 0 1-1.125-1.193c-.262-.516-.393-1.12-.393-1.812s.131-1.294.393-1.807a2.848 2.848 0 0 1 1.125-1.191c.487-.279 1.052-.418 1.695-.418Zm0 1.425c-.27 0-.504.076-.7.228-.193.147-.34.37-.443.67-.102.295-.153.66-.153 1.093 0 .435.05.801.153 1.1.102.3.25.524.443.676.196.147.43.22.7.22.27 0 .502-.073.694-.22.193-.152.341-.375.443-.67.103-.299.153-.667.153-1.106 0-.65-.112-1.145-.337-1.481a1.08 1.08 0 0 0-.953-.51ZM32.7 5.25c.61 0 1.127.1 1.549.3.422.197.74.48.953.849.217.368.325.809.325 1.32v2.704c0 .29.02.562.062.812.044.245.108.4.19.466V12h-1.935a5.895 5.895 0 0 1-.105-.684 7.745 7.745 0 0 1-.02-.228 2.293 2.293 0 0 1-.151.203c-.205.242-.47.437-.793.584-.32.143-.685.215-1.094.215-.406 0-.77-.08-1.094-.24a1.845 1.845 0 0 1-.756-.682 1.984 1.984 0 0 1-.27-1.045c0-.606.178-1.069.535-1.388.356-.324.87-.534 1.542-.633l1.125-.16c.225-.032.403-.074.534-.123a.622.622 0 0 0 .288-.196.549.549 0 0 0 .093-.327.65.65 0 0 0-.11-.367.702.702 0 0 0-.32-.27c-.14-.07-.31-.105-.51-.105-.32 0-.576.083-.768.251-.193.164-.298.39-.314.676h-1.923c.016-.434.147-.82.393-1.155.25-.34.596-.604 1.039-.792.442-.189.954-.283 1.535-.283Zm.99 3.498a.98.98 0 0 1-.215.14 2.49 2.49 0 0 1-.584.178l-.473.092c-.315.061-.553.156-.713.283-.155.127-.233.305-.233.534 0 .23.084.412.252.547.168.135.383.203.645.203s.494-.058.694-.173c.201-.118.355-.282.461-.49.11-.21.166-.448.166-.714v-.6Zm4.526-2.375c.065-.125.138-.243.221-.349.197-.25.437-.44.719-.571.282-.135.6-.203.952-.203.528 0 .988.138 1.377.412.389.275.688.67.896 1.186.21.512.314 1.12.314 1.824 0 .7-.107 1.309-.32 1.825-.213.512-.518.906-.915 1.18-.393.275-.854.412-1.383.412-.352 0-.667-.062-.946-.184a1.832 1.832 0 0 1-.7-.554 2.2 2.2 0 0 1-.234-.383V12h-1.843V3h1.862v3.373Zm1.284.296c-.274 0-.51.085-.707.253-.192.163-.338.397-.436.7a3.376 3.376 0 0 0-.148 1.05c0 .406.05.759.148 1.058.098.299.243.53.436.694.197.164.433.246.707.246.279 0 .512-.082.7-.246.193-.164.336-.395.43-.694.099-.3.148-.652.148-1.058 0-.405-.05-.757-.147-1.056-.095-.299-.238-.53-.43-.694a1.015 1.015 0 0 0-.7-.253Zm9.416-1.419c.602 0 1.136.131 1.604.393.466.262.829.643 1.086 1.143.263.5.394 1.097.394 1.794 0 .25-.002.449-.006.596H47.51c.018.288.071.538.164.75a1.3 1.3 0 0 0 .491.596c.214.13.465.196.757.196.319 0 .583-.082.792-.246.209-.167.34-.403.393-.706h1.862a2.48 2.48 0 0 1-.485 1.235 2.54 2.54 0 0 1-1.051.805c-.439.188-.949.283-1.53.283-.655 0-1.225-.125-1.708-.375a2.672 2.672 0 0 1-1.13-1.143c-.267-.508-.4-1.137-.4-1.887 0-.712.14-1.327.418-1.843a2.86 2.86 0 0 1 1.155-1.186c.491-.27 1.051-.405 1.678-.405Zm-.044 1.345c-.274 0-.516.068-.725.203a1.29 1.29 0 0 0-.479.59 2.045 2.045 0 0 0-.132.498h2.562a1.873 1.873 0 0 0-.138-.602 1.061 1.061 0 0 0-.418-.516 1.243 1.243 0 0 0-.67-.173Z" clip-rule="evenodd"/>
+  <path fill="#FCFBF8" d="m26.605 9.995 1.342-4.566h1.924L27.628 12h-2.07l-2.33-6.57h1.98l1.397 4.565Zm-13.013.143h2.256c1.632 0 1.421 1.837 1.418 1.861h-5.603V3h1.93v7.138Zm31.516 1.861h-1.862V3h1.862v8.999Z"/>
+  <path fill="url(#a)" fill-rule="evenodd" d="M2.7 3c1.492 0 2.7 1.192 2.7 2.663v1.012h.9c1.49 0 2.7 1.192 2.7 2.662S7.791 12 6.3 12H0V5.663C0 4.193 1.209 3 2.7 3Z" clip-rule="evenodd"/>
+  <defs>
+    <radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="matrix(-1.54236 7.07838 -10.231 -2.15602 4.627 5.022)" gradientUnits="userSpaceOnUse">
+      <stop offset=".106" stop-color="#FE7B02"/>
+      <stop offset=".394" stop-color="#FE3F21"/>
+      <stop offset=".608" stop-color="#F858BC"/>
+      <stop offset=".929" stop-color="#575ECF"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+
+	</a>
+	
+	<span id="lovable-badge-divider" aria-hidden="true">
+</span>
+	
+	<button 
+		id="lovable-badge-close"
+		aria-label="Dismiss"
+		title="Dismiss"
+		type="button">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+			<path d="M10.646 4.646a.5.5 0 1 1 .707.708L8.707 8l2.646 2.646a.5.5 0 1 1-.707.707L8 8.707l-2.646 2.646a.5.5 0 1 1-.708-.707L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708L8 7.293l2.646-2.647Z"/>
+		</svg>
+	</button>
+</aside>
+<script>
+	// Don't show the lovable-badge if the page is in an iframe or if it's being rendered by puppeteer (screenshot service)
+	if (window.self !== window.top || navigator.userAgent.includes('puppeteer')) {
+		// the page is in an iframe
+		var badge = document.getElementById('lovable-badge');
+		if (badge) {
+			badge.style.display = 'none';
+		}
+	}
+
+	// Add click event listener to close button with animation
+	var closeButton = document.getElementById('lovable-badge-close');
+	if (closeButton) {
+		closeButton.addEventListener('click', function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			var badge = document.getElementById('lovable-badge');
+			if (badge) {
+				badge.classList.add('closing');
+				setTimeout(function() {
+					if (badge) {
+						badge.style.display = 'none';
+					}
+				}, 240);
+			}
+		});
+	}
+</script>
+</body>
+</html>

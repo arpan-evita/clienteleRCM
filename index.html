@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Google AI Studio App</title>
+    <script>
+      // Defensively wrap window.fetch if it only has a getter (e.g. in sandboxed environment / iframes)
+      (function() {
+        try {
+          var proto = Window.prototype;
+          var target = window;
+          var desc = Object.getOwnPropertyDescriptor(target, 'fetch') || Object.getOwnPropertyDescriptor(proto, 'fetch');
+          if (desc && !desc.set && (desc.get || typeof desc.value === 'function')) {
+            var rawFetch = desc.get ? desc.get.call(target) : desc.value;
+            var currentFetch = rawFetch;
+            Object.defineProperty(target, 'fetch', {
+              get: function() {
+                return currentFetch;
+              },
+              set: function(val) {
+                currentFetch = val;
+              },
+              configurable: true,
+              enumerable: true
+            });
+          }
+        } catch (e) {
+          console.warn('Unable to patch window.fetch getter/setter:', e);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
