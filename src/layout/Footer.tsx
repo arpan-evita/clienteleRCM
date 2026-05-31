@@ -83,8 +83,13 @@ export default function Footer({ navigate }: FooterProps) {
               </a>
             </li>
             <li>
-              <a href="#" onClick={(e) => e.preventDefault()} className="text-white/70 hover:text-teal transition-colors">
+              <a href="/case-studies" onClick={(e) => handleLinkClick(e, '/case-studies')} className="text-white/70 hover:text-teal transition-colors">
                 Case Studies
+              </a>
+            </li>
+            <li>
+              <a href="/insights" onClick={(e) => handleLinkClick(e, '/insights')} className="text-white/70 hover:text-teal transition-colors">
+                Blog &amp; Insights
               </a>
             </li>
             <li>

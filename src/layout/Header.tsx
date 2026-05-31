@@ -202,8 +202,8 @@ export default function Header({ currentPath, navigate }: HeaderProps) {
               <div className="absolute left-0 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <div className="min-w-[240px] rounded-xl bg-background border border-border shadow-card p-2">
                   {[
-                    { name: 'Case Studies', path: '#' },
-                    { name: 'Blog & Insights', path: '#' },
+                    { name: 'Case Studies', path: '/case-studies' },
+                    { name: 'Blog & Insights', path: '/insights' },
                     { name: 'Compliance & Security', path: '/compliance' },
                     { name: 'Transition & Onboarding', path: '/transition' },
                   ].map((res) => (
@@ -336,8 +336,8 @@ export default function Header({ currentPath, navigate }: HeaderProps) {
               <div className="flex flex-col gap-2">
                 <div className="text-xs font-bold uppercase tracking-wider text-neutral-400">Resources</div>
                 {[
-                  { name: 'Case Studies', path: '#' },
-                  { name: 'Blog & Insights', path: '#' },
+                  { name: 'Case Studies', path: '/case-studies' },
+                  { name: 'Blog & Insights', path: '/insights' },
                   { name: 'Compliance & Security', path: '/compliance' },
                   { name: 'Transition & Onboarding', path: '/transition' }
                 ].map((res) => (

@@ -12,6 +12,8 @@ import Orthopedics from './pages/specialties/Orthopedics';
 import PainManagement from './pages/specialties/PainManagement';
 import Anesthesia from './pages/specialties/Anesthesia';
 import Therapy from './pages/specialties/Therapy';
+import CaseStudies from './pages/CaseStudies';
+import Insights from './pages/Insights';
 import ServicesOverview from './pages/services/ServicesOverview';
 import FrontEnd from './pages/services/FrontEnd';
 import MidCycle from './pages/services/MidCycle';
@@ -47,6 +49,10 @@ export default function App() {
         return <WhyClientele navigate={navigate} />;
       case '/compliance':
         return <Compliance navigate={navigate} />;
+      case '/case-studies':
+        return <CaseStudies navigate={navigate} />;
+      case '/insights':
+        return <Insights navigate={navigate} />;
       case '/transition':
         return <Transition navigate={navigate} />;
       case '/specialties':
