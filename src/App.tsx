@@ -10,6 +10,7 @@ import Transition from './pages/Transition';
 import Specialties from './pages/Specialties';
 import Orthopedics from './pages/specialties/Orthopedics';
 import PainManagement from './pages/specialties/PainManagement';
+import Anesthesia from './pages/specialties/Anesthesia';
 import ServicesOverview from './pages/services/ServicesOverview';
 import FrontEnd from './pages/services/FrontEnd';
 import MidCycle from './pages/services/MidCycle';
@@ -48,10 +49,11 @@ export default function App() {
       case '/transition':
         return <Transition navigate={navigate} />;
       case '/specialties':
-      case '/specialties/anesthesia':
       case '/specialties/therapy':
       case '/specialties/chiropractic':
         return <Specialties navigate={navigate} currentPath={path} />;
+      case '/specialties/anesthesia':
+        return <Anesthesia navigate={navigate} />;
       case '/specialties/orthopedics':
         return <Orthopedics navigate={navigate} />;
       case '/specialties/pain-management':
