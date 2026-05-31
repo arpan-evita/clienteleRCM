@@ -144,6 +144,7 @@ export default function Header({ currentPath, navigate }: HeaderProps) {
               <div className="absolute left-0 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <div className="min-w-[280px] rounded-xl bg-background border border-border shadow-card p-2 text-left">
                   {[
+                    { name: 'Specialties Overview', path: '/specialties' },
                     { name: 'Orthopedics', path: '/specialties/orthopedics' },
                     { name: 'Pain Management', path: '/specialties/pain-management' },
                     { name: 'Anesthesia', path: '/specialties/anesthesia' },
@@ -291,6 +292,7 @@ export default function Header({ currentPath, navigate }: HeaderProps) {
               <div className="flex flex-col gap-2">
                 <div className="text-xs font-bold uppercase tracking-wider text-neutral-400">Specialties</div>
                 {[
+                  { name: 'Specialties Overview', path: '/specialties' },
                   { name: 'Orthopedics', path: '/specialties/orthopedics' },
                   { name: 'Pain Management', path: '/specialties/pain-management' },
                   { name: 'Anesthesia', path: '/specialties/anesthesia' },
