@@ -11,6 +11,7 @@ import Specialties from './pages/Specialties';
 import Orthopedics from './pages/specialties/Orthopedics';
 import PainManagement from './pages/specialties/PainManagement';
 import Anesthesia from './pages/specialties/Anesthesia';
+import Therapy from './pages/specialties/Therapy';
 import ServicesOverview from './pages/services/ServicesOverview';
 import FrontEnd from './pages/services/FrontEnd';
 import MidCycle from './pages/services/MidCycle';
@@ -49,9 +50,10 @@ export default function App() {
       case '/transition':
         return <Transition navigate={navigate} />;
       case '/specialties':
-      case '/specialties/therapy':
       case '/specialties/chiropractic':
         return <Specialties navigate={navigate} currentPath={path} />;
+      case '/specialties/therapy':
+        return <Therapy navigate={navigate} />;
       case '/specialties/anesthesia':
         return <Anesthesia navigate={navigate} />;
       case '/specialties/orthopedics':
