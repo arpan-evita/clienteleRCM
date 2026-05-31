@@ -235,9 +235,13 @@ export default function Header({ currentPath, navigate }: HeaderProps) {
           <div className="flex items-center gap-4">
             <div className="hidden lg:block">
               <a
-                href="#assessment"
-                onClick={(e) => handleLinkClick(e, '#assessment')}
-                className="inline-flex items-center gap-2 rounded-full bg-navy text-white px-5 py-2.5 text-sm font-semibold hover:bg-navy-deep transition-all hover:translate-x-0.5 shadow-sm active:scale-98 cursor-pointer"
+                href="/contact"
+                onClick={(e) => handleLinkClick(e, '/contact')}
+                className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:translate-x-0.5 shadow-sm active:scale-98 cursor-pointer ${
+                  currentPath === '/contact'
+                    ? 'bg-teal text-navy hover:bg-teal-glow ring-2 ring-teal/35 shadow-glow'
+                    : 'bg-navy text-white hover:bg-navy-deep'
+                }`}
               >
                 Request Assessment →
               </a>
@@ -361,9 +365,13 @@ export default function Header({ currentPath, navigate }: HeaderProps) {
               </div>
 
               <a
-                href="#assessment"
-                onClick={(e) => handleLinkClick(e, '#assessment')}
-                className="mt-2 w-full text-center py-3 bg-navy text-white rounded-full font-bold shadow-sm hover:bg-navy-deep hover:shadow h-12 flex items-center justify-center cursor-pointer"
+                href="/contact"
+                onClick={(e) => handleLinkClick(e, '/contact')}
+                className={`mt-2 w-full text-center py-3 rounded-full font-bold shadow-sm transition-all h-12 flex items-center justify-center cursor-pointer ${
+                  currentPath === '/contact'
+                    ? 'bg-teal text-navy hover:bg-teal-glow'
+                    : 'bg-navy text-white hover:bg-navy-deep'
+                }`}
               >
                 Request Free Assessment
               </a>

@@ -14,6 +14,7 @@ import Anesthesia from './pages/specialties/Anesthesia';
 import Therapy from './pages/specialties/Therapy';
 import CaseStudies from './pages/CaseStudies';
 import Insights from './pages/Insights';
+import Contact from './pages/Contact';
 import ServicesOverview from './pages/services/ServicesOverview';
 import FrontEnd from './pages/services/FrontEnd';
 import MidCycle from './pages/services/MidCycle';
@@ -53,6 +54,8 @@ export default function App() {
         return <CaseStudies navigate={navigate} />;
       case '/insights':
         return <Insights navigate={navigate} />;
+      case '/contact':
+        return <Contact navigate={navigate} />;
       case '/transition':
         return <Transition navigate={navigate} />;
       case '/specialties':
