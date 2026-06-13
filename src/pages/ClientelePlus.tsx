@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import {
   CheckCircle,
   Check,
@@ -49,176 +49,69 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
-  // State Management
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [autoplay, setAutoplay] = useState(false);
-  
-  // OCR Interactive State
-  const [ocrMode, setOcrMode] = useState<'optionA' | 'optionB'>('optionA');
+  // State Management for Interactive Modules
+  // 1. OCR Sim State
+  const [ocrMode, setOcrMode] = useState<'optionA' | 'optionB'>('optionB');
   const [ocrStatus, setOcrStatus] = useState<'idle' | 'scanning' | 'done'>('idle');
   const [ocrProgress, setOcrProgress] = useState(0);
   const [ocrType, setOcrType] = useState<'dl' | 'insurance' | null>(null);
 
-  // Eligibility Check state
+  // 2. Eligibility Check State
   const [eligibilityStatus, setEligibilityStatus] = useState<'idle' | 'running' | 'completed'>('idle');
-  const [eligibilityReport, setEligibilityReport] = useState<any>(null);
+  const [eligibilityReport, setEligibilityReport] = useState<any>({
+    active: '🟢 Awaiting Real-Time Query',
+    carrier: 'Blue Cross Blue Shield Plan Choice Plus',
+    copay: '—',
+    deductible: '—',
+    restrictions: '—',
+  });
 
-  // Booking state
+  // 3. Billing & Booking Selection State
   const [selectedProvider, setSelectedProvider] = useState('Dr. Park · Internal Medicine');
   const [selectedLoc, setSelectedLoc] = useState('Westview Clinic');
   const [selectedSpecialty, setSelectedSpecialty] = useState('Annual physical');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('10:30 AM');
   const [bookingStep, setBookingStep] = useState<'idle' | 'booking' | 'confirmed'>('idle');
 
-  // Chat thread routing active team
+  // 4. Communication Channel State
   const [chatChannel, setChatChannel] = useState<'front' | 'provider' | 'billing'>('front');
 
-  // Claim scrubber demo
+  // 5. Claims Scrubber State
   const [scrubStatus, setScrubStatus] = useState<'dirty' | 'scrubbing' | 'clean'>('dirty');
   const [scrubErrors, setScrubErrors] = useState<string[]>([
-    'Missing CPT Modifier -25',
-    'Subscriber Name Mismatch on Ins. Entry',
-    'Invalid Bundling Protocol (99214 + 20550)'
+    'Missing CPT Modifier -25 on Orthopedic Consultation',
+    'Subscriber Name Mismatch on Insurance Entry',
+    'Invalid Bundling Protocol (99214 Evaluation + 20550 Injection)'
   ]);
 
-  // Dashboards role active selector
+  // 6. Dashboards Active view
   const [activeRole, setActiveRole] = useState<'patient' | 'provider' | 'front' | 'leadership'>('patient');
 
-  // Slide Deck Structure replicating the exact pages
-  const slides = [
-    {
-      id: '04',
-      section: 'Vision',
-      title: 'Transform healthcare administration with applied AI.',
-      subtitle: 'Five shifts that move the operating model from human-dependent paperwork to AI-assisted, real-time intelligence.',
-      type: 'shifts'
-    },
-    {
-      id: '05',
-      section: 'Strategy',
-      title: '80% automation, 20% human intelligence.',
-      subtitle: 'AI runs the predictable, repetitive volume. People are reserved for complex cases, exceptions and clinical judgement where they add the most value.',
-      type: 'operatingModel'
-    },
-    {
-      id: '06',
-      section: 'Patient Console',
-      title: 'From portal sign-in to fully closed billing cycle.',
-      subtitle: 'From eight phone calls and a clipboard to one connected experience the patient runs themselves.',
-      type: 'workflow8'
-    },
-    {
-      id: '07',
-      section: 'Smart Registration',
-      title: '5 fields. Or a photo. That is the entire registration.',
-      subtitle: 'Step 1 — Patient self-service. AI extracts demographics and insurance details automatically.',
-      type: 'ocr'
-    },
-    {
-      id: '08',
-      section: 'Eligibility',
-      title: 'Financial responsibility known before the patient walks in.',
-      subtitle: 'Step 2 — AI eligibility verification. Immediately after registration, Pulse calls the payor in real-time.',
-      type: 'eligibility'
-    },
-    {
-      id: '09',
-      section: 'EMR / EHR / PM Sync',
-      title: 'Pulse writes verified data into your existing system of record.',
-      subtitle: 'Step 3 — Zero-disruption integration. Bidirectional, real-time demographic and coverage updates.',
-      type: 'emrSync'
-    },
-    {
-      id: '10',
-      section: 'Scheduling',
-      title: 'Patient-controlled scheduling, no phone calls.',
-      subtitle: 'Step 4 — AI appointment scheduling. Search availability, select slots, and confirm appointments.',
-      type: 'scheduling'
-    },
-    {
-      id: '11',
-      section: 'Appointment Mgmt',
-      title: 'Cut no-shows. Recapture empty slots.',
-      subtitle: 'Step 5 — Automated appointment management. Proactive smart text alerts and instant release cycle.',
-      type: 'mgmtGains'
-    },
-    {
-      id: '12',
-      section: 'Communication',
-      title: 'One thread. Three teams. Zero phone tag.',
-      subtitle: 'Step 6 — Patient communication hub. Every conversation tracked, routed and audited under one secure context.',
-      type: 'commsThread'
-    },
-    {
-      id: '13',
-      section: 'Patient Dashboard',
-      title: 'The full record in the patient\'s pocket.',
-      subtitle: 'Step 7 — Patient health dashboard. Visually mapping visits, files, balances, and real-time medical updates.',
-      type: 'pocketDashboard'
-    },
-    {
-      id: '14',
-      section: 'Provider Console',
-      title: 'AI works alongside the clinician before, during and after the visit.',
-      subtitle: 'Provider console — AI-assisted workflow. Minimize clinical documentation burden.',
-      type: 'providerConsole'
-    },
-    {
-      id: '15',
-      section: 'RCM Automation',
-      title: 'Complete revenue cycle automation from documentation to submission.',
-      subtitle: 'AI-powered RCM automation. Eliminating the manual chaser overhead entirely.',
-      type: 'rcmColumns'
-    },
-    {
-      id: '16',
-      section: 'Claims & AR',
-      title: 'Real-time revenue visibility.',
-      subtitle: 'Intelligent claims & AR management. Continuously monitoring every claim and AR bucket.',
-      type: 'claimsBucket'
-    },
-    {
-      id: '17',
-      section: 'Denial Management',
-      title: 'Stop the revenue leak before it spreads.',
-      subtitle: 'AI denial management. Real-time root-cause analysis and automated corrective queues.',
-      type: 'denialPrv'
-    },
-    {
-      id: '18',
-      section: 'Dashboards',
-      title: 'Role-based intelligence: everyone sees what matters to them.',
-      subtitle: 'Real-time dashboards. Segmented portals representing live coordination loops.',
-      type: 'liveDashboards'
-    },
-    {
-      id: '19',
-      section: 'Benefits',
-      title: 'Operational transformation across every team that touches the patient.',
-      subtitle: 'Business benefits. Driving quantifiable savings, care focus, and lightning-fast RCM performance.',
-      type: 'benefitsPX'
-    },
-    {
-      id: '20',
-      section: 'Why Pulse',
-      title: 'The future of connected healthcare, delivered on one platform.',
-      subtitle: 'A smarter healthcare ecosystem — real-time automation, optimal patient coverage alignment, and clean claims.',
-      type: 'whyFinal'
-    }
+  // Active section tracker for the sticky left navigation tape
+  const sections = [
+    { id: 'vision', label: '01 · Vision & Shifts' },
+    { id: 'strategy', label: '02 · 80/20 Strategy' },
+    { id: 'workflow', label: '03 · Patient Console' },
+    { id: 'onboarding', label: '04 · Intake & OCR' },
+    { id: 'eligibility', label: '05 · Instant Eligibility' },
+    { id: 'scheduling', label: '06 · Custom Booking' },
+    { id: 'comms', label: '07 · Live Comms' },
+    { id: 'clinician', label: '08 · Clinician Assist' },
+    { id: 'rcm', label: '09 · Revenue Cycle' },
+    { id: 'denial-prevention', label: '10 · Denial Prevention' },
+    { id: 'analytics', label: '11 · Live Dashboards' },
+    { id: 'outcomes', label: '12 · Core Benefits' },
   ];
 
-  // Autoplay Logic
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (autoplay) {
-      timer = setInterval(() => {
-        setActiveSlide((prev) => (prev + 1) % slides.length);
-      }, 5500);
+  // Helper smooth scroll
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    return () => clearInterval(timer);
-  }, [autoplay]);
+  };
 
-  // OCR Sim action
+  // Run Simulators
   const runOcrSim = (type: 'dl' | 'insurance') => {
     setOcrStatus('scanning');
     setOcrProgress(0);
@@ -232,10 +125,9 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
         clearInterval(interval);
         setOcrStatus('done');
       }
-    }, 120);
+    }, 100);
   };
 
-  // Eligibility request action
   const runEligibilityChecker = () => {
     setEligibilityStatus('running');
     setTimeout(() => {
@@ -243,1397 +135,1251 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
       setEligibilityReport({
         active: '🟢 Fully Active Standard Coverage',
         carrier: 'Blue Cross Blue Shield Plan Choice Plus',
-        copay: '$25.00 Copayment (Specialist)',
+        copay: '$25.00 Copayment (Specialist Visit)',
         deductible: '$1,500.00 Total ($350.00 Met)',
-        coinsurance: '15% Covered Coinsurance Weight',
+        coinsurance: '15% Coinsurance Weight',
         oop: '$4,000.00 Limit ($1,200.00 Met)',
-        restrictions: 'Prior Authorization checklist mandatory on CPT 20550',
+        restrictions: 'Prior Authorization checklist mandatory on CPT Code 20550',
       });
-    }, 1500);
+    }, 1200);
   };
 
-  // Simulate slot booking
   const triggerSelfBooking = () => {
     setBookingStep('booking');
     setTimeout(() => {
       setBookingStep('confirmed');
-    }, 1500);
+    }, 1200);
   };
 
-  // Claim Scrubber Scrub action
   const runScrubber = () => {
     setScrubStatus('scrubbing');
     setTimeout(() => {
       setScrubStatus('clean');
       setScrubErrors([]);
-    }, 1800);
+    }, 1500);
   };
 
   return (
     <div className="bg-[#FAFBFD] text-navy min-h-screen text-left">
-      {/* HEADER HERO AREA */}
-      <section className="relative overflow-hidden bg-white border-b border-neutral-100 pt-20 pb-12">
+      
+      {/* 1. HERO BANNER */}
+      <section className="relative overflow-hidden bg-white border-b border-neutral-100 pt-24 pb-16">
         <div className="absolute inset-0 grid-noise opacity-[0.03] pointer-events-none" />
-        <div className="absolute top-1/4 right-[-10%] w-[450px] h-[450px] bg-teal/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 left-[-10%] w-[300px] h-[300px] bg-[#F56A00]/5 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-1/4 right-[-10%] w-[500px] h-[500px] bg-teal/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-5 left-[-5%] w-[350px] h-[350px] bg-[#F56A00]/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="max-w-3xl space-y-4">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#F56A00]/25 bg-[#F56A00]/5 px-4 py-1 text-xs font-semibold text-[#F56A00]">
-              <Sparkles className="size-3.5" /> Clientele Plus Suite Launch
+          <div className="max-w-4xl space-y-6">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#F56A00]/20 bg-[#F56A00]/5 px-4 py-1.5 text-xs font-semibold text-[#F56A00]">
+              <Sparkles className="size-3.5 fill-[#F56A00]/20" /> Clientele Plus Suite Launch
             </span>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-navy leading-tight">
               Clientele Plus <br />
-              <span className="text-neutral-500 font-sans text-3xl sm:text-4xl block mt-2 font-normal">
+              <span className="text-neutral-500 font-sans text-2xl sm:text-3xl lg:text-4xl block mt-3 font-normal">
                 Autonomous Revenue Cycle & Operational Intelligence
               </span>
             </h1>
-            <p className="text-neutral-500 max-w-xl text-sm sm:text-base leading-relaxed">
-              Experience the complete, unedited product architecture and operating model compiled directly from our executive deck. Replicated in live, functional modules under a unified high-integrity design.
+            <p className="text-neutral-600 max-w-2xl text-base leading-relaxed font-sans">
+              Experience the complete, unedited product architecture and operating model compiled from our executive blueprints. Explore the strategic shift from human-dependent paperwork to AI-assisted, real-time intelligence.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
-              <a
-                href="#interactive-deck"
-                className="rounded-full bg-navy hover:bg-navy-deep text-white text-xs font-bold px-6 py-3 transition-transform hover:-translate-y-0.5"
+              <button
+                onClick={() => scrollToSection('vision')}
+                className="rounded-full bg-navy hover:bg-navy-deep text-white text-xs font-bold px-7 py-3.5 transition-transform hover:-translate-y-0.5 cursor-pointer"
               >
-                Launch Slide Deck Simulator ↓
-              </a>
+                Explore Platform Capabilities ↓
+              </button>
               <a
                 href="/contact"
                 onClick={(e) => handleLinkClick(e, '/contact')}
-                className="rounded-full border border-neutral-200 hover:bg-neutral-50 text-neutral-600 text-xs font-bold px-6 py-3 transition-transform hover:-translate-y-0.5"
+                className="rounded-full border border-neutral-250 hover:bg-neutral-50 text-neutral-600 text-xs font-bold px-7 py-3.5 transition-transform hover:-translate-y-0.5"
               >
-                Request Custom Assessment
+                Request Practice Assessment
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* QUICK STATS TOP BAR */}
+      {/* QUICK STATS TOP STRIP */}
       <section className="bg-navy border-b border-teal/20 text-white py-6">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="border-r border-white/10 pr-4">
             <div className="text-2xl font-bold text-teal">80%</div>
-            <div className="text-[10px] font-mono tracking-widest text-white/60 uppercase mt-0.5">Automated Workloads</div>
+            <div className="text-[10px] font-mono tracking-widest text-[#B4C3D0] uppercase mt-0.5">Automated Workloads</div>
           </div>
           <div className="border-r border-white/10 pr-4">
             <div className="text-2xl font-bold text-white">&lt; 30s</div>
-            <div className="text-[10px] font-mono tracking-widest text-white/60 uppercase mt-0.5">Payer Eligibility Rate</div>
+            <div className="text-[10px] font-mono tracking-widest text-[#B4C3D0] uppercase mt-0.5">Eligibility Verification</div>
           </div>
           <div className="border-r border-white/10 pr-4">
             <div className="text-2xl font-bold text-teal">99.2%</div>
-            <div className="text-[10px] font-mono tracking-widest text-white/60 uppercase mt-0.5">Clean-Claim Fidelity</div>
+            <div className="text-[10px] font-mono tracking-widest text-[#B4C3D0] uppercase mt-0.5">Clean-Claim Fidelity</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-white">-35%</div>
-            <div className="text-[10px] font-mono tracking-widest text-white/60 uppercase mt-0.5">Average No-Shows</div>
+            <div className="text-[10px] font-mono tracking-widest text-[#B4C3D0] uppercase mt-0.5">Average No-Show Rate</div>
           </div>
         </div>
       </section>
 
-      {/* INTERACTIVE DECK VIEWER */}
-      <section id="interactive-deck" className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
-          
-          {/* LEFT COLUMN: Slide Index Navigation (5 Cols) */}
-          <div className="lg:col-span-4 bg-white rounded-2xl border border-neutral-100 p-4 shadow-sm sticky top-24">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-neutral-100">
-              <span className="text-xs font-bold text-navy uppercase font-mono tracking-wider">Executive Presentation</span>
-              <button
-                onClick={() => setAutoplay((prev) => !prev)}
-                className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full flex items-center gap-1.5 transition-colors cursor-pointer ${
-                  autoplay 
-                    ? 'bg-[#F56A00]/15 text-[#F56A00]' 
-                    : 'bg-neutral-100 text-neutral-500 hover:bg-neutral-200'
-                }`}
-              >
-                <div className={`size-1.5 rounded-full ${autoplay ? 'bg-[#F56A00] animate-pulse' : 'bg-neutral-400'}`} />
-                {autoplay ? 'Autoplay On' : 'Autoplay Off'}
-              </button>
-            </div>
+      {/* MAIN CONTENT AREA */}
+      <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
 
-            {/* Scrollable list of slides */}
-            <div className="space-y-1 max-h-[580px] overflow-y-auto pr-1 no-scrollbar">
-              {slides.map((s, index) => (
-                <button
-                  key={s.id}
-                  onClick={() => {
-                    setActiveSlide(index);
-                    setAutoplay(false);
-                  }}
-                  className={`w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-center justify-between group cursor-pointer ${
-                    activeSlide === index
-                      ? 'bg-navy text-white font-semibold'
-                      : 'hover:bg-neutral-50 text-neutral-600'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className={`font-mono text-xs ${activeSlide === index ? 'text-teal' : 'text-neutral-450 text-neutral-400'}`}>
-                      {s.id}
-                    </span>
-                    <div className="truncate">
-                      <div className="text-[10px] font-mono uppercase tracking-widest text-[#F56A00] -mb-0.5">
-                        {s.section}
-                      </div>
-                      <div className={`text-xs truncate max-w-[200px] ${activeSlide === index ? 'text-white' : 'text-navy'}`}>
-                        {s.title}
-                      </div>
-                    </div>
-                  </div>
-                  <ChevronRight className={`size-3.5 transition-transform ${activeSlide === index ? 'text-teal translate-x-0.5' : 'text-neutral-400 opacity-0 group-hover:opacity-100'}`} />
-                </button>
-              ))}
-            </div>
-            
-            <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-[11px] font-semibold text-neutral-400 font-mono">
-              <span>Clientele Pulse Platform</span>
-              <span>Slide {slides[activeSlide].id} / 21</span>
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN: Interactive Slide Canvas (8 Cols) */}
-          <div className="lg:col-span-8 space-y-6">
-            
-            {/* Slide Header Indicator */}
-            <div className="flex justify-between items-center bg-white border border-neutral-100 outline-none p-4 rounded-xl shadow-xs">
-              <div className="flex items-center gap-2">
-                <span className="size-2 rounded-full bg-[#F56A00] animate-ping" />
-                <span className="text-[11px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">
-                  ACTIVE MODAL WORKLOAD — Slide {slides[activeSlide].id}
-                </span>
-              </div>
-              <div className="flex gap-1.5">
-                <button
-                  onClick={() => {
-                    setActiveSlide((prev) => (prev > 0 ? prev - 1 : slides.length - 1));
-                    setAutoplay(false);
-                  }}
-                  className="size-8 rounded-lg border border-neutral-200 hover:bg-neutral-50 flex items-center justify-center text-xs text-navy font-bold cursor-pointer"
-                >
-                  ←
-                </button>
-                <button
-                  onClick={() => {
-                    setActiveSlide((prev) => (prev + 1) % slides.length);
-                    setAutoplay(false);
-                  }}
-                  className="size-8 rounded-lg bg-navy hover:bg-navy-deep text-white flex items-center justify-center text-xs font-bold cursor-pointer"
-                >
-                  →
-                </button>
-              </div>
-            </div>
-
-            {/* MAIN INTERACTIVE AREA CELL */}
-            <div className="bg-white rounded-2xl border border-neutral-100 p-6 sm:p-8 shadow-sm">
-              <div className="pb-6 border-b border-neutral-100 mb-6 text-left">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#F56A00]">
-                    {slides[activeSlide].section}
-                  </span>
+            {/* SECTION 1: VISION & SHIFTS */}
+            <section id="vision" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">01 · Strategic Vision</span>
                   <span className="size-1 rounded-full bg-neutral-300" />
-                  <span className="font-mono text-[10px] text-neutral-400">OPERATING SPEC: {slides[activeSlide].id}/21</span>
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 1</span>
                 </div>
-                <h2 className="font-display text-2xl sm:text-3xl text-navy font-bold tracking-tight">
-                  {slides[activeSlide].title}
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  Transform Healthcare Administration of Modern Practices with Applied AI
                 </h2>
-                <p className="mt-2 text-sm text-neutral-500 font-sans leading-relaxed">
-                  {slides[activeSlide].subtitle}
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  The primary operations model shifts that transition clinical workflows from manual, paper-cluttered processes to connected, real-time automation.
                 </p>
               </div>
 
-              {/* RENDER DYNAMIC COMPONENT BASED ON TYPE */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeSlide}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.3 }}
-                  className="min-h-[350px] flex flex-col justify-between"
-                >
-                  
-                  {/* TYPE 1: SHIFTS (Slide 1 Vision) */}
-                  {slides[activeSlide].type === 'shifts' && (
-                    <div className="space-y-4">
-                      {[
-                        { from: 'Manual', to: 'Automated', color: 'border-orange-200/50 hover:bg-orange-50/10' },
-                        { from: 'Reactive', to: 'Real-Time', color: 'border-blue-200/50 hover:bg-blue-50/10' },
-                        { from: 'Disconnected', to: 'Connected', color: 'border-purple-200/50 hover:bg-purple-50/10' },
-                        { from: 'Paperwork', to: 'Intelligence', color: 'border-teal-200/50 hover:bg-teal-50/10' },
-                        { from: 'Human Dependency', to: 'AI-Assisted Workflow', color: 'border-emerald-200/50 hover:bg-emerald-50/10' }
-                      ].map((item, idx) => (
-                        <div key={idx} className={`grid grid-cols-11 items-center border border-neutral-100 p-3 rounded-xl transition-all ${item.color}`}>
-                          <div className="col-span-4 text-left">
-                            <span className="text-[10px] uppercase font-bold text-neutral-400 font-mono block">From</span>
-                            <span className="text-sm font-semibold text-navy">{item.from}</span>
-                          </div>
-                          <div className="col-span-3 flex justify-center text-neutral-400">
-                            <ArrowRight className="size-4 text-[#F56A00] animate-pulse" />
-                          </div>
-                          <div className="col-span-4 text-left bg-navy px-4 py-2 rounded-lg text-white">
-                            <span className="text-[9px] uppercase font-bold text-teal font-mono block">To</span>
-                            <span className="text-xs font-bold text-white tracking-wide">{item.to}</span>
-                          </div>
-                        </div>
-                      ))}
+              {/* 5 SHIFTS GRID */}
+              <div className="space-y-3.5">
+                {[
+                  { from: 'Manual Administrative Redos', to: 'Autonomous Workload Dispatch', label: 'Operations Speed', desc: 'Predictive forms routing replaces manual typing.' },
+                  { from: 'Reactive Claim Discrepancies', to: 'Real-Time Eligibility Checking', label: 'Payer Interface', desc: 'Queries eligibility immediately within 30 seconds.' },
+                  { from: 'Disconnected EMR Records', to: 'Fully Unified Bilateral Sync', label: 'Fidelity', desc: 'Automated clinical data committing with zero front-desk interference.' },
+                  { from: 'Exhausting Paperwork Audits', to: 'Applied Scribing Intelligence', label: 'Clinician Overhead', desc: 'AI ambient room scribing minimizes charting time.' },
+                  { from: 'Staff Phone Tag Disputes', to: 'Single Secure Communication Context', label: 'Patient Experience', desc: 'One shared thread routes billing, provider, and admin updates.' }
+                ].map((item, idx) => (
+                  <div key={idx} className="grid grid-cols-1 md:grid-cols-12 items-center border border-neutral-100 rounded-xl p-4 gap-4 bg-[#FAFBFD]/50 hover:bg-[#FAFBFD] transition-colors">
+                    <div className="md:col-span-4 text-left">
+                      <span className="text-[9px] uppercase font-bold text-neutral-400 font-mono block mb-1">Traditional Model</span>
+                      <span className="text-xs font-semibold text-neutral-500">{item.from}</span>
                     </div>
-                  )}
-
-                  {/* TYPE 2: OPERATING MODEL (Slide 2 Strategy) */}
-                  {slides[activeSlide].type === 'operatingModel' && (
-                    <div className="grid md:grid-cols-2 gap-6 text-left">
-                      {/* Left: 80% AI */}
-                      <div className="bg-navy rounded-xl p-5 border border-white/5 text-white flex flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-2 right-2 flex items-center gap-1.5 bg-white/5 px-2 py-0.5 rounded text-[10px] font-mono text-teal">
-                          <Activity className="size-3 animate-pulse" /> Live Automation
-                        </div>
-                        <div>
-                          <div className="text-4xl font-black text-teal font-display">80%</div>
-                          <p className="text-xs font-bold tracking-widest text-[#F56A00] uppercase mt-1">AI MANAGES</p>
-                          <ul className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 text-[11px] text-white/75 font-sans">
-                            <li>• Registration</li>
-                            <li>• Scheduling</li>
-                            <li>• AI Scribing</li>
-                            <li>• Claim Creation</li>
-                            <li>• Payment Posting</li>
-                            <li>• Denial Mgmt</li>
-                            <li>• Eligibility Verif</li>
-                            <li>• Claim Scrubbing</li>
-                          </ul>
-                        </div>
-                        <div className="text-[9px] text-[#FAFBFD]/45 font-mono mt-4 pt-2 border-t border-white/10">
-                          Automating predictable, high-volume tasks.
-                        </div>
-                      </div>
-
-                      {/* Right: 20% Human Link */}
-                      <div className="bg-[#FAFBFD] rounded-xl p-5 border border-neutral-200/80 flex flex-col justify-between">
-                        <div>
-                          <div className="text-4xl font-black text-navy font-display">20%</div>
-                          <p className="text-xs font-bold tracking-widest text-neutral-400 uppercase mt-1">HUMAN-IN-THE-LOOP</p>
-                          <ul className="mt-4 space-y-2 text-xs text-neutral-600 font-sans">
-                            <li className="flex items-center gap-1.5"><Check className="size-3.5 text-teal" /> Complex/Edge Cases</li>
-                            <li className="flex items-center gap-1.5"><Check className="size-3.5 text-teal" /> Exceptions Handling</li>
-                            <li className="flex items-center gap-1.5"><Check className="size-3.5 text-teal" /> Clinical Judgement</li>
-                            <li className="flex items-center gap-1.5"><Check className="size-3.5 text-teal" /> Escalations Management</li>
-                            <li className="flex items-center gap-1.5"><Check className="size-3.5 text-teal" /> AI Guidance & Oversight</li>
-                          </ul>
-                        </div>
-                        <div className="text-[9px] text-neutral-400 font-mono mt-4 pt-2 border-t border-neutral-100">
-                          Reserving staff focus for maximum clinic value.
-                        </div>
-                      </div>
+                    <div className="md:col-span-1 flex justify-start md:justify-center text-[#F56A00]">
+                      <ArrowRight className="size-4 rotate-90 md:rotate-0" />
                     </div>
-                  )}
+                    <div className="md:col-span-5 text-left bg-navy text-white px-4 py-3 rounded-xl border border-white/5 shadow-xs">
+                      <span className="text-[9px] uppercase font-bold text-teal font-mono block mb-0.5">{item.label}</span>
+                      <span className="text-xs font-bold text-[#FAFBFD] tracking-wide block">{item.to}</span>
+                      <p className="text-[10.5px] text-[#FAFBFD]/75 font-sans mt-1 leading-snug">{item.desc}</p>
+                    </div>
+                    <div className="md:col-span-2 text-right hidden md:block">
+                      <span className="inline-flex items-center gap-1 rounded bg-teal/10 px-2 py-0.5 text-[10px] font-mono text-teal font-bold">
+                        Shift 0{idx + 1}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
 
-                  {/* TYPE 3: WORKFLOW 8 PIPELINE (Slide 3 Patient Console) */}
-                  {slides[activeSlide].type === 'workflow8' && (
-                    <div className="space-y-6">
-                      <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">
-                        {[
-                          { step: '01', title: 'Open Portal', desc: 'Patient lands on practice customized portal' },
-                          { step: '02', title: 'Create Account', desc: 'Secure profile generation with auth' },
-                          { step: '03', title: 'Insurance Verif', desc: 'Real-time coverage checks' },
-                          { step: '04', title: 'Appt Booking', desc: 'Select providers and calendar slots' },
-                          { step: '05', title: 'EMR Update', desc: 'Instant bilateral sync parameters' },
-                          { step: '06', title: 'Provider Prep', desc: 'Clinician chart summaries' },
-                          { step: '07', title: 'Visit Complete', desc: 'Voice scribe transcript sync' },
-                          { step: '08', title: 'Closed Billing', desc: 'Finalized claim RCM cycle closed' }
-                        ].map((w, index) => (
-                          <div
-                            key={w.step}
-                            className={`p-3 rounded-lg border text-left cursor-pointer transition-all ${
-                              index === 2 
-                                ? 'border-[#F56A00] bg-[#F56A00]/5 shadow-glow ring-1 ring-[#F56A00]/10' 
-                                : 'border-neutral-100 bg-neutral-50/20'
-                            }`}
-                          >
-                            <div className="text-xs font-mono font-bold text-navy-deep">{w.step}</div>
-                            <div className="text-[10px] font-bold text-navy mt-1 leading-tight">{w.title}</div>
-                          </div>
-                        ))}
+
+            {/* SECTION 2: THE 80/20 OPERATING MODEL */}
+            <section id="strategy" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">02 · Resource Strategy</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 2</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  80% AI Automation. 20% Human-in-the-Loop Safeguards.
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  The artificial intelligence coordinates redundant, high-volume operations autonomously, leaving complex edge cases and clinical escalations to practitioners.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 text-left">
+                {/* 80% AI CONTAINER */}
+                <div className="bg-navy rounded-2xl p-6 border border-white/5 text-white flex flex-col justify-between relative overflow-hidden shadow-xs">
+                  <div className="absolute top-4 right-4 flex items-center gap-1 bg-teal/10 px-2.5 py-1 rounded text-[10px] font-mono text-teal font-bold uppercase tracking-wider">
+                    <Activity className="size-3 animate-pulse text-teal" /> Autonomous Dispatch
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-black text-teal font-display">80%</h3>
+                    <p className="text-xs font-bold tracking-widest text-[#F56A00] uppercase mt-1">Autonomous Workload</p>
+                    <ul className="mt-6 space-y-3.5 text-xs text-[#E1EBF5] font-sans">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
+                        <span>Instant image OCR capture on demographics.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
+                        <span>Bilateral scheduling with EMR availability matrices.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
+                        <span>Pre-visit charting summarization & modifiers check.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
+                        <span>Pre-submission claim scrubbing and automated error repairs.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="text-[10px] text-neutral-400 font-mono mt-6 pt-3 border-t border-white/10">
+                    Eliminating manual data input and redundant office checks.
+                  </div>
+                </div>
+
+                {/* 20% HUMAN IN THE LOOP */}
+                <div className="bg-[#FAFBFD] rounded-2xl p-6 border border-neutral-200/80 flex flex-col justify-between shadow-xs">
+                  <div className="absolute top-4 right-4 flex items-center gap-1 bg-neutral-200/50 px-2.5 py-1 rounded text-[10px] font-mono text-neutral-500 font-bold uppercase">
+                    Verification Protocol
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-black text-navy font-display">20%</h3>
+                    <p className="text-xs font-bold tracking-widest text-neutral-500 uppercase mt-1">Practitioner Judgement</p>
+                    <ul className="mt-6 space-y-3.5 text-xs text-neutral-600 font-sans">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-[#F56A00] shrink-0 mt-0.5" />
+                        <span>Resolving billing code exceptions on scrub conflicts.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-[#F56A00] shrink-0 mt-0.5" />
+                        <span>Complex patient co-insurance disputes evaluation.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-[#F56A00] shrink-0 mt-0.5" />
+                        <span>Direct clinical consultation and patient comforting.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-[#F56A00] shrink-0 mt-0.5" />
+                        <span>Review and sign-off on ambient scribed notes.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="text-[10px] text-neutral-500 font-mono mt-6 pt-3 border-t border-neutral-200">
+                    Frees staff focus for patient comfort and elite care services.
+                  </div>
+                </div>
+              </div>
+            </section>
+
+
+            {/* SECTION 3: THE CONNECTED PATIENT JOURNEY (8 WORKFLOWS) */}
+            <section id="workflow" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">03 · Patient Pipeline</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-450">Section 3</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  From Intelligent Access to Fully Closed Financial Loops
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  The client moves flawlessly through an 8-stage sequence they direct entirely from their personal browser, keeping practice staff out of the paperwork loop.
+                </p>
+              </div>
+
+              {/* 8 PIPELINE MOVES */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { step: '01', title: 'Open Practise Portal', desc: 'Secure custom landing page matches user identity credentials.' },
+                  { step: '02', title: 'Profile Registration', desc: 'No manual typing needed — credentials generated with multi-factor passkeys.' },
+                  { step: '03', title: 'Coverage Check', desc: 'AI extracts insurance card info and queries national payers in real-time.' },
+                  { step: '04', title: 'Immediate Booking', desc: 'Select specialist, clinics, and open calendar slots synced with provider EMRs.' },
+                  { step: '05', title: 'EMR Sync Commit', desc: 'Pulse writes patient data back into practice records immediately with zero lag.' },
+                  { step: '06', title: 'Provider Care Prep', desc: 'Aggregates previous lab reports and previous clinical histories systematically.' },
+                  { step: '07', title: 'Visit Scribing', desc: 'Ambient voice parsing transcribes the patient encounter into clean, structured notes.' },
+                  { step: '08', title: 'Closed RCM Loop', desc: 'Billing claims are automatically compiled, scrubbed for CPT errors, and submitted.' }
+                ].map((item, index) => (
+                  <div key={item.step} className="p-4 rounded-xl border border-neutral-100 bg-[#FAFBFD] hover:shadow-xs transition-shadow">
+                    <span className="text-xs font-mono font-bold text-[#F56A00]">{item.step}</span>
+                    <h4 className="font-bold text-navy text-xs mt-1.5 leading-tight">{item.title}</h4>
+                    <p className="text-[10.5px] text-neutral-500 mt-1 leading-snug">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+
+            {/* SECTION 4: SMART INTAKE & AUTO-OCR */}
+            <section id="onboarding" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">04 · Intelligent Intake</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 4</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  Intake Completed in 5 Input Fields. Or 1 Quick Photo.
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  Test the smart registration simulation below. Click the buttons to simulate patient uploading documents. Our applied computer-vision model auto-populates demographics immediately.
+                </p>
+              </div>
+
+              {/* DEMO CONTAINER */}
+              <div className="grid md:grid-cols-2 gap-6 items-stretch">
+                
+                {/* Left: Input upload trigger */}
+                <div className="bg-[#FAFBFD] p-6 rounded-2xl border border-neutral-200 flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">Document Upload Hub</span>
+                    
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => runOcrSim('dl')}
+                        className={`p-4 border rounded-xl flex flex-col items-center justify-center transition-all cursor-pointer ${
+                          ocrType === 'dl' && ocrStatus === 'done'
+                            ? 'border-teal bg-teal/5'
+                            : 'border-neutral-200 border-dashed bg-white hover:bg-neutral-50'
+                        }`}
+                      >
+                        <Smartphone className="size-6 text-neutral-550 border-neutral-200 text-neutral-500" />
+                        <span className="text-xs font-bold text-navy mt-2">Driver&apos;s License</span>
+                        <span className="text-[9px] text-neutral-400 mt-0.5">Front &amp; Back</span>
+                      </button>
+                      
+                      <button
+                        onClick={() => runOcrSim('insurance')}
+                        className={`p-4 border rounded-xl flex flex-col items-center justify-center transition-all cursor-pointer ${
+                          ocrType === 'insurance' && ocrStatus === 'done'
+                            ? 'border-teal bg-teal/5'
+                            : 'border-neutral-200 border-dashed bg-white hover:bg-neutral-50'
+                        }`}
+                      >
+                        <FileText className="size-6 text-neutral-550 border-neutral-200 text-neutral-500" />
+                        <span className="text-xs font-bold text-navy mt-2">Insurance Card</span>
+                        <span className="text-[9px] text-neutral-400 mt-0.5">Carrier side</span>
+                      </button>
+                    </div>
+
+                    {ocrStatus === 'scanning' && (
+                      <div className="space-y-1.5 p-3 bg-white border border-neutral-150 rounded-xl">
+                        <div className="flex justify-between text-[10px] font-mono text-[#F56A00] font-bold">
+                          <span>Applied Computer-Vision OCR Scanning...</span>
+                          <span>{ocrProgress}%</span>
+                        </div>
+                        <div className="w-full bg-neutral-250 bg-neutral-200 h-2 rounded-full overflow-hidden">
+                          <div className="bg-[#F56A00] h-full transition-all duration-100" style={{ width: `${ocrProgress}%` }} />
+                        </div>
                       </div>
+                    )}
 
-                      <div className="bg-[#FAFBFD] rounded-xl border border-neutral-200/80 p-4">
-                        <div className="text-xs font-bold text-[#F56A00] uppercase tracking-wide mb-1">What Changes for the Patient</div>
-                        <p className="text-xs text-neutral-600 leading-relaxed font-sans">
-                          From eight exhausting phone calls and a manual clipboard to one integrated, patient-centered digital sequence that they run themselves on their own phones. No retyping, zero benefit phone tag, and one thread for all communication.
+                    {ocrStatus === 'done' && (
+                      <div className="p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-800 rounded-xl text-xs space-y-1">
+                        <span className="font-bold flex items-center gap-1.5">
+                          <CheckCircle className="size-4" /> OCR Extracted Successfully!
+                        </span>
+                        <p className="text-[11px] text-emerald-700 font-sans">
+                          Pulse parsed the driver license and insurance parameters with high-integrity matching indexes.
                         </p>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
-                  {/* TYPE 4: SMART REGISTRATION OCR (Slide 4 Smart Registration) */}
-                  {slides[activeSlide].type === 'ocr' && (
-                    <div className="space-y-6 text-left">
-                      <div className="flex gap-4 border-b border-neutral-100 pb-3">
-                        <button
-                          onClick={() => {
-                            setOcrMode('optionA');
-                            setOcrStatus('idle');
-                          }}
-                          className={`text-xs font-bold pb-2 relative transition-colors cursor-pointer ${
-                            ocrMode === 'optionA' ? 'text-[#F56A00]' : 'text-neutral-400 hover:text-navy'
-                          }`}
-                        >
-                          Option A: Manual Fields
-                          {ocrMode === 'optionA' && <div className="absolute bottom-[-13px] left-0 right-0 h-0.5 bg-[#F56A00]" />}
-                        </button>
-                        <button
-                          onClick={() => {
-                            setOcrMode('optionB');
-                            setOcrStatus('idle');
-                          }}
-                          className={`text-xs font-bold pb-2 relative transition-colors cursor-pointer ${
-                            ocrMode === 'optionB' ? 'text-[#F56A00]' : 'text-neutral-400 hover:text-navy'
-                          }`}
-                        >
-                          Option B: Auto-OCR Capture
-                          {ocrMode === 'optionB' && <div className="absolute bottom-[-13px] left-0 right-0 h-0.5 bg-[#F56A00]" />}
-                        </button>
+                  <div className="text-[10px] text-neutral-400 font-mono mt-4">
+                    *Tuned specifically on high reflectivity and typical client smartphone focus bounds.
+                  </div>
+                </div>
+
+                {/* Right: Output parsed view */}
+                <div className="bg-navy text-white p-6 rounded-2xl border border-white/5 space-y-4 flex flex-col justify-between shadow-xs">
+                  <div>
+                    <div className="text-xs font-mono text-teal uppercase font-bold tracking-wider flex items-center justify-between pb-3 border-b border-white/10">
+                      <span>Live Demographics Record</span>
+                      {ocrStatus === 'done' ? (
+                        <span className="text-[9px] bg-emerald-500 text-white px-2 py-0.5 rounded font-bold uppercase tracking-wider">Matched</span>
+                      ) : (
+                        <span className="text-[9px] bg-white/10 text-neutral-300 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Awaiting Upload</span>
+                      )}
+                    </div>
+
+                    <div className="space-y-3.5 text-xs mt-4">
+                      <div className="bg-white/5 p-3.5 rounded-xl space-y-1.5">
+                        <div className="text-[9.5px] text-teal font-mono uppercase tracking-wider">Demographic Attributes</div>
+                        <div className="flex justify-between text-white/80">
+                          <span>Full Name:</span> 
+                          <strong className={ocrStatus === 'done' ? 'text-white' : 'text-white/40'}>
+                            {ocrStatus === 'done' ? 'Anita Lopez' : 'Awaiting sync...'}
+                          </strong>
+                        </div>
+                        <div className="flex justify-between text-white/80">
+                          <span>Date of Birth:</span> 
+                          <strong className={ocrStatus === 'done' ? 'text-white' : 'text-white/40'}>
+                            {ocrStatus === 'done' ? '04/12/1986' : 'Awaiting sync...'}
+                          </strong>
+                        </div>
+                        <div className="flex justify-between text-white/80">
+                          <span>Parsed Gender:</span> 
+                          <strong className={ocrStatus === 'done' ? 'text-white' : 'text-white/40'}>
+                            {ocrStatus === 'done' ? 'Female' : 'Awaiting sync...'}
+                          </strong>
+                        </div>
                       </div>
 
-                      <div className="grid md:grid-cols-12 gap-6 items-center">
-                        <div className="md:col-span-6 bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200">
-                          {ocrMode === 'optionA' ? (
-                            <div className="space-y-3">
-                              <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">Type 5 Core Fields</span>
-                              <div className="grid grid-cols-2 gap-2">
-                                <input type="text" placeholder="First Name" value="Anita" disabled className="text-xs p-2 rounded border border-neutral-100 bg-white" />
-                                <input type="text" placeholder="Last Name" value="Lopez" disabled className="text-xs p-2 rounded border border-neutral-100 bg-white" />
-                              </div>
-                              <input type="text" placeholder="Date of Birth" value="04/12/1986" disabled className="text-xs p-2.5 rounded w-full border border-neutral-100 bg-white" />
-                              <div className="grid grid-cols-2 gap-2">
-                                <input type="text" placeholder="Primary Insurance" value="BCBS Illinois" disabled className="text-xs p-2.5 rounded border border-neutral-100 bg-white" />
-                                <input type="text" placeholder="Member ID" value="XOF-890218765" disabled className="text-xs p-2.5 rounded border border-neutral-100 bg-white" />
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="space-y-4">
-                              <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">Upload Documents</span>
-                              <div className="grid grid-cols-2 gap-3">
-                                <button
-                                  onClick={() => runOcrSim('dl')}
-                                  className="p-4 border border-dashed rounded-xl flex flex-col items-center justify-center bg-white hover:bg-neutral-50 cursor-pointer"
-                                >
-                                  <Smartphone className="size-5 text-neutral-450 border-neutral-200" />
-                                  <span className="text-[10px] font-bold text-navy mt-1">Driver&apos;s License</span>
-                                </button>
-                                <button
-                                  onClick={() => runOcrSim('insurance')}
-                                  className="p-4 border border-dashed rounded-xl flex flex-col items-center justify-center bg-white hover:bg-neutral-50 cursor-pointer"
-                                >
-                                  <FileText className="size-5 text-neutral-450 border-neutral-200" />
-                                  <span className="text-[10px] font-bold text-navy mt-1">Insurance Card</span>
-                                </button>
-                              </div>
-                              {ocrStatus === 'scanning' && (
-                                <div className="space-y-1.5">
-                                  <div className="flex justify-between text-[10px] font-mono text-neutral-400">
-                                    <span>AI OCR Scanning...</span>
-                                    <span>{ocrProgress}%</span>
-                                  </div>
-                                  <div className="w-full bg-neutral-200 h-1.5 rounded-full overflow-hidden">
-                                    <div className="bg-[#F56A00] h-full" style={{ width: `${ocrProgress}%` }} />
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          )}
+                      <div className="bg-white/5 p-3.5 rounded-xl space-y-1.5">
+                        <div className="text-[9.5px] text-teal font-mono uppercase tracking-wider">Carrier &amp; Plan Parameters</div>
+                        <div className="flex justify-between text-white/80">
+                          <span>Carrier:</span> 
+                          <strong className={ocrStatus === 'done' ? 'text-white' : 'text-white/40'}>
+                            {ocrStatus === 'done' ? 'BCBS Illinois (Plan Choice)' : 'Awaiting card scanner...'}
+                          </strong>
                         </div>
-
-                        <div className="md:col-span-6 bg-navy text-white p-5 rounded-xl border border-white/5 space-y-4">
-                          <div className="text-xs font-mono text-teal uppercase font-bold tracking-wider flex items-center justify-between">
-                            <span>Auto-Extracted Data</span>
-                            {ocrStatus === 'done' && <CheckCircle className="size-4 text-teal" />}
-                          </div>
-
-                          <div className="space-y-3 text-xs">
-                            <div className="bg-white/5 p-3 rounded-lg space-y-1">
-                              <div className="text-[10px] text-teal font-mono uppercase tracking-wider">Demographics</div>
-                              <div className="flex justify-between text-white/80"><span>Full Name:</span> <strong className="text-white">Anita Lopez</strong></div>
-                              <div className="flex justify-between text-white/80"><span>DOB:</span> <strong className="text-white">04/12/1986</strong></div>
-                              <div className="flex justify-between text-white/80"><span>Gender:</span> <strong className="text-white">Female</strong></div>
-                            </div>
-
-                            <div className="bg-white/5 p-3 rounded-lg space-y-1">
-                              <div className="text-[10px] text-teal font-mono uppercase tracking-wider">Insurance Card Detail</div>
-                              <div className="flex justify-between text-white/80"><span>Carrier:</span> <strong className="text-white">BCBS Illinois</strong></div>
-                              <div className="flex justify-between text-white/80"><span>Member ID:</span> <strong className="text-white font-mono">XOF-890218765</strong></div>
-                              <div className="flex justify-between text-white/80"><span>Group No:</span> <strong className="text-white font-mono">BC-9921-A</strong></div>
-                            </div>
-                          </div>
-
-                          <div className="flex gap-2 justify-center text-[10px] font-mono text-[#F56A00] bg-[#F56A00]/5 px-3 py-1.5 rounded-lg border border-[#F56A00]/10">
-                            <span>✓ No typing required</span>
-                            <span>·</span>
-                            <span>✓ No front-desk assistance</span>
-                          </div>
+                        <div className="flex justify-between text-white/80">
+                          <span>Member Identification:</span> 
+                          <strong className={ocrStatus === 'done' ? 'text-white font-mono' : 'text-white/40'}>
+                            {ocrStatus === 'done' ? 'XOF-890218765' : 'Awaiting card scanner...'}
+                          </strong>
+                        </div>
+                        <div className="flex justify-between text-white/80">
+                          <span>Group Identifier:</span> 
+                          <strong className={ocrStatus === 'done' ? 'text-white font-mono' : 'text-white/40'}>
+                            {ocrStatus === 'done' ? 'BC-9921-A' : 'Awaiting card scanner...'}
+                          </strong>
                         </div>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="text-[9.5px] text-center text-[#F56A00] font-mono bg-[#F56A00]/5 py-2 rounded-lg border border-[#F56A00]/10">
+                    ✓ Verified DL Matches Insurance Subscriber Record
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+
+            {/* SECTION 5: REAL-TIME ELIGIBILITY VERIFICATION */}
+            <section id="eligibility" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">05 · Eligibility Check</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 5</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  Pre-Check Copays and Co-Insurance Before Patients Arrive
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  Once registered, Pulse calls national payer portals to resolve plan exclusions, CPT prior authorization mandates, and deductibles within 30 seconds.
+                </p>
+              </div>
+
+              {/* ELIGIBILITY TRACKS */}
+              <div className="grid md:grid-cols-2 gap-6 items-stretch">
+                
+                <div className="bg-[#FAFBFD] p-6 rounded-2xl border border-neutral-200 space-y-4 text-left flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block mb-1">Payer Network API Integration</span>
+                    <h3 className="font-bold text-navy text-sm">Automated Real-Time 270/271 Portals Query</h3>
+                    
+                    <p className="text-xs text-neutral-500 font-sans mt-2 leading-relaxed">
+                      Instead of calling insurers or spending hours checking portals, the practice maps out copay and prior authorization (PA) checks instantly.
+                    </p>
+
+                    <div className="bg-white p-3 rounded-xl border border-neutral-100 mt-4 space-y-2">
+                      <div className="flex justify-between text-xs font-mono text-neutral-500">
+                        <span>Payer Connection:</span>
+                        <strong className="text-navy">ANSI ASC X12 270/271</strong>
+                      </div>
+                      <div className="w-full bg-neutral-100 h-1 rounded-full overflow-hidden">
+                        <div className={`h-full bg-teal transition-all ${eligibilityStatus === 'running' ? 'w-1/2 animate-pulse' : eligibilityStatus === 'completed' ? 'w-full' : 'w-0'}`} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={runEligibilityChecker}
+                    className="w-full rounded-xl bg-navy hover:bg-navy-deep text-white font-semibold text-xs py-3 flex items-center justify-center gap-2 cursor-pointer mt-4"
+                  >
+                    <RefreshCw className={`size-3.5 ${eligibilityStatus === 'running' ? 'animate-spin' : ''}`} />
+                    {eligibilityStatus === 'idle' ? 'Call Insurer Portal Live' : eligibilityStatus === 'running' ? 'Querying Portals (< 30s)...' : 'Carrier Query Complete'}
+                  </button>
+                </div>
+
+                {/* Response Visualizer */}
+                <div className="bg-white p-6 rounded-2xl border border-[#F56A00]/15 space-y-4 relative overflow-hidden flex flex-col justify-between">
+                  <div className="absolute top-4 right-4 bg-teal/10 text-teal px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider">
+                    Resolved Data
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono uppercase text-[#F56A00] font-bold block mb-2">Verified Coverage snap</span>
+                    <ul className="space-y-2.5 text-xs">
+                      <li className="flex justify-between border-b border-neutral-50 pb-2">
+                        <span className="text-neutral-500">Active Status:</span>
+                        <strong className="text-navy">{eligibilityStatus === 'completed' ? eligibilityReport.active : '🟢 Awaiting live trigger...'}</strong>
+                      </li>
+                      <li className="flex justify-between border-b border-neutral-50 pb-2">
+                        <span className="text-neutral-500">Registered Carrier:</span>
+                        <strong className="text-navy">{eligibilityStatus === 'completed' ? eligibilityReport.carrier : '—'}</strong>
+                      </li>
+                      <li className="flex justify-between border-b border-neutral-50 pb-2">
+                        <span className="text-neutral-500">Dynamic Copay:</span>
+                        <strong className="text-navy">{eligibilityStatus === 'completed' ? eligibilityReport.copay : '—'}</strong>
+                      </li>
+                      <li className="flex justify-between border-b border-neutral-50 pb-2">
+                        <span className="text-neutral-500">Deductible Tracker:</span>
+                        <strong className="text-navy">{eligibilityStatus === 'completed' ? eligibilityReport.deductible : '—'}</strong>
+                      </li>
+                      <li className="flex justify-between">
+                        <span className="text-neutral-500">CPT Prior Auth (PA) Rules:</span>
+                        <strong className="text-[#F56A00] font-semibold">{eligibilityStatus === 'completed' ? eligibilityReport.restrictions : '—'}</strong>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {eligibilityStatus === 'idle' && (
+                    <div className="text-[11px] text-neutral-400 italic text-center py-4 font-mono">
+                      *Click the button on the left to invoke the payer portals.
+                    </div>
                   )}
 
-                  {/* TYPE 5: ELIGIBILITY VERIFICATION (Slide 5 Eligibility) */}
-                  {slides[activeSlide].type === 'eligibility' && (
-                    <div className="space-y-5 text-left">
-                      <div className="grid md:grid-cols-2 gap-6 items-start">
-                        {/* Trigger flow */}
-                        <div className="bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200/80 space-y-4">
-                          <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">1. Process Workflow Trigger</span>
-                          <div className="flex items-center justify-between border border-neutral-100 bg-white p-3 rounded-lg">
-                            <span className="text-xs font-bold text-navy">Patient Enrolls</span>
-                            <ChevronRight className="size-3 text-neutral-400" />
-                            <span className="text-xs font-bold text-[#F56A00] bg-[#F56A00]/5 px-2.5 py-1 rounded">Pulse Core</span>
-                            <ChevronRight className="size-3 text-neutral-400" />
-                            <span className="text-xs font-bold text-white bg-navy px-2.5 py-1 rounded">Payor Gateway</span>
-                          </div>
-                          
-                          <p className="text-xs text-neutral-500 leading-relaxed font-sans">
-                            Instantaneous 270/271 transaction maps coverage limits, dynamic copays, coinsurances, and deductible parameters before checkout.
-                          </p>
+                  <div className="text-[10px] text-neutral-400 font-mono mt-2">
+                    Ensures clear financial estimates prior to scheduling clinical procedures.
+                  </div>
+                </div>
 
+              </div>
+            </section>
+
+
+            {/* SECTION 6: SCHEDULING & APPOINTMENT MANAGEMENT */}
+            <section id="scheduling" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">06 · Dynamic Calendars</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-440 text-neutral-400">Section 6</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  Patient-Controlled Scheduling Paired with Smart Management Gains
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  From search eligibility fields straight into calendar synchronization with zero office phone calls or receptionist manual checkups.
+                </p>
+              </div>
+
+              {/* INT SCHEDULER WIDGET */}
+              <div className="grid md:grid-cols-12 gap-6 items-stretch">
+                
+                {/* Left booking selector (7 cols) */}
+                <div className="md:col-span-7 bg-[#FAFBFD] p-6 rounded-2xl border border-neutral-200 space-y-4">
+                  <span className="text-[10px] font-mono uppercase text-[#F56A00] font-bold block">Patient Booking Terminal</span>
+                  
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-neutral-500 font-bold block">Select Clinician</span>
+                      <select
+                        value={selectedProvider}
+                        onChange={(e) => setSelectedProvider(e.target.value)}
+                        className="w-full text-xs p-2 rounded-lg border border-neutral-200 bg-white"
+                      >
+                        <option>Dr. Park · Internal Medicine</option>
+                        <option>Dr. Lopez · Specialty Ortho</option>
+                        <option>Dr. Harris · Pain Therapist</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-neutral-500 font-bold block">Clinic Location</span>
+                      <select
+                        value={selectedLoc}
+                        onChange={(e) => setSelectedLoc(e.target.value)}
+                        className="w-full text-xs p-2 rounded-lg border border-neutral-200 bg-white"
+                      >
+                        <option>Westview Medical Clinic</option>
+                        <option>Eastside Outpatient Facility</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1 col-span-2">
+                      <span className="text-[10px] text-neutral-500 font-bold block">Visit Reasons / Specialties</span>
+                      <select
+                        value={selectedSpecialty}
+                        onChange={(e) => setSelectedSpecialty(e.target.value)}
+                        className="w-full text-xs p-2 rounded-lg border border-neutral-200 bg-white"
+                      >
+                        <option>Annual Physical Procedure</option>
+                        <option>Orthopedic Outpatient consultation</option>
+                        <option>Physical Therapy Joint Diagnostic</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1 col-span-2">
+                      <span className="text-[10px] text-neutral-500 font-bold block">Available Time Slots (Synced live)</span>
+                      <div className="grid grid-cols-4 gap-1.5 pt-1">
+                        {['9:00', '9:30', '10:00', '10:30', '11:00', '1:00', '1:30', '2:00'].map((slot) => (
                           <button
-                            onClick={runEligibilityChecker}
-                            className="w-full rounded-lg bg-navy hover:bg-navy-deep text-white font-semibold text-xs py-3 flex items-center justify-center gap-2 cursor-pointer"
-                          >
-                            <RefreshCw className={`size-3.5 ${eligibilityStatus === 'running' ? 'animate-spin' : ''}`} />
-                            {eligibilityStatus === 'idle' ? 'Simulate Real-Time Payer Call' : eligibilityStatus === 'running' ? 'Querying Portals (< 30s)...' : 'Query Succeeded'}
-                          </button>
-                        </div>
-
-                        {/* Return details list */}
-                        <div className="bg-white p-5 rounded-xl border border-[#F56A00]/15 space-y-3 relative overflow-hidden">
-                          <div className="absolute top-2 right-2 bg-teal/10 text-teal px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider">
-                            Response Received
-                          </div>
-                          <span className="text-[10px] font-mono uppercase text-[#F56A00] font-bold block">Verified Payer Outcomes</span>
-                          
-                          <ul className="space-y-1.5 text-xs">
-                            <li className="flex justify-between border-b border-neutral-50 pb-1.5">
-                              <span className="text-neutral-500 flex items-center gap-1.5">✓ Active Coverage Status</span>
-                              <strong className="text-navy">{eligibilityReport?.active || 'Pending...'}</strong>
-                            </li>
-                            <li className="flex justify-between border-b border-neutral-50 pb-1.5">
-                              <span className="text-neutral-500 flex items-center gap-1.5">✓ Copay Mapping</span>
-                              <strong className="text-navy">{eligibilityReport?.copay || 'Pending...'}</strong>
-                            </li>
-                            <li className="flex justify-between border-b border-neutral-50 pb-1.5">
-                              <span className="text-neutral-500 flex items-center gap-1.5">✓ Plan Exclusion Rules</span>
-                              <strong className="text-navy">{eligibilityReport?.restrictions || 'Pending...'}</strong>
-                            </li>
-                            <li className="flex justify-between">
-                              <span className="text-neutral-500 flex items-center gap-1.5">✓ Deductible Met Tracker</span>
-                              <strong className="text-navy">{eligibilityReport?.deductible || 'Pending...'}</strong>
-                            </li>
-                          </ul>
-
-                          {eligibilityStatus === 'idle' && (
-                            <div className="text-xs text-neutral-400 italic text-center py-4 font-mono">
-                              Click the button on the left to fire the real-time API call.
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 6: EMR SYNC (Slide 6 EMR / EHR / PM Sync) */}
-                  {slides[activeSlide].type === 'emrSync' && (
-                    <div className="space-y-6 text-left">
-                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border border-dashed border-neutral-200 p-4 rounded-xl bg-neutral-50/20">
-                        <div>
-                          <span className="text-[10px] font-mono text-neutral-400 uppercase font-bold block">Source Context</span>
-                          <span className="text-xs font-bold text-navy flex items-center gap-1.5 mt-0.5">
-                            <CheckCircle className="size-4 text-teal" /> Verified Pulse Profile
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1 text-xs font-mono font-bold text-[#F56A00]">
-                          <Activity className="size-4 text-[#F56A00] animate-pulse" /> 
-                          <span>Bi-directional Real-Time Sync</span>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-mono text-neutral-400 uppercase font-bold block">Target System</span>
-                          <span className="text-xs font-bold text-navy flex items-center gap-1.5 mt-0.5">
-                            <Database className="size-4 text-purple-600" /> Existing Clinic EMR
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="grid sm:grid-cols-4 gap-4">
-                        {[
-                          { title: 'Patient Profile', task: 'Master Demographics Record', query: 'Audited back to DL upload source.' },
-                          { title: 'Insurance Record', task: 'Key Hierarchy Mapping', query: 'Carrier, plan, member ID, group synced.' },
-                          { title: 'Appointment Info', task: 'EMR Calendar Sync', query: 'Time slot, clinician, specialty linked.' },
-                          { title: 'Visit Prep Data', task: 'Clinical Eligibility Files', query: 'Uploaded documents & eligibility snapshots.' }
-                        ].map((item, idx) => (
-                          <div key={idx} className="p-4 rounded-xl bg-[#FAFBFD] border border-neutral-200/50 hover:shadow-sm transition-shadow">
-                            <div className="text-xs font-bold text-navy-deep">{item.title}</div>
-                            <div className="text-[10px] font-medium text-[#F56A00] uppercase font-mono mt-1">{item.task}</div>
-                            <p className="text-[11px] text-neutral-500 mt-2 font-sans leading-relaxed">{item.query}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 7: SCHEDULING (Slide 7 AI Scheduling) */}
-                  {slides[activeSlide].type === 'scheduling' && (
-                    <div className="space-y-5 text-left">
-                      <div className="grid md:grid-cols-12 gap-6 items-center">
-                        <div className="md:col-span-7 bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200/80 space-y-4">
-                          <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">Patient Selects Parameter</span>
-                          
-                          <div className="grid grid-cols-2 gap-3 text-xs">
-                            <div className="space-y-1">
-                              <span className="text-[10px] text-neutral-500 font-semibold block">01 · Provider</span>
-                              <select
-                                value={selectedProvider}
-                                onChange={(e) => setSelectedProvider(e.target.value)}
-                                className="w-full text-xs p-2 rounded border border-neutral-200 bg-white"
-                              >
-                                <option>Dr. Park · Internal Medicine</option>
-                                <option>Dr. Lopez · Specialty Ortho</option>
-                              </select>
-                            </div>
-
-                            <div className="space-y-1">
-                              <span className="text-[10px] text-neutral-500 font-semibold block">02 · Location</span>
-                              <select
-                                value={selectedLoc}
-                                onChange={(e) => setSelectedLoc(e.target.value)}
-                                className="w-full text-xs p-2 rounded border border-neutral-200 bg-white"
-                              >
-                                <option>Westview Clinic</option>
-                                <option>Eastside Outpatient</option>
-                              </select>
-                            </div>
-
-                            <div className="space-y-1">
-                              <span className="text-[10px] text-neutral-500 font-semibold block">03 · Specialty</span>
-                              <select
-                                value={selectedSpecialty}
-                                onChange={(e) => setSelectedSpecialty(e.target.value)}
-                                className="w-full text-xs p-3 rounded border border-neutral-200 bg-white col-span-2"
-                              >
-                                <option>Annual physical</option>
-                                <option>Orthopedic Outpatient consultation</option>
-                              </select>
-                            </div>
-
-                            <div className="space-y-1">
-                              <span className="text-[10px] text-neutral-500 font-semibold block">04 · Time Slot</span>
-                              <div className="grid grid-cols-4 gap-1.5 pt-1">
-                                {['9:00', '9:30', '10:00', '10:30', '11:00', '1:00', '1:30', '2:00'].map((slot) => (
-                                  <button
-                                    key={slot}
-                                    onClick={() => setSelectedTimeSlot(`${slot} AM`)}
-                                    className={`py-1 rounded text-[10px] font-bold text-center border cursor-pointer ${
-                                      selectedTimeSlot.startsWith(slot)
-                                        ? 'bg-[#F56A00] text-white border-[#F56A00]'
-                                        : 'bg-white hover:bg-neutral-50 border-neutral-200 text-neutral-600'
-                                    }`}
-                                  >
-                                    {slot}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-
-                          <button
-                            onClick={triggerSelfBooking}
-                            className="w-full rounded-lg bg-navy hover:bg-navy-deep text-white font-semibold text-xs py-3 flex items-center justify-center gap-2 cursor-pointer mt-4"
-                          >
-                            <Calendar className="size-4" /> Book Appointmemt Instantly (Click)
-                          </button>
-                        </div>
-
-                        <div className="md:col-span-5 bg-navy text-white p-5 rounded-xl border border-white/5 space-y-3 flex flex-col justify-between">
-                          <div>
-                            <span className="text-[10px] font-mono text-teal uppercase font-bold tracking-wider">Clientele Pulse Handles</span>
-                            <div className="text-sm font-bold text-white mt-1">Unified Multi-move Engine</div>
-                            
-                            <ul className="mt-4 space-y-2.5 text-xs text-white/80">
-                              <li className="flex items-start gap-2">
-                                <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
-                                <span>Checks provider calendar live availability.</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
-                                <span>Secures appointment in system of records.</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
-                                <span>Instantly coordinates EMR calendar.</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
-                                <span>Sends SMS verification with instructions.</span>
-                              </li>
-                            </ul>
-                          </div>
-
-                          <div className="mt-4 pt-3 border-t border-white/10 text-[10px] font-mono text-neutral-400">
-                            Status: {bookingStep === 'idle' ? 'Awaiting Interaction' : bookingStep === 'booking' ? 'Booking...' : '🟢 Outpatient slot booked and verified.'}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 8: APPOINTMENT MGMT GAINS (Slide 8 Appointment Mgmt) */}
-                  {slides[activeSlide].type === 'mgmtGains' && (
-                    <div className="space-y-6 text-left">
-                      <div className="grid md:grid-cols-3 gap-6">
-                        
-                        <div className="bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200">
-                          <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">01 · Patient Receives</span>
-                          <div className="text-xs font-bold text-navy mt-1">Proactive Nudges</div>
-                          <ul className="mt-4 space-y-2.5 text-xs text-neutral-600 font-sans">
-                            <li>• Appointment confirmation.</li>
-                            <li>• Smart text reminders tuned by visit type.</li>
-                            <li>• Streamlined reschedule link.</li>
-                            <li>• One-click cancellation options.</li>
-                          </ul>
-                        </div>
-
-                        <div className="bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200">
-                          <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">02 · Patient Can</span>
-                          <div className="text-xs font-bold text-navy mt-1">Self-Serve Anytime</div>
-                          <ul className="mt-4 space-y-2.5 text-xs text-neutral-600 font-sans">
-                            <li>• Cancel appointment any time.</li>
-                            <li>• Reschedule time slots without office calls.</li>
-                            <li>• Multi-calendar sync integrations.</li>
-                            <li className="text-[#F56A00] font-semibold">• Cancelled slot instantly flows back to open pool.</li>
-                          </ul>
-                        </div>
-
-                        <div className="bg-navy text-white p-5 rounded-xl border border-white/5 space-y-4">
-                          <span className="text-[10px] font-mono uppercase text-teal font-bold block">03 · Verified Results</span>
-                          <div className="text-xs font-bold text-white mt-1">Strategic Operations Gains</div>
-                          
-                          <div className="space-y-2.5">
-                            <div>
-                              <div className="flex justify-between text-xs text-white/95">
-                                <span>No-Shows Rate</span>
-                                <span className="font-mono text-xs font-bold text-teal">-35% Target</span>
-                              </div>
-                              <div className="w-full bg-white/10 h-1 rounded-full"><div className="bg-teal h-full w-[35%]" /></div>
-                            </div>
-                            <div>
-                              <div className="flex justify-between text-xs text-white/95">
-                                <span>Empty Slots Recapture</span>
-                                <span className="font-mono text-xs font-bold text-teal">-60% Saved</span>
-                              </div>
-                              <div className="w-full bg-white/10 h-1 rounded-full"><div className="bg-teal h-full w-[60%]" /></div>
-                            </div>
-                            <div>
-                              <div className="flex justify-between text-xs text-white/95">
-                                <span>Staff Follow-up Calls</span>
-                                <span className="font-mono text-xs font-bold text-[#F56A00]">-80% Less</span>
-                              </div>
-                              <div className="w-full bg-white/10 h-1 rounded-full"><div className="bg-[#F56A00] h-full w-[80%]" /></div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 9: PATIENT COMMUNICATION THREADS (Slide 9 Communication) */}
-                  {slides[activeSlide].type === 'commsThread' && (
-                    <div className="space-y-5 text-left">
-                      <div className="grid md:grid-cols-12 gap-6 items-stretch">
-                        
-                        {/* Selector lists */}
-                        <div className="md:col-span-5 bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200/80 flex flex-col justify-between">
-                          <div className="space-y-3">
-                            <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">Central Communication Loop</span>
-                            
-                            <button
-                              onClick={() => setChatChannel('front')}
-                              className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
-                                chatChannel === 'front' ? 'border-[#F56A00] bg-white shadow-xs' : 'border-neutral-100 bg-neutral-50/20'
-                              }`}
-                            >
-                              <div>
-                                <div className="text-xs font-bold text-navy">FD · Front Desk Channel</div>
-                                <div className="text-[10px] text-neutral-450 text-neutral-400 font-mono mt-0.5">Forms &amp; registration, schedule changes.</div>
-                              </div>
-                              {chatChannel === 'front' && <div className="size-2 rounded-full bg-[#F56A00]" />}
-                            </button>
-
-                            <button
-                              onClick={() => setChatChannel('provider')}
-                              className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
-                                chatChannel === 'provider' ? 'border-[#F56A00] bg-white shadow-xs' : 'border-neutral-100 bg-neutral-50/20'
-                              }`}
-                            >
-                              <div>
-                                <div className="text-xs font-bold text-navy">DR · Provider Channel</div>
-                                <div className="text-[10px] text-neutral-450 text-neutral-400 font-mono mt-0.5">Clinical questions, care plans, dosage.</div>
-                              </div>
-                              {chatChannel === 'provider' && <div className="size-2 rounded-full bg-[#F56A00]" />}
-                            </button>
-
-                            <button
-                              onClick={() => setChatChannel('billing')}
-                              className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
-                                chatChannel === 'billing' ? 'border-[#F56A00] bg-white shadow-xs' : 'border-neutral-100 bg-neutral-50/20'
-                              }`}
-                            >
-                              <div>
-                                <div className="text-xs font-bold text-navy">$ · Billing Team Channel</div>
-                                <div className="text-[10px] text-neutral-450 text-neutral-400 font-mono mt-0.5">Statements, payments, EOB details, claim disputes.</div>
-                              </div>
-                              {chatChannel === 'billing' && <div className="size-2 rounded-full bg-[#F56A00]" />}
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Thread detail */}
-                        <div className="md:col-span-7 bg-navy text-white p-5 rounded-xl border border-white/5 flex flex-col justify-between">
-                          <div className="space-y-4">
-                            <div className="flex justify-between items-center pb-2 border-b border-white/15">
-                              <span className="text-[10px] font-mono text-teal font-bold uppercase tracking-wider">
-                                {chatChannel === 'front' ? 'FRONT DESK QUEUE' : chatChannel === 'provider' ? 'PROVIDER NOTIFICATION' : 'BILLING OFFICE QUEUE'}
-                              </span>
-                              <span className="text-[10px] text-white/50 font-mono">Bilateral TLS Channel</span>
-                            </div>
-
-                            {chatChannel === 'front' && (
-                              <div className="space-y-3 font-sans">
-                                <div className="bg-white/5 p-3 rounded-lg text-xs leading-relaxed">
-                                  <span className="text-teal font-bold block mb-1 font-mono text-[9px]">PATIENT INQUIRY</span>
-                                  &quot;Can I move my Thursday visit? My work calendar changed.&quot;
-                                </div>
-                                <div className="p-3 rounded-lg text-xs leading-relaxed bg-[#F56A00]/10 border border-[#F56A00]/25 text-[#FAFBFD]/90">
-                                  <span className="text-[#F56A00] font-bold block mb-1 font-mono text-[9px]">PULSE AUTO ROUTER RESPONSE</span>
-                                  &quot;Routing to Front Desk. We noticed 2 open slots that match your provider slot on Thursday at 2:00 PM and 3:30 PM. Click here to swap.&quot;
-                                </div>
-                              </div>
-                            )}
-
-                            {chatChannel === 'provider' && (
-                              <div className="space-y-3 font-sans">
-                                <div className="bg-white/5 p-3 rounded-lg text-xs leading-relaxed">
-                                  <span className="text-teal font-bold block mb-1 font-mono text-[9px]">PATIENT INQUIRY</span>
-                                  &quot;Slight side effect on day 3 of recovery — is this response pattern normal?&quot;
-                                </div>
-                                <div className="p-3 rounded-lg text-xs leading-relaxed bg-[#F56A00]/10 border border-[#F56A00]/25 text-[#FAFBFD]/90">
-                                  <span className="text-[#F56A00] font-bold block mb-1 font-mono text-[9px]">PROVIDER SECURE DECT QUEUE</span>
-                                  &quot;Delivered directly to Dr. Park&apos;s chart dashboard. Average provider reply/escalation window: under 2 hours.&quot;
-                                </div>
-                              </div>
-                            )}
-
-                            {chatChannel === 'billing' && (
-                              <div className="space-y-3 font-sans">
-                                <div className="bg-white/5 p-3 rounded-lg text-xs leading-relaxed">
-                                  <span className="text-teal font-bold block mb-1 font-mono text-[9px]">PATIENT INQUIRY</span>
-                                  &quot;Under doctor orders, why was my specialty clinic copay $40 instead of $20?&quot;
-                                </div>
-                                <div className="p-3 rounded-lg text-xs leading-relaxed bg-[#F56A00]/10 border border-[#F56A00]/25 text-[#FAFBFD]/90">
-                                  <span className="text-[#F56A00] font-bold block mb-1 font-mono text-[9px]">BILLING GATEWAY INTELLIGENCE</span>
-                                  &quot;Route confirmed to billing ledger. Attached EOB and standard medical exclusions report for patient review.&quot;
-                                </div>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="text-[10px] text-[#FAFBFD]/40 font-mono pt-3 border-t border-white/5 text-center">
-                            No more phone tag — every conversation is tracked, routed, and fully audited.
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 10: PATIENT POCKET DASHBOARD (Slide 10 Patient Dashboard) */}
-                  {slides[activeSlide].type === 'pocketDashboard' && (
-                    <div className="space-y-5 text-left">
-                      <div className="grid md:grid-cols-12 gap-6 items-stretch">
-                        
-                        {/* Mobile preview frame */}
-                        <div className="md:col-span-6 bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200 max-w-sm mx-auto w-full">
-                          <div className="border border-neutral-100 bg-white rounded-2xl p-4 shadow-sm space-y-4">
-                            <div className="flex justify-between items-center pb-2 border-b border-neutral-100">
-                              <div>
-                                <div className="text-xs font-bold text-navy">My Health · Pulse Portal</div>
-                                <div className="text-[9px] text-neutral-400 font-mono mt-0.5">Anita Lopez · DOB 04/12/1986</div>
-                              </div>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-3">
-                              <div className="p-2.5 rounded-lg border border-neutral-100 text-left bg-neutral-50/30">
-                                <span className="text-[9px] uppercase font-mono tracking-wider font-semibold text-neutral-400 block">Upcoming Visits</span>
-                                <span className="text-xs font-bold text-navy-deep block mt-1">3 upcoming</span>
-                                <span className="text-[9px] text-[#F56A00] block mt-0.5">Thu 10:30 · Dr. Park</span>
-                              </div>
-                              <div className="p-2.5 rounded-lg border border-neutral-100 text-left bg-neutral-50/30">
-                                <span className="text-[9px] uppercase font-mono tracking-wider font-semibold text-neutral-400 block">Lab Reports</span>
-                                <span className="text-xs font-bold text-emerald-600 block mt-1">2 new</span>
-                                <span className="text-[9px] text-neutral-400 block mt-0.5">CBC &amp; Lipid panel</span>
-                              </div>
-                              <div className="p-2.5 rounded-lg border border-neutral-100 text-left bg-neutral-50/30">
-                                <span className="text-[9px] uppercase font-mono tracking-wider font-semibold text-neutral-400 block">Uploaded Files</span>
-                                <span className="text-xs font-bold text-navy-deep block mt-1">12 uploaded</span>
-                                <span className="text-[9px] text-neutral-400 block mt-0.5">MRI, MRI summary</span>
-                              </div>
-                              <div className="p-2.5 rounded-lg border border-neutral-100 text-left bg-neutral-50/30">
-                                <span className="text-[9px] uppercase font-mono tracking-wider font-semibold text-neutral-400 block">Statement Balance</span>
-                                <span className="text-xs font-bold text-navy-deep block mt-1">$0.00 Outstanding</span>
-                                <span className="text-[10px] text-teal-glow block font-bold mt-0.5">Closed Billing Ledger</span>
-                              </div>
-                            </div>
-
-                            <div className="border border-dashed border-neutral-300 rounded-xl p-3 text-center bg-neutral-50/50">
-                              <Upload className="size-4 text-neutral-400 mx-auto" />
-                              <span className="text-[10px] font-bold text-neutral-500 block mt-1">+ Upload Medical Documents</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Provider gets */}
-                        <div className="md:col-span-6 bg-navy text-white p-6 rounded-xl border border-white/5 space-y-4">
-                          <span className="text-[10px] font-mono text-teal uppercase font-bold block tracking-wider">Provider Dashboard Integration</span>
-                          <div className="text-sm font-bold text-white leading-snug">Full picture before the visit. Clinical documentation updates automatically:</div>
-                          
-                          <ul className="space-y-3.5 text-xs text-white/80">
-                            <li className="flex justify-between border-b border-white/10 pb-2">
-                              <span>✓ Previous Visit Summaries</span>
-                              <strong className="text-teal uppercase font-mono text-[10px]">Indexed Automatically</strong>
-                            </li>
-                            <li className="flex justify-between border-b border-white/10 pb-2">
-                              <span>✓ Specialty Lab Reports</span>
-                              <strong className="text-[#F56A00] uppercase font-mono text-[10px]">Flagged Values Surfaced</strong>
-                            </li>
-                            <li className="flex justify-between border-b border-white/10 pb-2">
-                              <span>✓ Ortho X-Ray &amp; MRI Scans</span>
-                              <strong className="text-teal uppercase font-mono text-[10px]">Linked Viewer</strong>
-                            </li>
-                            <li className="flex justify-between">
-                              <span>✓ External Medical Histories</span>
-                              <strong className="text-teal uppercase font-mono text-[10px]">OCR-Searchable PDF</strong>
-                            </li>
-                          </ul>
-                        </div>
-
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 11: PROVIDER CONSOLE ASSISTANCE (Slide 11 Provider Console) */}
-                  {slides[activeSlide].type === 'providerConsole' && (
-                    <div className="space-y-5 text-left">
-                      <div className="grid md:grid-cols-3 gap-6">
-                        
-                        <div className="bg-white p-5 rounded-xl border border-neutral-200">
-                          <span className="inline-flex items-center gap-1.5 bg-amber-50 px-2.5 py-1 rounded text-[10px] font-bold text-amber-700 mb-3">
-                            Phase 01 · Before Visit
-                          </span>
-                          <div className="text-xs font-bold text-navy">Pre-Visit Briefing</div>
-                          <p className="text-[11px] text-neutral-500 mt-2 leading-relaxed">
-                            Complete clinical context aggregated automatically on a single clinical entry screen:
-                          </p>
-                          <ul className="mt-3 space-y-2 text-xs text-neutral-600 font-sans">
-                            <li>• Patient history review.</li>
-                            <li>• Active insurance status snapshot.</li>
-                            <li>• Verified Eligibility Confirmation.</li>
-                            <li>• Uploaded external records summaries.</li>
-                          </ul>
-                        </div>
-
-                        <div className="bg-navy text-white p-5 rounded-xl border border-white/5 space-y-3">
-                          <span className="inline-flex items-center gap-1.5 bg-[#F56A00]/10 px-2.5 py-1 rounded text-[10px] font-bold text-[#F56A00] mb-1">
-                            Phase 02 · During Visit
-                          </span>
-                          <div className="text-xs font-bold text-white">Hands Stay on Patient — Not Keyboard</div>
-                          <p className="text-[11px] text-white/70 leading-relaxed">
-                            State-of-the-art voice and clinical scribing updates chart slots instantly:
-                          </p>
-                          <ul className="space-y-2 text-xs text-white/80 font-sans">
-                            <li>• Automated room voice scribing.</li>
-                            <li>• Real-time clinically structured notes.</li>
-                            <li>• Custom EHR structured templates.</li>
-                            <li>• Specialty documentation modifier pre-checks.</li>
-                          </ul>
-                        </div>
-
-                        <div className="bg-white p-5 rounded-xl border border-neutral-200">
-                          <span className="inline-flex items-center gap-1.5 bg-blue-50 px-2.5 py-1 rounded text-[10px] font-bold text-blue-700 mb-3">
-                            Phase 03 · After Visit
-                          </span>
-                          <div className="text-xs font-bold text-navy">Closing the Financial Loop</div>
-                          <p className="text-[11px] text-neutral-500 mt-2 leading-relaxed">
-                            Clinical data flows directly and securely to administrative desks in real-time:
-                          </p>
-                          <ul className="mt-3 space-y-2 text-xs text-neutral-600 font-sans">
-                            <li>• Code modifier recommendations.</li>
-                            <li>• Clean claim billing payload file.</li>
-                            <li>• Patient summary with clear directions.</li>
-                            <li>• Care pathway reminders queued.</li>
-                          </ul>
-                        </div>
-
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 12: RCM AUTOMATION COLUMNS (Slide 12 RCM Automation) */}
-                  {slides[activeSlide].type === 'rcmColumns' && (
-                    <div className="space-y-5 text-left">
-                      <div className="grid md:grid-cols-3 gap-6">
-                        
-                        <div className="bg-white p-5 rounded-xl border border-neutral-200/80">
-                          <span className="size-8 rounded-lg bg-[#FAFBFD] flex items-center justify-center text-xs font-bold text-[#F56A00] mb-3">
-                            PA
-                          </span>
-                          <div className="text-xs font-bold text-navy">Prior Authorization Automation</div>
-                          <p className="text-[11px] text-neutral-500 mt-2 leading-relaxed">
-                            Autonomously queries medical necessity criteria per modifier/CPT rules so providers bypass chaser overhead completely:
-                          </p>
-                          <ul className="mt-4 space-y-2 text-xs text-neutral-600">
-                            <li>• Identifies criteria prerequisites automatically.</li>
-                            <li>• Prepares complete clinical dossier.</li>
-                            <li>• Logs, submits, &amp; monitors status.</li>
-                            <li>• Flags human billing team on exception.</li>
-                          </ul>
-                        </div>
-
-                        <div className="bg-white p-5 rounded-xl border border-neutral-200/80">
-                          <span className="size-8 rounded-lg bg-[#FAFBFD] flex items-center justify-center text-xs font-bold text-blue-600 mb-3">
-                            CD
-                          </span>
-                          <div className="text-xs font-bold text-navy">Autonomous Medical Coding</div>
-                          <p className="text-[11px] text-neutral-500 mt-2 leading-relaxed">
-                            AI analyzes chart notes, extracting ICD-10 codes, modifiers, and bundles, then passes to coders to confirm:
-                          </p>
-                          <ul className="mt-4 space-y-2 text-xs text-neutral-600">
-                            <li>• Direct ICD-10 modifier suggest selection.</li>
-                            <li>• Multi-modifier and CPT code alignments.</li>
-                            <li>• Checks documentation completeness gaps.</li>
-                            <li>• Local CMS coverage guideline checklists.</li>
-                          </ul>
-                        </div>
-
-                        <div className="bg-navy text-white p-5 rounded-xl border border-white/5 flex flex-col justify-between">
-                          <div>
-                            <span className="size-8 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-teal mb-3">
-                              CL
-                            </span>
-                            <div className="text-xs font-bold text-white">Uncompromising Claim Scrubbing</div>
-                            <p className="text-[11px] text-white/70 mt-2 leading-relaxed">
-                              Clean claims standard validated pre-submission, eliminating payer denial loops upstream:
-                            </p>
-                            <ul className="mt-4 space-y-2 text-xs text-white/80">
-                              <li>• Automatic structured file creation.</li>
-                              <li>• Direct pre-submission scrubbing.</li>
-                              <li>• Self-healing error auto-fix loops.</li>
-                              <li>• Predictive score indices.</li>
-                            </ul>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 13: CLAIMS & AR / PAYMENT CHART (Slide 13 Claims & AR) */}
-                  {slides[activeSlide].type === 'claimsBucket' && (
-                    <div className="space-y-6 text-left">
-                      <div className="grid md:grid-cols-3 gap-6">
-                        
-                        {/* Bucket 1 Claims tracker */}
-                        <div className="bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200/80 space-y-4">
-                          <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">Track 01 · Claim Buckets</span>
-                          <div className="text-xs font-bold text-navy-deep">Submission Status</div>
-                          
-                          <div className="space-y-2 text-xs font-mono">
-                            <div className="flex justify-between bg-white p-2 border border-neutral-100 rounded">
-                              <span className="text-neutral-500">Submitted OK:</span>
-                              <span className="font-bold text-navy">1,284 Claims</span>
-                            </div>
-                            <div className="flex justify-between bg-white p-2 border border-neutral-105 border-neutral-100 rounded">
-                              <span className="text-neutral-500">Pending:</span>
-                              <span className="font-bold text-amber-600">147 Claims</span>
-                            </div>
-                            <div className="flex justify-between bg-white p-2 border border-neutral-105 border-neutral-100 rounded">
-                              <span className="text-neutral-500">Rejected:</span>
-                              <span className="font-bold text-red-500">23 Claims</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Bucket 2 Week Postings */}
-                        <div className="bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200/80 space-y-4">
-                          <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">Track 02 · Payments Posting</span>
-                          <div className="text-xs font-bold text-navy">This Week Postings</div>
-                          
-                          <div className="grid grid-cols-7 items-end gap-1 h-24 pt-4">
-                            {[15, 30, 45, 65, 80, 40, 20].map((val, idx) => (
-                              <div key={idx} className="flex flex-col items-center">
-                                <div className="bg-[#F56A00] w-2.5 rounded-t" style={{ height: `${val}px` }} />
-                                <span className="text-[9px] text-neutral-400 font-mono mt-1">
-                                  {['M', 'T', 'W', 'T', 'F', 'S', 'S'][idx]}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                          <div className="text-[9px] text-neutral-400 font-mono text-center">
-                            Automated payments balance ERA checklist.
-                          </div>
-                        </div>
-
-                        {/* Bucket 3 AR aging */}
-                        <div className="bg-navy text-white p-5 rounded-xl border border-white/5 space-y-4">
-                          <span className="text-[10px] font-mono uppercase text-teal font-bold block">Track 03 · Accounts Receivable</span>
-                          <div className="text-xs font-bold text-white">AR Aging Buckets</div>
-                          
-                          <div className="space-y-3.5 text-xs font-sans">
-                            <div className="flex justify-between items-center text-[11px]">
-                              <span>0–30 Days Outstanding</span>
-                              <strong className="text-teal font-mono">62%</strong>
-                            </div>
-                            <div className="flex justify-between items-center text-[11px]">
-                              <span>31–60 Days Outstanding</span>
-                              <strong className="text-teal font-mono">21%</strong>
-                            </div>
-                            <div className="flex justify-between items-center text-[11px]">
-                              <span>61–90 Days Outstanding</span>
-                              <strong className="text-teal font-mono">11%</strong>
-                            </div>
-                            <div className="flex justify-between items-center text-[11px] text-[#F56A00]">
-                              <span>90+ Days (High Risk)</span>
-                              <strong className="font-mono">6%</strong>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 14: DENIAL PREVENTION & MANAGEMENT (Slide 14 Denial Mgmt) */}
-                  {slides[activeSlide].type === 'denialPrv' && (
-                    <div className="space-y-5 text-left">
-                      <div className="grid md:grid-cols-12 gap-6 items-stretch">
-                        
-                        {/* What AI Identifies */}
-                        <div className="md:col-span-6 bg-[#FAFBFD] p-5 rounded-xl border border-neutral-200/80 space-y-4">
-                          <span className="text-[10px] font-mono uppercase text-neutral-400 font-bold block">What AI Identifies</span>
-                          <div className="text-xs font-bold text-navy">Locating Claim Fault Signs</div>
-
-                          {scrubStatus === 'dirty' ? (
-                            <div className="space-y-3">
-                              {scrubErrors.map((err, i) => (
-                                <div key={i} className="flex gap-2 items-center bg-red-50 text-red-700 text-xs p-2.5 rounded border border-red-100">
-                                  <AlertTriangle className="size-4 shrink-0" />
-                                  <span>{err}</span>
-                                </div>
-                              ))}
-                              <button
-                                onClick={runScrubber}
-                                className="w-full text-xs font-bold rounded-lg bg-navy hover:bg-navy-deep text-white py-2.5 flex items-center justify-center gap-1.5 cursor-pointer"
-                              >
-                                Run Claim Scrubber &amp; Repair
-                              </button>
-                            </div>
-                          ) : scrubStatus === 'scrubbing' ? (
-                            <div className="py-8 text-center text-xs text-neutral-500 font-mono">
-                              <RefreshCw className="size-6 text-[#F56A00] animate-spin mx-auto mb-2" />
-                              Repairing claim payloads based on payer billing patterns...
-                            </div>
-                          ) : (
-                            <div className="space-y-3">
-                              <div className="p-4 rounded-lg bg-emerald-50 text-emerald-800 text-xs font-semibold flex items-center gap-2">
-                                <CheckCircle className="size-4" />
-                                All claims repaired! Clean Claim ready for submission.
-                              </div>
-                              <button
-                                onClick={() => setScrubStatus('dirty')}
-                                className="text-xs font-bold text-neutral-500 hover:text-navy block mx-auto underline cursor-pointer"
-                              >
-                                Reset Demo
-                              </button>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* What AI Provides */}
-                        <div className="md:col-span-6 bg-navy text-white p-5 rounded-xl border border-white/5 flex flex-col justify-between">
-                          <div className="space-y-4">
-                            <span className="text-[10px] font-mono text-teal uppercase font-bold block">Autonomous Path to Recovery</span>
-                            
-                            <ul className="space-y-3 text-xs text-white/85">
-                              <li className="flex items-start gap-2.5">
-                                <div className="size-5 rounded bg-white/10 flex items-center justify-center text-teal text-[10px] font-bold">1</div>
-                                <div>
-                                  <div className="font-bold text-white">Corrective action suggestions</div>
-                                  <p className="text-[10px] text-white/60">Generated automatically and routed to coders for review.</p>
-                                </div>
-                              </li>
-                              <li className="flex items-start gap-2.5">
-                                <div className="size-5 rounded bg-white/10 flex items-center justify-center text-teal text-[10px] font-bold">2</div>
-                                <div>
-                                  <div className="font-bold text-white">Workflow corrective recommendation</div>
-                                  <p className="text-[10px] text-white/60">Adjusts upstream criteria so repeat errors don&apos;t duplicate next cycles.</p>
-                                </div>
-                              </li>
-                              <li className="flex items-start gap-2.5">
-                                <div className="size-5 rounded bg-white/10 flex items-center justify-center text-teal text-[10px] font-bold">3</div>
-                                <div>
-                                  <div className="font-bold text-white">Priority appeal handling</div>
-                                  <p className="text-[10px] text-white/60">Organizes highest aging value claims first, protecting margins.</p>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-
-                          <button className="w-full text-xs font-bold text-[#F56A00] text-center pt-3 mt-4 border-t border-white/10 uppercase tracking-widest block hover:text-[#D15900] transition-colors cursor-pointer">
-                            REDUCE REVENUE LEAKAGE ↑
-                          </button>
-                        </div>
-
-                      </div>
-                    </div>
-                  )}
-
-                  {/* TYPE 15: ROLE-BASED DASHBOARDS (Slide 15 Dashboards) */}
-                  {slides[activeSlide].type === 'liveDashboards' && (
-                    <div className="space-y-5 text-left">
-                      <div className="flex gap-2 border-b border-neutral-100 pb-3">
-                        {['patient', 'provider', 'front', 'leadership'].map((role) => (
-                          <button
-                            key={role}
-                            onClick={() => setActiveRole(role as any)}
-                            className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors cursor-pointer ${
-                              activeRole === role
-                                ? 'bg-navy text-white'
-                                : 'bg-[#FAFBFD] hover:bg-neutral-50 text-neutral-600 border border-neutral-200'
+                            key={slot}
+                            onClick={() => setSelectedTimeSlot(`${slot} AM`)}
+                            className={`py-1.5 rounded-lg text-[10.5px] font-bold text-center border cursor-pointer transition-all ${
+                              selectedTimeSlot.startsWith(slot)
+                                ? 'bg-[#F56A00] text-white border-[#F56A00]'
+                                : 'bg-white hover:bg-neutral-50 border-neutral-200 text-neutral-600'
                             }`}
                           >
-                            For {role === 'front' ? 'Front Office' : role === 'leadership' ? 'Leadership' : role.charAt(0).toUpperCase() + role.slice(1)}
+                            {slot}
                           </button>
                         ))}
                       </div>
-
-                      <div className="bg-[#FAFBFD] border border-neutral-200 p-5 rounded-xl">
-                        {activeRole === 'patient' && (
-                          <div className="space-y-2">
-                            <div className="text-xs font-bold text-navy">Patient Dashboard Home</div>
-                            <p className="text-xs text-neutral-500">Patient manages active scheduled check-ins, EOB receipts, payments, and clinic reminders dynamically on a safe smartphone portal layout.</p>
-                            <div className="mt-4 grid grid-cols-2 gap-3 text-xs bg-white p-3 rounded-lg border border-neutral-100">
-                              <div className="text-neutral-500">• Secure records and previous clinical summaries.</div>
-                              <div className="text-neutral-500">• Upcoming outpatient coordinators.</div>
-                            </div>
-                          </div>
-                        )}
-
-                        {activeRole === 'provider' && (
-                          <div className="space-y-2">
-                            <div className="text-xs font-bold text-navy">Provider / Clinician Portal</div>
-                            <p className="text-xs text-neutral-500">AGGREGATING patient readiness files, preceding lab transcripts, visit histories, in-room voice scribes status, and coding recommendations.</p>
-                            <div className="mt-4 grid grid-cols-2 gap-3 text-xs bg-white p-3 rounded-lg border border-neutral-100">
-                              <div className="text-neutral-500">• Clinical notes modification queues.</div>
-                              <div className="text-neutral-500">• Productivity and scheduling meters.</div>
-                            </div>
-                          </div>
-                        )}
-
-                        {activeRole === 'front' && (
-                          <div className="space-y-2">
-                            <div className="text-xs font-bold text-navy">Front Office Console</div>
-                            <p className="text-xs text-neutral-500">Monitors registration checklist status, coverage alerts, real-time eligibility flags, and coordinated scheduling options.</p>
-                            <div className="mt-4 grid grid-cols-2 gap-3 text-xs bg-white p-3 rounded-lg border border-neutral-100">
-                              <div className="text-neutral-500">• Auto-captured intake list ledger.</div>
-                              <div className="text-neutral-500">• Communication threads routed by target team.</div>
-                            </div>
-                          </div>
-                        )}
-
-                        {activeRole === 'leadership' && (
-                          <div className="space-y-2">
-                            <div className="text-xs font-bold text-navy">Management Dashboard</div>
-                            <p className="text-xs text-neutral-500">High-level financial KPIs: tracking claims submitted, payment postings, denial trends, clean claim score indices, and accounts receivable (AR).</p>
-                            <div className="mt-4 grid grid-cols-2 gap-3 text-xs bg-white p-3 rounded-lg border border-neutral-100">
-                              <div className="text-neutral-500">• AR aging buckets report.</div>
-                              <div className="text-neutral-500">• Clean claims performance index tracking.</div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
                     </div>
-                  )}
+                  </div>
 
-                  {/* TYPE 16: TEAM BENEFITS GRID (Slide 16 Benefits) */}
-                  {slides[activeSlide].type === 'benefitsPX' && (
-                    <div className="space-y-5 text-left">
-                      <div className="grid sm:grid-cols-4 gap-4">
-                        {[
-                          { title: 'PX · Patient Experience', list: ['Faster registration', 'Bilateral booking coordination', 'Shorter waiting delays', 'Transparent cost details'] },
-                          { title: 'FO · Front Office staff', list: ['Minimized typing burden', 'No manual data entries', 'Less administrative phone calls', 'Automated coverage sync'] },
-                          { title: 'PR · Provider comfort', list: ['Voice scribe charting', 'Pre-visit briefing indexes', 'More direct patient time', 'Fewer documentation hurdles'] },
-                          { title: 'RCM · Billing Teams', list: ['Ultra-clean claim rates', 'Near-zero manual re-dos', 'Accelerated reimbursement', 'High AR collection rates'] }
-                        ].map((b, idx) => (
-                          <div key={idx} className="p-4 rounded-xl border border-neutral-205 border-neutral-200/80 bg-[#FAFBFD] hover:shadow-sm transition-shadow">
-                            <div className="text-xs font-bold text-navy-deep">{b.title}</div>
-                            <ul className="mt-3 space-y-2 text-[11px] text-neutral-500 font-sans">
-                              {b.list.map((item, i) => (
-                                <li key={i} className="flex items-center gap-1.5">
-                                  <Check className="size-3 text-teal shrink-0" />
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
+                  <button
+                    onClick={triggerSelfBooking}
+                    className="w-full rounded-xl bg-navy hover:bg-navy-deep text-white font-semibold text-xs py-3 flex items-center justify-center gap-2 cursor-pointer mt-4"
+                  >
+                    <Calendar className="size-4" /> 
+                    {bookingStep === 'idle' ? 'Reserve Appointment Slot' : bookingStep === 'booking' ? 'Syncing with EMR...' : 'Appointment Saved Successfully'}
+                  </button>
+                </div>
+
+                {/* Right outcomes tracker (5 cols) */}
+                <div className="md:col-span-5 bg-navy text-white p-6 rounded-2xl border border-white/5 flex flex-col justify-between shadow-xs">
+                  <div>
+                    <span className="text-[10px] font-mono text-teal uppercase font-bold tracking-wider">Sync &amp; Coordination</span>
+                    <div className="text-sm font-bold text-white mt-1 leading-tight">Zero-Disruption Integration</div>
+                    
+                    <ul className="mt-4 space-y-3 text-xs text-white/80 font-sans">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
+                        <span>Confirms doctor credential boundaries.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
+                        <span>Checks patient eligibility rules live.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
+                        <span>Commits slot directly to EMR calendars.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="size-4 text-teal shrink-0 mt-0.5" />
+                        <span>Dispatches SMS verification directions.</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-white/5 p-3 rounded-xl border border-white/10 mt-4 text-[10px] font-mono">
+                    <span className="text-teal font-bold tracking-widest uppercase block mb-1">Status Report:</span>
+                    {bookingStep === 'idle' ? (
+                      <span className="text-neutral-400">Awaiting slot confirmation...</span>
+                    ) : bookingStep === 'booking' ? (
+                      <span className="text-teal animate-pulse">Routing details...</span>
+                    ) : (
+                      <span className="text-emerald-400 font-semibold">🟢 Synced: {selectedTimeSlot} with {selectedProvider} at {selectedLoc}</span>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+
+            {/* SECTION 7: ONE CONTEXT ROUTED COMMUNICATIONS */}
+            <section id="comms" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">07 · Unified Messages</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 7</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  One Practice communication thread. Three Teams. Zero Phone Tag.
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  The client keeps one continuous thread. Behind the scenes, Pulse routes inquiries to either the front desk, provider chart, or billing office depending on context.
+                </p>
+              </div>
+
+              {/* COMMS ROTATOR */}
+              <div className="grid md:grid-cols-12 gap-6 items-stretch">
+                
+                {/* Channel Selector (5 Cols) */}
+                <div className="md:col-span-5 bg-[#FAFBFD] p-5 rounded-2xl border border-neutral-200/80 flex flex-col justify-between">
+                  <div className="space-y-2.5">
+                    <span className="text-[10px] font-mono uppercase text-navy font-bold block mb-2">Select Active Routing Channel</span>
+                    
+                    <button
+                      onClick={() => setChatChannel('front')}
+                      className={`w-full text-left p-3 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
+                        chatChannel === 'front' ? 'border-[#F56A00] bg-white shadow-xs' : 'border-neutral-150 bg-neutral-100/30 hover:bg-neutral-100/60'
+                      }`}
+                    >
+                      <div>
+                        <div className="text-xs font-bold text-navy">FD · Front Desk Routing</div>
+                        <div className="text-[10px] text-neutral-450 text-neutral-400 font-mono mt-0.5">Scheduling steps, entry forms, arrival check-in.</div>
                       </div>
-                    </div>
-                  )}
+                      {chatChannel === 'front' && <div className="size-2 rounded-full bg-[#F56A00]" />}
+                    </button>
 
-                  {/* TYPE 17: WHY PULSE PLATFORM (Slide 17 Why Pulse) */}
-                  {slides[activeSlide].type === 'whyFinal' && (
-                    <div className="space-y-5 text-left">
-                      <div className="grid md:grid-cols-2 gap-6 items-center">
-                        <div className="space-y-3">
-                          <span className="text-6xl font-black text-navy font-display select-none">Clientele Plus.</span>
-                          
-                          <p className="text-xs text-neutral-500 leading-relaxed font-sans">
-                            Clientele Plus wraps patient engagement, clinical documentation voice scribing, insurer authorization, eligibility checking, coding modifying, and closed-loop billing ledgers under one connected platform.
+                    <button
+                      onClick={() => setChatChannel('provider')}
+                      className={`w-full text-left p-3 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
+                        chatChannel === 'provider' ? 'border-[#F56A00] bg-white shadow-xs' : 'border-neutral-150 bg-neutral-100/30 hover:bg-neutral-100/60'
+                      }`}
+                    >
+                      <div>
+                        <div className="text-xs font-bold text-navy">DR · Provider Clinical Routing</div>
+                        <div className="text-[10px] text-neutral-450 text-neutral-400 font-mono mt-0.5">Medical questions, post-ops help, lab results.</div>
+                      </div>
+                      {chatChannel === 'provider' && <div className="size-2 rounded-full bg-[#F56A00]" />}
+                    </button>
+
+                    <button
+                      onClick={() => setChatChannel('billing')}
+                      className={`w-full text-left p-3 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
+                        chatChannel === 'billing' ? 'border-[#F56A00] bg-white shadow-xs' : 'border-neutral-155 bg-neutral-100/30 hover:bg-neutral-100/60'
+                      }`}
+                    >
+                      <div>
+                        <div className="text-xs font-bold text-navy">RCM · Practice Billing Routing</div>
+                        <div className="text-[10px] text-neutral-450 text-neutral-400 font-mono mt-0.5">Claims posting statuses, insurer EOBs, deductible questions.</div>
+                      </div>
+                      {chatChannel === 'billing' && <div className="size-2 rounded-full bg-[#F56A00]" />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Secure Chat View (7 Cols) */}
+                <div className="md:col-span-7 bg-navy text-white p-6 rounded-2xl border border-white/5 flex flex-col justify-between shadow-xs">
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center pb-2 border-b border-white/10">
+                      <span className="text-[10px] font-mono text-teal font-bold uppercase tracking-wider">
+                        {chatChannel === 'front' ? 'FRONT DESK DISPATCH' : chatChannel === 'provider' ? 'PROVIDER CHART CONTEXT' : 'PULSE BILLING OFFICE'}
+                      </span>
+                      <span className="text-[10px] text-[#B4C3D0] font-mono">TLS Security Enabled</span>
+                    </div>
+
+                    {chatChannel === 'front' && (
+                      <div className="space-y-3 text-xs leading-relaxed">
+                        <div className="bg-white/5 p-3 rounded-xl border border-white/10">
+                          <span className="text-teal font-bold text-[9px] font-mono block mb-1">ANITA LOPEZ · PATIENT</span>
+                          &quot;Can I change my physical procedure on Thursday to late afternoon? My team meeting moved.&quot;
+                        </div>
+                        <div className="bg-[#F56A00]/10 p-3 rounded-xl border border-[#F56A00]/30">
+                          <span className="text-[#F56A00] font-bold text-[9px] font-mono block mb-1">PULSE CORE AUTO-AGENT</span>
+                          &quot;Understood Anita, we found matching open slots with Dr. Park on Thursday at 2:30 PM &amp; 3:30 PM. Swap completed.&quot;
+                        </div>
+                      </div>
+                    )}
+
+                    {chatChannel === 'provider' && (
+                      <div className="space-y-3 text-xs leading-relaxed">
+                        <div className="bg-white/5 p-3 rounded-xl border border-white/10">
+                          <span className="text-teal font-bold text-[9px] font-mono block mb-1">ANITA LOPEZ · PATIENT</span>
+                          &quot;I am on Day 3 of pain recovery. The surgical joint is slightly warm but bearable, is this expected?&quot;
+                        </div>
+                        <div className="bg-[#F56A00]/10 p-3 rounded-xl border border-[#F56A00]/30">
+                          <span className="text-[#F56A00] font-bold text-[9px] font-mono block mb-1">CLINICAL DISPATCH ROUTER</span>
+                          &quot;Alert piped straight to Dr. Park&apos;s chart brief queue. Prior visit notes preloaded. Replies average under 90 minutes.&quot;
+                        </div>
+                      </div>
+                    )}
+
+                    {chatChannel === 'billing' && (
+                      <div className="space-y-3 text-xs leading-relaxed">
+                        <div className="bg-white/5 p-3 rounded-xl border border-white/10">
+                          <span className="text-teal font-bold text-[9px] font-mono block mb-1">ANITA LOPEZ · PATIENT</span>
+                          &quot;My insurer said my copay for orthopedic procedures is $25, but the estimate showed $40. Why?&quot;
+                        </div>
+                        <div className="bg-[#F56A00]/10 p-3 rounded-xl border border-[#F56A00]/30">
+                          <span className="text-[#F56A00] font-bold text-[9px] font-mono block mb-1">RCM INTELLIGENCE ENGINE</span>
+                          &quot;Pulled your latest 271 Eligibility report. BCBS Plan Choice Plus places orthopedic modifiers on specialist tiers. Attached details copy.&quot;
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="text-[10px] text-neutral-400 font-mono pt-3 border-t border-white/10 mt-4 text-center">
+                    Auditable billing logs remain linked directly to the patient&apos;s master EMR files.
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+
+            {/* SECTION 8: CLINICIAN ASSIST & SCRIBE */}
+            <section id="clinician" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">08 · Clinician Support</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 8</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  Minimize Administrative Burnout: AI Works Alongside Doctors
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  By structuring complete client narratives before, during, and after visits, clinical teams focus on direct diagnostic care rather than documentation hurdles.
+                </p>
+              </div>
+
+              {/* ASSIST LOOPS GRID */}
+              <div className="grid md:grid-cols-3 gap-6">
+                
+                <div className="bg-white rounded-2xl p-5 border border-neutral-200 flex flex-col justify-between">
+                  <div>
+                    <span className="inline-flex items-center gap-1 bg-amber-50 px-2 mt-1 rounded text-[10px] font-bold text-amber-700 uppercase font-mono">
+                      Phase 1 · Pre-Visit Briefing
+                    </span>
+                    <h3 className="font-bold text-navy text-sm mt-3">Comprehensive Aggregation</h3>
+                    <p className="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+                      Instantly indexes the patient&apos;s record, previous visits files, real-time insurer eligibility checkups, and diagnostic lab reports into a single screen.
+                    </p>
+                  </div>
+                  <div className="border-t border-neutral-100 pt-3 mt-4 text-[10.5px] font-semibold text-[#F56A00]">
+                    ✓ Preloaded &amp; Sorted 10m Prior
+                  </div>
+                </div>
+
+                <div className="bg-navy text-white rounded-2xl p-5 border border-white/5 flex flex-col justify-between shadow-xs">
+                  <div>
+                    <span className="inline-flex items-center gap-1 bg-[#F56A00]/10 px-2 mt-1 rounded text-[10px] font-bold text-[#F56A00] uppercase font-mono">
+                      Phase 2 · During Visit
+                    </span>
+                    <h3 className="font-bold text-teal text-sm mt-3 font-display">Hands Off Keyboard</h3>
+                    <p className="text-xs text-[#B4C3D0] mt-1.5 leading-relaxed">
+                      Applied room sound parsing transcribes patient-physician dialogue into medically structured charting notes in real-time.
+                    </p>
+                  </div>
+                  <div className="border-t border-white/10 pt-3 mt-4 text-[10.5px] font-semibold text-teal">
+                    ✓ Ambient Voice Scribing Active
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl p-5 border border-neutral-200 flex flex-col justify-between">
+                  <div>
+                    <span className="inline-flex items-center gap-1 bg-blue-50 px-2 mt-1 rounded text-[10px] font-bold text-blue-700 uppercase font-mono">
+                      Phase 3 · Post-Visit RCM
+                    </span>
+                    <h3 className="font-bold text-navy text-sm mt-3">Closing Billing Payloads</h3>
+                    <p className="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+                      Notes map directly to appropriate modifier recommendations, CPT codes, and prior authorization checklists to bypass down-stream denials.
+                    </p>
+                  </div>
+                  <div className="border-t border-neutral-100 pt-3 mt-4 text-[10.5px] font-semibold text-teal-glow text-neutral-650">
+                    ✓ Zero Manual Coding Lag
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+
+            {/* SECTION 9: REVENUE CYCLE MANAGEMENT AUTOMATION */}
+            <section id="rcm" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">09 · Autonomous billing</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 9</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  Continuous Revenue Cycle Performance From Scribing through Claim Submission
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  The artificial intelligence automates prior authorization files and validates modifiers upstream to safeguard collections from payer denial loops.
+                </p>
+              </div>
+
+              {/* RCM STACK PILLARS */}
+              <div className="grid md:grid-cols-3 gap-6">
+                
+                <div className="p-5 rounded-2xl bg-[#FAFBFD] border border-neutral-200/60 hover:shadow-xs transition-shadow">
+                  <span className="size-7 rounded bg-white border border-neutral-150 flex items-center justify-center text-xs font-bold text-[#F56A00] font-mono block mb-3 shadow-xs">
+                    PA
+                  </span>
+                  <h4 className="font-bold text-navy text-sm">Prior Auth (PA) Orchestrator</h4>
+                  <p className="text-xs text-neutral-500 mt-2 leading-relaxed">
+                    Queries diagnostic medical necessity rules and builds complete clinical dossiers automatically, passing rules directly to insurers.
+                  </p>
+                  <ul className="mt-3 text-[11px] text-neutral-600 space-y-1 bg-white p-2.5 rounded-lg border border-neutral-100 font-mono">
+                    <li>• Automates criteria gathering.</li>
+                    <li>• Zero hours spent on phone tag.</li>
+                  </ul>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#FAFBFD] border border-neutral-200/60 hover:shadow-xs transition-shadow">
+                  <span className="size-7 rounded bg-white border border-neutral-150 flex items-center justify-center text-xs font-bold text-blue-600 font-mono block mb-3 shadow-xs">
+                    CD
+                  </span>
+                  <h4 className="font-bold text-navy text-sm">Autonomous Diagnostic Coding</h4>
+                  <p className="text-xs text-neutral-500 mt-2 leading-relaxed">
+                    AI models search charted narratives to suggest appropriate modifiers, ICD-10 groupings, and bundled procedure validations.
+                  </p>
+                  <ul className="mt-3 text-[11px] text-neutral-600 space-y-1 bg-white p-2.5 rounded-lg border border-neutral-100 font-mono">
+                    <li>• Evaluates bundling rules.</li>
+                    <li>• Flags code exclusions prior to save.</li>
+                  </ul>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#FAFBFD] border border-neutral-200/60 hover:shadow-xs transition-shadow">
+                  <span className="size-7 rounded bg-[#F56A00]/10 border border-[#F56A00]/20 flex items-center justify-center text-xs font-bold text-[#F56A00] font-mono block mb-3 shadow-xs">
+                    SB
+                  </span>
+                  <h4 className="font-bold text-navy text-sm">Interactive Claim Scrubbing</h4>
+                  <p className="text-xs text-neutral-500 mt-2 leading-relaxed">
+                    Runs over 200 real-time insurance validation protocols, resolving common entry fields mistakes before submitting claims.
+                  </p>
+                  <ul className="mt-3 text-[11px] text-neutral-600 space-y-1 bg-white p-2.5 rounded-lg border border-neutral-100 font-mono">
+                    <li>• Pre-clearinghouse error repairs.</li>
+                    <li>• 99.2% clean first-pass submission rate.</li>
+                  </ul>
+                </div>
+
+              </div>
+            </section>
+
+
+            {/* SECTION 10: AUTOMATED CLAIM REPAIR & DENIAL PREVENTION (THE LIVE SCRUBBER SIMULATOR) */}
+            <section id="denial-prevention" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">10 · Denial prevention</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 10</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  Stop Financial Leaks with Pre-Submission Self-Healing Claims
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  Payer denial patterns change weekly. Pulse&apos;s auto-corrections engine repairs coding mistakes beforehand to maximize collections cashflow.
+                </p>
+              </div>
+
+              {/* REPAIR INTERACTIVE WIDGET */}
+              <div className="grid md:grid-cols-12 gap-6 items-stretch">
+                
+                {/* Left Live Scrubber panel (7 cols) */}
+                <div className="md:col-span-7 bg-[#FAFBFD] p-6 rounded-2xl border border-neutral-200 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono uppercase text-[#F56A00] font-bold block mb-2">Interactive Claim validation Hub</span>
+                    
+                    {scrubStatus === 'dirty' ? (
+                      <div className="space-y-3">
+                        <div className="bg-white p-3 rounded-xl border border-neutral-150 space-y-2">
+                          <span className="text-[10px] font-mono text-neutral-400 uppercase block">Discovered Discrepancy Items:</span>
+                          {scrubErrors.map((err, i) => (
+                            <div key={i} className="flex gap-2 items-center bg-red-50 text-red-700 text-xs p-2.5 rounded-lg border border-red-100 font-sans">
+                              <AlertTriangle className="size-4 shrink-0 text-red-500" />
+                              <span className="font-medium">{err}</span>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <button
+                          onClick={runScrubber}
+                          className="w-full text-xs font-bold rounded-xl bg-navy hover:bg-navy-deep text-white py-3 flex items-center justify-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5"
+                        >
+                          <Zap className="size-3.5 text-teal" />
+                          Invoke Self-Healing Claims Protocol
+                        </button>
+                      </div>
+                    ) : scrubStatus === 'scrubbing' ? (
+                      <div className="py-8 text-center text-xs text-neutral-500 font-mono space-y-2.5 bg-white rounded-xl border border-neutral-100">
+                        <RefreshCw className="size-6 text-[#F56A00] animate-spin mx-auto" />
+                        <p>Validating medical necessity boundaries against insurer rules databases...</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        <div className="p-4 rounded-xl bg-emerald-50 text-emerald-800 text-xs font-semibold flex flex-col gap-2 border border-emerald-100">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle className="size-4 text-emerald-600" />
+                            <span>First-Pass Claim Fidelity Standard Succeeded!</span>
+                          </div>
+                          <p className="font-normal text-[11px] text-emerald-700 font-sans">
+                            Pulse automatically attached modifier -25, matched patient database name, and unbundled the orthopaedic injection codes.
                           </p>
-
-                          <div className="pt-2">
-                            <a
-                              href="/contact"
-                              onClick={(e) => handleLinkClick(e, '/contact')}
-                              className="inline-flex items-center gap-2 rounded-full bg-navy hover:bg-navy-deep text-white text-xs font-bold px-5 py-3 transition-transform hover:translate-x-0.5 shadow-sm"
-                            >
-                              Connect To Your EMR Now →
-                            </a>
-                          </div>
                         </div>
+                        
+                        <button
+                          onClick={() => setScrubStatus('dirty')}
+                          className="text-xs font-bold text-neutral-500 hover:text-navy block mx-auto underline cursor-pointer"
+                        >
+                          Reset Interactive Claim Simulator
+                        </button>
+                      </div>
+                    )}
+                  </div>
 
-                        <div className="bg-navy text-white p-5 rounded-2xl border border-white/5 space-y-3 flex flex-col justify-between">
-                          <span className="text-[10px] font-mono text-teal uppercase font-bold tracking-wider">Dynamic Outcomes</span>
-                          
-                          <div className="space-y-2 text-xs">
-                            <div className="flex justify-between border-b border-white/5 pb-1.5"><span>01 · Patient Engagement</span> <strong className="text-teal font-mono">Self-Service Portals</strong></div>
-                            <div className="flex justify-between border-b border-white/5 pb-1.5"><span>02 · Clinical Workflow</span> <strong className="text-teal font-mono">In-room Voice Scribing</strong></div>
-                            <div className="flex justify-between border-b border-white/5 pb-1.5"><span>03 · Revenue Cycle Mgmt</span> <strong className="text-teal font-mono">Scrubbed Claims</strong></div>
-                            <div className="flex justify-between"><span>04 · AI Suite Orchestration</span> <strong className="text-[#F56A00] font-mono">Connected Loop</strong></div>
-                          </div>
+                  <div className="text-[10px] text-neutral-400 font-mono mt-4 pt-4 border-t border-neutral-150">
+                    *Self-healing logic resolves up to 88% of outpatient medical billing rejections automatically.
+                  </div>
+                </div>
 
-                          <div className="mt-3 p-3 bg-white/5 border border-white/10 rounded-xl text-[10px] leading-relaxed text-white/85">
-                            A smarter healthcare ecosystem — real-time automation, optimized staff coordination, and clean claim submissions.
-                          </div>
+                {/* Right static details (5 cols) */}
+                <div className="md:col-span-5 bg-navy text-white p-6 rounded-2xl border border-white/5 flex flex-col justify-between shadow-xs">
+                  <div className="space-y-4">
+                    <span className="text-[10px] font-mono text-teal uppercase font-bold block">Fidelity Standard gains</span>
+                    <h3 className="font-bold text-white text-sm">Stopping the Revenue Leak Upstream</h3>
+                    
+                    <div className="space-y-3 font-sans text-xs">
+                      <div className="flex justify-between items-center bg-white/5 p-2.5 rounded-lg">
+                        <span>First-Pass Submission</span>
+                        <strong className="text-teal font-mono">99.2% OK</strong>
+                      </div>
+                      <div className="flex justify-between items-center bg-white/5 p-2.5 rounded-lg">
+                        <span>Payer Denial Loop Speed</span>
+                        <strong className="text-teal font-mono">-75% Less</strong>
+                      </div>
+                      <div className="flex justify-between items-center bg-white/5 p-2.5 rounded-lg text-[#F56A00]">
+                        <span>Days Sales Outstanding</span>
+                        <strong className="font-mono">&lt; 14 Days</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-[9.5px] text-neutral-400 font-mono leading-relaxed mt-4">
+                    Ensures clean electronic claims submissions to clearance networks without delayed billing disputes.
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+
+            {/* SECTION 11: ROLE-BASED LIVE DASHBOARDS */}
+            <section id="analytics" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">11 · Specialized Portals</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 11</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  Role-Based Intelligence: Everyone Sees What Matters to Them
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  Segmented layouts representing real-time synchronization loops for clinical, scheduling, billing, and practice leadership teams.
+                </p>
+              </div>
+
+              {/* DYNAMIC PORTALS VIEW */}
+              <div className="space-y-5 text-left">
+                <div className="flex flex-wrap gap-2 border-b border-neutral-100 pb-3">
+                  {[
+                    { id: 'patient', label: 'Patient View' },
+                    { id: 'provider', label: 'Clinician Portal' },
+                    { id: 'front', label: 'Front Office Console' },
+                    { id: 'leadership', label: 'Practice Management' }
+                  ].map((role) => (
+                    <button
+                      key={role.id}
+                      onClick={() => setActiveRole(role.id as any)}
+                      className={`text-xs font-bold px-4 py-2 rounded-full transition-colors cursor-pointer ${
+                        activeRole === role.id
+                          ? 'bg-navy text-white shadow-xs'
+                          : 'bg-[#FAFBFD] hover:bg-neutral-50 text-neutral-600 border border-neutral-250'
+                      }`}
+                    >
+                      {role.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="bg-[#FAFBFD] border border-neutral-200 p-6 rounded-2xl text-left shadow-xs">
+                  {activeRole === 'patient' && (
+                    <div className="space-y-4">
+                      <div>
+                        <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Secure Access Mobile Companion</span>
+                        <h4 className="font-bold text-navy text-sm mt-1">Anita Lopez · Standard Records Companion</h4>
+                      </div>
+                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+                        Allows patients to view their verified demographic profile, check upcoming appointments, upload new intake driver license documents, and pay co-insurance claims from home.
+                      </p>
+                      <div className="grid sm:grid-cols-2 gap-3 mt-4 text-[11px] font-mono">
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
+                          <span className="text-neutral-500">Upcoming Visits:</span>
+                          <strong className="text-[#F56A00]">Thu 10:30 Dr. Park</strong>
+                        </div>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
+                          <span className="text-neutral-500">Self-Service Deductible Met:</span>
+                          <strong className="text-teal">$1,200.00 OOP Met</strong>
                         </div>
                       </div>
                     </div>
                   )}
 
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                  {activeRole === 'provider' && (
+                    <div className="space-y-4">
+                      <div>
+                        <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Clinician Chart Assistant</span>
+                        <h4 className="font-bold text-navy text-sm mt-1">Dr. Park · Internal Specialty Entry Panel</h4>
+                      </div>
+                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+                        Equips medical providers with pre-visit charts briefings, direct integration to diagnostic lab logs, in-room voice scribe controls, and diagnostic CPT modifier recommends.
+                      </p>
+                      <div className="grid sm:grid-cols-2 gap-3 mt-4 text-[11px] font-mono">
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
+                          <span className="text-neutral-500">Ambient voice transcription:</span>
+                          <strong className="text-emerald-500">🟢 Active Room Listening</strong>
+                        </div>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
+                          <span className="text-neutral-500">Modifier modifier indicators:</span>
+                          <strong className="text-teal font-semibold">Pre-verified -25 Checked</strong>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
-            {/* DIRECT MANUAL PDF VERIFIED SUMMARY CARD */}
-            <div className="bg-white rounded-2xl border border-[#F56A00]/15 p-6 shadow-sm text-left">
-              <span className="text-xs font-mono font-bold text-[#F56A00] uppercase tracking-wider block mb-2">Corporate Alignment Certificate</span>
-              <h3 className="font-display font-bold text-navy text-xl">17 Pages of Elite Material Replicated</h3>
-              <p className="text-xs text-neutral-500 mt-1 leading-relaxed">
-                This Clientele Plus Product Gateway delivers the exact operational blueprints, five-shift visions, 80/20 personnel strategy grids, patient registration steps, EMR bi-directional sync specifications, and clinical coding flow mechanics directly to our public portal with absolute visual integrity.
-              </p>
-            </div>
+                  {activeRole === 'front' && (
+                    <div className="space-y-4">
+                      <div>
+                        <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Administrative Ledger</span>
+                        <h4 className="font-bold text-navy text-sm mt-1">Practice Scheduling &amp; Intake List</h4>
+                      </div>
+                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+                        Gives front-office staff immediate validation on pending patient check-ins, card uploads discrepancy warning items, real-time eligibility updates, and unified message threads routing.
+                      </p>
+                      <div className="grid sm:grid-cols-2 gap-3 mt-4 text-[11px] font-mono">
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
+                          <span className="text-neutral-500">Required paper checkups:</span>
+                          <strong className="text-teal">None · 100% Digital Completed</strong>
+                        </div>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
+                          <span className="text-neutral-500">Active scheduling conflicts:</span>
+                          <strong className="text-emerald-500">0 Alerts Outstanding</strong>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
-          </div>
-        </div>
-      </section>
+                  {activeRole === 'leadership' && (
+                    <div className="space-y-4">
+                      <div>
+                        <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Practice Leadership View</span>
+                        <h4 className="font-bold text-navy text-sm mt-1">Operations KPI &amp; Financial Ledger Monitoring</h4>
+                      </div>
+                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+                        Monitors aggregated collections efficiency index, cuentas por cobrar (AR) aging categories, clean electronic claims submission ratios, and clinical coordinator performance overviews.
+                      </p>
+                      <div className="grid sm:grid-cols-2 gap-3 mt-4 text-[11px] font-mono">
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
+                          <span className="text-neutral-500">Collections Rate Efficiency:</span>
+                          <strong className="text-teal">99.2% First-pass</strong>
+                        </div>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
+                          <span className="text-neutral-500">Average accounts receivable:</span>
+                          <strong className="text-teal">13.2 Days Sales Outstanding (DSO)</strong>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </section>
 
-      {/* DETAILED FEATURES REFERENCE GRID */}
-      <section className="bg-white border-t border-b border-neutral-100 py-16 text-left">
+
+            {/* SECTION 12: CORE INTENDED BENEFITS */}
+            <section id="outcomes" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="max-w-3xl mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">12 · Operational Wins</span>
+                  <span className="size-1 rounded-full bg-neutral-300" />
+                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 12</span>
+                </div>
+                <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                  Strategic Transformation Across All Practice Stakeholders
+                </h2>
+                <p className="text-sm text-neutral-500 mt-2 font-sans">
+                  The real value of Clientele Plus comes from integrating administrative, clinical, and financial silos into a single high-integrity platform.
+                </p>
+              </div>
+
+              {/* 4 COL BENEFIT GRIDS */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  { title: 'PX · Patient Experience', bg: 'bg-[#FAFBFD]/50 border-neutral-200/60', icon: Smartphone, list: ['Demographics and card photos uploaded from home in under 2 minutes.', 'Instant eligibility preloads prevent sudden checkout surprises.', 'Secure unilateral message threads route to the right desk automatically.', 'Schedules and reschedules saved directly with zero phone tag.'] },
+                  { title: 'FO · Front Office Teams', bg: 'bg-[#FAFBFD]/50 border-neutral-200/60', icon: ClipboardList, list: ['Manual re-keying and clipboard errors decreased by over 80%.', 'Automated coverage pre-scrubbing resolves eligibility exceptions upstream.', 'Communication routing filters unnecessary telephone tag completely.', 'Slick dashboard monitors checking status and intake tasks seamlessly.'] },
+                  { title: 'PR · Clinical Providers', bg: 'bg-[#FAFBFD]/50 border-neutral-200/60', icon: Brain, list: ['Pre-visit brief compiles historic documentation automatically before encounters.', 'Real-time ambient room listen-scribes compile charting notes flawlessly.', 'No administrative computer typing barriers during patient treatments.', 'Diagnostic billing modifier recommends flag discrepancies instantly.'] },
+                  { title: 'RCM · Practice Billing', bg: 'bg-navy border-white/5 text-white', icon: DollarSign, list: ['Submits ultra-clean, unbundled claims to clearance networks.', 'Self-healing claim scripts automatically adjust typical validation items.', 'Reduces accounts receivable (AR) cycles downwards of under 14 days.', 'Continuous and predictable operations collections cashflow monitoring.'] }
+                ].map((b, idx) => (
+                  <div key={idx} className={`p-6 rounded-2xl border flex flex-col justify-between ${b.bg}`}>
+                    <div>
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className={`size-8 rounded-lg flex items-center justify-center ${b.bg.includes('navy') ? 'bg-white/10 text-teal' : 'bg-navy/5 text-[#F56A00]'}`}>
+                          <b.icon className="size-4" />
+                        </span>
+                        <h4 className="font-bold text-sm tracking-tight">{b.title}</h4>
+                      </div>
+                      
+                      <ul className="space-y-2.5 text-xs">
+                        {b.list.map((item, i) => (
+                          <li key={i} className="flex items-start gap-1.5 leading-snug">
+                            <Check className="size-3.5 text-teal mt-0.5 shrink-0" />
+                            <span className={b.bg.includes('navy') ? 'text-white/80' : 'text-neutral-600'}>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+      </div>
+
+      {/* 4. EXECUTIVE COMPILATION VERITY CARD */}
+      <section className="bg-white border-t border-b border-neutral-100 py-16 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-2xl mb-12">
-            <span className="text-xs font-mono font-[#F56A00] text-[#F56A00] uppercase tracking-widest block mb-2">Platform Specifications Reference</span>
-            <h2 className="font-display text-3xl font-bold text-navy leading-tight">
-              A Closer Look at Clientele Plus Capabilities
-            </h2>
-            <p className="text-sm text-neutral-500 mt-2 font-sans">
-              Designed by specialty healthcare billing experts to optimize and safeguard collections from documentation through final claims recovery.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-gradient-to-r from-navy to-navy-deep text-white rounded-3xl p-8 md:p-12 border border-white/5 relative overflow-hidden flex flex-col md:flex-row justify-between items-center gap-8 shadow-md">
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-teal/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="space-y-4 max-w-2xl text-left">
+              <span className="inline-flex items-center gap-1.5 bg-white/10 px-3 py-1 rounded-full text-[10px] font-mono text-teal font-bold uppercase tracking-wider">
+                Platform Alignment Verity
+              </span>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold leading-tight">
+                Complete Executive Architecture Replicated
+              </h2>
+              <p className="text-xs sm:text-sm text-[#B4C3D0] leading-relaxed font-sans">
+                This Clientele Plus blueprint delivers the entire 17-page corporate operating deck systematically. Explore the 5 strategic visions, the 80/20 automation guidelines, intake computer-vision OCR workflows, EMR bilateral synchronization loops, and self-healing claim scrubbers under a continuous, high-integrity design.
+              </p>
+            </div>
             
-            <div className="p-6 rounded-2xl border border-neutral-100 bg-[#FAFBFD] hover:shadow-xs transition-shadow space-y-3">
-              <div className="size-10 bg-teal/15 rounded-xl text-teal flex items-center justify-center">
-                <Brain className="size-5" />
+            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl min-w-xs space-y-3.5 text-left text-xs shrink-0">
+              <span className="text-[9.5px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Expected Practice Gains</span>
+              <div className="space-y-1 text-[#E1EBF5]">
+                <div className="flex justify-between border-b border-white/5 pb-1"><span>Claims Submission Fidelity</span> <strong className="text-white">99.2% Clear</strong></div>
+                <div className="flex justify-between border-b border-white/5 pb-1"><span>Average No-Show Rates</span> <strong className="text-white">-35% Decrease</strong></div>
+                <div className="flex justify-between border-b border-white/5 pb-1"><span>Claim Recovery Cycles</span> <strong className="text-white">&lt; 14 Days DSO</strong></div>
+                <div className="flex justify-between mt-1"><span>Scribe Charting Overhead</span> <strong className="text-teal font-bold">80% Saved</strong></div>
               </div>
-              <h4 className="font-bold text-navy text-sm">Applied Clinical AI Engine</h4>
-              <p className="text-xs text-neutral-500 leading-relaxed font-sans">
-                Continuous model finetuning aligned to orthopedic, pain management, anesthesia and physical therapy specific modifiers and CPT code rules.
-              </p>
             </div>
-
-            <div className="p-6 rounded-2xl border border-neutral-100 bg-[#FAFBFD] hover:shadow-xs transition-shadow space-y-3">
-              <div className="size-10 bg-teal/15 rounded-xl text-teal flex items-center justify-center">
-                <ShieldCheck className="size-5" />
-              </div>
-              <h4 className="font-bold text-navy text-sm">HIPAA &amp; Security Compliance</h4>
-              <p className="text-xs text-neutral-500 leading-relaxed font-sans">
-                Full end-to-end data isolate pipelines, complete audit logging, business associate agreements (BAA), SOC2 readiness, and HBMA guidelines.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl border border-neutral-100 bg-[#FAFBFD] hover:shadow-xs transition-shadow space-y-3">
-              <div className="size-10 bg-teal/15 rounded-xl text-teal flex items-center justify-center">
-                <Zap className="size-5" />
-              </div>
-              <h4 className="font-bold text-navy text-sm">Instant Response Rates</h4>
-              <p className="text-xs text-neutral-500 leading-relaxed font-sans">
-                Real-time API queries and OCR processing return standard demographics, active payor details, and deductible stats in under 30 seconds.
-              </p>
-            </div>
-
           </div>
         </div>
       </section>
 
-      {/* CALL TO ACTION BLOCK */}
-      <section className="bg-navy text-white relative overflow-hidden py-16 md:py-20 text-center">
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-teal" />
-        <div className="absolute inset-0 bg-hero opacity-30 pointer-events-none" />
+      {/* CALL TO ACTION ACCELERATOR SECTION */}
+      <section className="bg-navy text-white relative overflow-hidden py-20 text-center">
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-teal" />
+        <div className="absolute inset-0 bg-hero opacity-35 pointer-events-none" />
 
         <div className="max-w-4xl mx-auto px-6 relative z-10 space-y-6">
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-            Ready to Accelerate Your Clinical Collections?
+          <h2 className="font-display text-4xl sm:text-5xl font-bold leading-tight">
+            Ready to Transform Your Practice Collections?
           </h2>
-          <p className="text-white/70 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
-            Eliminate manual clipboard errors, stop administrative eligibility chase delays, and streamline clean billing submissions with Clientele Plus.
+          <p className="text-neutral-400 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
+            Integrate your existing EMR/PM credentials with Clientele Pulse and bypass manual intake errors, coverage phone delays, and modifier rejections.
           </p>
 
-          <div className="pt-2 flex flex-col sm:flex-row justify-center items-center gap-4">
+          <div className="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
             <a
               href="/contact"
               onClick={(e) => handleLinkClick(e, '/contact')}
-              className="rounded-full bg-teal text-navy hover:bg-teal-glow font-bold text-xs px-8 py-3.5 transition-transform hover:-translate-y-0.5 w-full sm:w-auto"
+              className="rounded-full bg-teal text-navy hover:bg-white font-bold text-xs px-8 py-3.5 transition-transform hover:-translate-y-0.5 w-full sm:w-auto text-center"
             >
-              Schedule Platform Demonstration
+              Schedule Customized Demonstration
             </a>
             <a
               href="/about"
               onClick={(e) => handleLinkClick(e, '/about')}
-              className="rounded-full border border-white/20 hover:bg-white/5 text-white font-bold text-xs px-8 py-3.5 transition-transform hover:-translate-y-0.5 w-full sm:w-auto"
+              className="rounded-full border border-white/20 hover:bg-white/5 text-white font-bold text-xs px-8 py-3.5 transition-transform hover:-translate-y-0.5 w-full sm:w-auto text-center"
             >
-              Learn About Our Firm
+              Explore Firm Credentials
             </a>
           </div>
         </div>
       </section>
+
     </div>
   );
 }
