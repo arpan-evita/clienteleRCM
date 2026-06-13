@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, MapPin, Award, CheckCircle, Shield, Lock, Globe } from 'lucide-react';
+import { Phone, Mail, MapPin, Award, CheckCircle, Shield, Lock, Globe, Sparkles } from 'lucide-react';
 
 interface FooterProps {
   navigate: (path: string) => void;
@@ -65,6 +65,11 @@ export default function Footer({ navigate }: FooterProps) {
             <li>
               <a href="/platform" onClick={(e) => handleLinkClick(e, '/platform')} className="text-white/70 hover:text-teal transition-colors">
                 Clientele AI Platform
+              </a>
+            </li>
+            <li>
+              <a href="/clientele-plus" onClick={(e) => handleLinkClick(e, '/clientele-plus')} className="text-white/70 hover:text-teal transition-colors flex items-center gap-1">
+                <Sparkles className="size-3.5 text-[#F56A00]" /> Clientele Plus Suite
               </a>
             </li>
             <li>

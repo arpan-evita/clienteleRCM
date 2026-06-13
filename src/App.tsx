@@ -3,6 +3,7 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import Home from './pages/Home';
 import Platform from './pages/Platform';
+import ClientelePlus from './pages/ClientelePlus';
 import About from './pages/About';
 import WhyClientele from './pages/WhyClientele';
 import Compliance from './pages/Compliance';
@@ -44,6 +45,8 @@ export default function App() {
     switch (path) {
       case '/platform':
         return <Platform navigate={navigate} />;
+      case '/clientele-plus':
+        return <ClientelePlus navigate={navigate} />;
       case '/about':
         return <About navigate={navigate} />;
       case '/why-clientele':

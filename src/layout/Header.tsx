@@ -100,6 +100,18 @@ export default function Header({ currentPath, navigate }: HeaderProps) {
               Platform
             </a>
 
+            <a
+              href="/clientele-plus"
+              onClick={(e) => handleLinkClick(e, '/clientele-plus')}
+              className={`text-sm font-medium transition-colors py-2 flex items-center gap-1.5 ${
+                currentPath === '/clientele-plus'
+                  ? 'text-navy font-semibold border-b-2 border-teal'
+                  : 'text-foreground/80 hover:text-foreground'
+              }`}
+            >
+              <Sparkles className="size-3.5 text-[#F56A00]" /> Clientele Plus
+            </a>
+
             {/* Services Dropdown */}
             <div className="relative group">
               <button className="flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-2 cursor-pointer">
@@ -270,6 +282,16 @@ export default function Header({ currentPath, navigate }: HeaderProps) {
                 }`}
               >
                 Platform
+              </a>
+
+              <a
+                href="/clientele-plus"
+                onClick={(e) => handleLinkClick(e, '/clientele-plus')}
+                className={`text-base font-semibold py-1 border-b border-neutral-50 flex items-center gap-1.5 ${
+                  currentPath === '/clientele-plus' ? 'text-teal font-bold' : 'text-navy font-semibold'
+                }`}
+              >
+                <Sparkles className="size-4 text-[#F56A00]" /> Clientele Plus
               </a>
 
               <div className="flex flex-col gap-2">
