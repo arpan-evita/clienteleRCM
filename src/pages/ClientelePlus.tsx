@@ -1459,15 +1459,15 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
             <section id="analytics" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
               <div className="max-w-3xl mb-8">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">13 · Real-Time Dashboards</span>
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">SPECIALIZED PORTALS</span>
                   <span className="size-1 rounded-full bg-neutral-300" />
                   <span className="text-xs font-mono text-neutral-400">Section 13</span>
                 </div>
                 <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
-                  Role-Based Intelligence: Real-Time Performance &amp; Operations
+                  Role-Based Intelligence: Everyone Sees What Matters to Them
                 </h2>
                 <p className="text-sm text-neutral-500 mt-2 font-sans leading-relaxed">
-                  Clientele Pulse delivers real-time, role-based dashboards across patients, providers, front desk teams, billing managers, and executives — providing complete visibility into practice performance, revenue cycle health, and operational insights.
+                  Segmented layouts representing real-time synchronization loops for clinical, scheduling, billing, and practice leadership teams.
                 </p>
               </div>
 
@@ -1477,15 +1477,13 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
                   {[
                     { id: 'patient', label: 'Patient View' },
                     { id: 'provider', label: 'Clinician Portal' },
-                    { id: 'front', label: 'Front Office' },
-                    { id: 'billing', label: 'Billing Manager' },
-                    { id: 'executive', label: 'Executive Board' }
+                    { id: 'front', label: 'Front Office Console' }
                   ].map((role) => (
                     <button
                       key={role.id}
                       onClick={() => setActiveRole(role.id as any)}
                       className={`text-xs font-bold px-4 py-2 rounded-full transition-colors cursor-pointer ${
-                        activeRole === role.id
+                        activeRole === role.id || (activeRole !== 'patient' && activeRole !== 'provider' && role.id === 'front')
                           ? 'bg-navy text-white shadow-xs'
                           : 'bg-[#FAFBFD] hover:bg-neutral-50 text-neutral-600 border border-neutral-250'
                       }`}
@@ -1497,189 +1495,177 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
 
                 <div className="bg-[#FAFBFD] border border-neutral-200 p-6 rounded-2xl text-left shadow-xs">
                   {activeRole === 'patient' && (
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
+                    <div className="space-y-5">
+                      <div className="flex justify-between items-start border-b border-neutral-150 pb-2">
                         <div>
-                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Secure Access Mobile Companion</span>
-                          <h4 className="font-bold text-navy text-sm mt-1">Anita Lopez · Patient Companion View</h4>
+                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">SECURE ACCESS MOBILE COMPANION</span>
+                          <h4 className="font-bold text-navy text-lg font-display mt-0.5">Patient: Anita Lopez • Standard Records Companion</h4>
                         </div>
-                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Standard</span>
+                        <span className="text-[10px] bg-teal/10 text-teal px-2.5 py-0.5 rounded-full font-mono font-medium">Standard Records</span>
                       </div>
-                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
-                        Allows patients to view their verified demographic profile, check upcoming appointments, upload new intake driver license documents, and pay co-insurance claims from home.
+                      <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-sans">
+                        Clientele Pulse provides patients with a secure mobile and web companion that gives them control over their healthcare journey. Patients can access verified demographic information, manage insurance details, review benefits, schedule visits, communicate with care teams, and stay connected with their treatment plans — anytime, anywhere.
                       </p>
+
                       <div className="grid sm:grid-cols-2 gap-3 mt-4 text-[11px] font-mono">
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
-                          <span className="text-neutral-500">Upcoming Visits:</span>
-                          <strong className="text-[#F56A00]">Thu 10:30 Dr. Park</strong>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-150 flex items-center justify-between">
+                          <span className="text-neutral-500 font-bold uppercase text-[9px] tracking-wider">Upcoming Visits:</span>
+                          <strong className="text-[#F56A00] font-bold">📅 Thursday – 10:30 AM · Dr. Park</strong>
                         </div>
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
-                          <span className="text-neutral-500">Self-Service Deductible Met:</span>
-                          <strong className="text-teal">$3,500.00 / $5,000 OOP Copay Met</strong>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-150 flex items-center justify-between">
+                          <span className="text-neutral-500 font-bold uppercase text-[9px] tracking-wider">Insurance Snapshot:</span>
+                          <div className="bg-[#E1F7F4] text-teal border border-teal/10 px-2 py-0.5 rounded font-bold text-[10px] flex items-center gap-1">
+                            <span>Met: $3,500 / $5,000 Payer OOP Met</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-white p-3.5 rounded-xl border border-neutral-150 text-[11px] font-mono flex flex-wrap gap-4 text-neutral-600 justify-around">
+                        <span className="flex items-center gap-1.5">
+                          <span className="size-1.5 rounded-full bg-teal" />
+                          Deductible Limit: <strong className="text-navy">$5,000</strong>
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="size-1.5 rounded-full bg-teal" />
+                          Amount Met: <strong className="text-teal font-bold">$3,500</strong>
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="size-1.5 rounded-full bg-[#F56A00]" />
+                          Copay: <strong className="text-navy font-bold">$20</strong>
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="size-1.5 rounded-full bg-violet" />
+                          Co-Insurance: <strong className="text-navy font-bold">20%</strong>
+                        </span>
+                      </div>
+
+                      <div className="pt-4 border-t border-neutral-150 space-y-3">
+                        <h5 className="text-[11px] font-mono font-bold text-neutral-400 uppercase tracking-widest">Key Features:</h5>
+                        <div className="grid sm:grid-cols-2 gap-3 pb-2">
+                          {[
+                            { title: 'Verified Patient Profile', desc: 'View and manage validated demographic and contact information' },
+                            { title: 'Insurance & COB Management', desc: 'Upload active insurance cards, verify coverage, and maintain coordination of benefits' },
+                            { title: 'Real-Time Benefit Visibility', desc: 'View copay, coinsurance, deductible status, and estimated patient responsibility' },
+                            { title: 'Appointment Management', desc: 'View upcoming visits, reschedule appointments, and manage availability' },
+                            { title: 'Treatment & Diagnostic Plans', desc: 'Review care plans, recommended treatments, and diagnostic reports' },
+                            { title: 'Prescription Refill Requests', desc: 'Submit refill requests directly through the secure portal' },
+                            { title: 'Secure Care Team Communication', desc: 'Chat with front desk, providers, and billing teams through encrypted messaging' },
+                            { title: 'Mobile-First Access', desc: 'Available through secure portal or mobile companion app' }
+                          ].map((feat, idx) => (
+                            <div key={idx} className="flex items-start gap-2 text-xs text-neutral-600 font-sans p-2.5 bg-white rounded-lg border border-neutral-150">
+                              <Check className="size-4 text-emerald-500 mt-0.5 shrink-0" />
+                              <div>
+                                <strong className="text-navy block font-semibold">{feat.title}</strong>
+                                <span className="text-[10.5px] text-neutral-500 mt-0.5 block leading-relaxed">{feat.desc}</span>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
                   )}
 
                   {activeRole === 'provider' && (
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
+                    <div className="space-y-5">
+                      <div className="flex justify-between items-start border-b border-neutral-150 pb-2">
                         <div>
-                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Clinician Chart Assistant</span>
-                          <h4 className="font-bold text-navy text-sm mt-1">Dr. Park · Internal Specialty Entry Panel</h4>
+                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">CLINICIAN VISIT ASSISTANT</span>
+                          <h4 className="font-bold text-navy text-lg font-display mt-0.5">Provider App – Clinician Visit Assistant</h4>
                         </div>
-                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Active Room</span>
+                        <span className="text-[10px] bg-teal/10 text-teal px-2.5 py-0.5 rounded-full font-mono font-medium">Point of Care</span>
                       </div>
-                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
-                        Equips medical providers with pre-visit charts briefings, direct integration to diagnostic lab logs, in-room voice scribe controls, and diagnostic CPT modifier recommends.
+                      <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-sans">
+                        Clientele Pulse Clinician Visit Assistant empowers providers with a complete, real-time patient and revenue intelligence workspace. It delivers a 30-second pre-visit snapshot, clinical history, diagnostics, AI-powered documentation, coding guidance, and practice performance insights — helping clinicians focus on patient care while reducing administrative burden.
                       </p>
+
                       <div className="grid sm:grid-cols-2 gap-3 mt-4 text-[11px] font-mono">
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
-                          <span className="text-neutral-500">Ambient voice transcription:</span>
-                          <strong className="text-emerald-500">🟢 Active Room Listening</strong>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-150 flex items-center justify-between">
+                          <span className="text-neutral-500 font-bold uppercase text-[9px] tracking-wider">Pre-Visit Status:</span>
+                          <strong className="text-[#F56A50] font-bold">🩺 M. Reyes — Active Session Room 4</strong>
                         </div>
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
-                          <span className="text-neutral-500">Modifier modifier indicators:</span>
-                          <strong className="text-teal font-semibold font-mono">Pre-verified -25 Checked</strong>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-150 flex items-center justify-between">
+                          <span className="text-neutral-500 font-bold uppercase text-[9px] tracking-wider">AI Scribe Status: </span>
+                          <span className="bg-[#E1F7F4] text-teal border border-teal/10 px-2 py-0.5 rounded font-bold text-[10px]">🎙️ Recording &amp; Note Scribing Active</span>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-neutral-150 space-y-3">
+                        <h5 className="text-[11px] font-mono font-bold text-neutral-400 uppercase tracking-widest">Key Features:</h5>
+                        <div className="grid sm:grid-cols-2 gap-3 pb-2">
+                          {[
+                            { title: '30-Second Patient Pre-Visit Snapshot', desc: 'Quickly review patient history, active conditions, previous visits, medications, allergies, and care context before entering the exam room' },
+                            { title: 'Clinical Records at Point of Care', desc: 'Access related X-rays, lab reports, diagnostic results, medical records, and medication history based on visit reason/chief complaint' },
+                            { title: 'Digital Vital Tracking', desc: 'Capture and monitor patient vitals digitally with visit-level visibility' },
+                            { title: 'AI Ambient Voice Scribing', desc: 'Convert patient-provider conversations into structured clinical notes in real time' },
+                            { title: 'Medical Necessity Documentation Guidance', desc: 'Provide intelligent documentation suggestions to support compliant billing' },
+                            { title: 'Coding Intelligence', desc: 'Recommend ICD-10, CPT codes, modifiers, and estimated average billed amount based on encounter details' },
+                            { title: 'Visit & Revenue Dashboard', desc: 'Analyze provider performance by payor mix, billed amount, paid amount, denied claims, and collections' },
+                            { title: 'Claim & Financial Visibility', desc: 'View billing outcomes connected to clinical encounters' },
+                            { title: 'Integrated Care Workflow', desc: 'Connect clinical documentation, coding, billing, and revenue cycle insights in one provider workspace' }
+                          ].map((feat, idx) => (
+                            <div key={idx} className="flex items-start gap-2 text-xs text-neutral-600 font-sans p-2.5 bg-white rounded-lg border border-neutral-150">
+                              <Check className="size-4 text-emerald-500 mt-0.5 shrink-0" />
+                              <div>
+                                <strong className="text-navy block font-semibold">{feat.title}</strong>
+                                <span className="text-[10.5px] text-neutral-500 mt-0.5 block leading-relaxed">{feat.desc}</span>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
                   )}
 
                   {activeRole === 'front' && (
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
+                    <div className="space-y-5">
+                      <div className="flex justify-between items-start border-b border-neutral-150 pb-2">
                         <div>
-                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Administrative Ledger</span>
-                          <h4 className="font-bold text-navy text-sm mt-1">Practice Scheduling &amp; Intake List</h4>
+                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">CLIENTELE PULSE BRIDGE</span>
+                          <h4 className="font-bold text-navy text-lg font-display mt-0.5">Front Office Portal – Clientele Pulse Bridge</h4>
                         </div>
-                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Synced</span>
+                        <span className="text-[10px] bg-teal/10 text-teal px-2.5 py-0.5 rounded-full font-mono font-medium">Bilateral Sync</span>
                       </div>
-                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
-                        Gives front-office staff immediate validation on pending patient check-ins, card uploads discrepancy warning items, real-time eligibility updates, and unified message threads routing.
+                      <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-sans">
+                        Clientele Pulse Bridge connects the front office workflow with the Patient App, Provider App, Payor Network, and EMR/EHR/PM systems to automate and streamline the complete patient journey — from registration through check-out. The platform enables front desk teams to deliver faster, smoother, and more accurate patient interactions through digital workflows, real-time verification, and integrated care coordination.
                       </p>
+
                       <div className="grid sm:grid-cols-2 gap-3 mt-4 text-[11px] font-mono">
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
-                          <span className="text-neutral-500">Required paper checkups:</span>
-                          <strong className="text-teal">None · 100% Digital Completed</strong>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-150 flex items-center justify-between">
+                          <span className="text-neutral-500 font-bold uppercase text-[9px] tracking-wider">Connectivity Node:</span>
+                          <strong className="text-emerald-500 font-bold">🟢 Patient + Provider + Payor Bilaterally Linked</strong>
                         </div>
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
-                          <span className="text-neutral-500">Active scheduling conflicts:</span>
-                          <strong className="text-emerald-500">0 Alerts Outstanding</strong>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-150 flex items-center justify-between">
+                          <span className="text-neutral-500 font-bold uppercase text-[9px] tracking-wider">Arrival Traffic: </span>
+                          <span className="bg-[#E1F7F4] text-teal border border-teal/10 px-2 py-0.5 rounded font-bold text-[10px]">0 Alerts Outstanding · 100% Digital</span>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t border-neutral-150 space-y-3">
+                        <h5 className="text-[11px] font-mono font-bold text-neutral-400 uppercase tracking-widest">Key Features:</h5>
+                        <div className="grid sm:grid-cols-2 gap-3 pb-2">
+                          {[
+                            { title: 'Unified System Connectivity', desc: 'Seamlessly connects Patient App, Provider App, Payors, and EMR/EHR/PM platforms' },
+                            { title: 'Automated Patient Registration', desc: 'Captures and syncs patient demographics and registration details digitally' },
+                            { title: 'Real-Time Insurance Verification', desc: 'Validates insurance eligibility, benefits, copay, coinsurance, and deductible information' },
+                            { title: 'Appointment Management', desc: 'Enables appointment booking, rescheduling, and walk-in appointment scheduling' },
+                            { title: 'Digital Check-In Experience', desc: 'Allows patients to complete check-in remotely or at the front desk' },
+                            { title: 'Digital Consent Management', desc: 'Collects and stores HIPAA-compliant consent forms securely' },
+                            { title: 'Digital Vital Tracking', desc: 'Captures patient vitals and makes them available for the clinical team before visits' },
+                            { title: 'Front Desk Visit Dashboard', desc: 'Provides real-time visibility into patient flow, arrivals, pending tasks, and visit status' },
+                            { title: 'Improved Check-In / Check-Out Workflow', desc: 'Reduces wait times, minimizes manual entry, and improves patient satisfaction' }
+                          ].map((feat, idx) => (
+                            <div key={idx} className="flex items-start gap-2 text-xs text-neutral-600 font-sans p-2.5 bg-white rounded-lg border border-neutral-150">
+                              <Check className="size-4 text-emerald-500 mt-0.5 shrink-0" />
+                              <div>
+                                <strong className="text-navy block font-semibold">{feat.title}</strong>
+                                <span className="text-[10.5px] text-neutral-500 mt-0.5 block leading-relaxed">{feat.desc}</span>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
                   )}
-
-                  {activeRole === 'billing' && (
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
-                        <div>
-                          <span className="text-[10px] font-mono text-teal uppercase font-bold tracking-wider">RCM &amp; Outstanding Claims Management</span>
-                          <h4 className="font-bold text-navy text-sm mt-1">Live Billing Ledger &amp; AR Analytics</h4>
-                        </div>
-                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Bilateral Sync</span>
-                      </div>
-                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
-                        Enables RCM experts to track billed amounts, adjustments, underpayments, zero-payment claims, and unpaid claims in a high-priority AR worklist.
-                      </p>
-                      <div className="grid sm:grid-cols-4 gap-3 mt-4 text-[11px] font-mono">
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100">
-                          <span className="text-neutral-400 block text-[9px] uppercase">Billed Charges</span>
-                          <strong className="text-navy text-sm block mt-1">$248,500.00</strong>
-                        </div>
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100">
-                          <span className="text-neutral-400 block text-[9px] uppercase">Payments Received</span>
-                          <strong className="text-teal text-sm block mt-1">$192,200.00</strong>
-                        </div>
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100">
-                          <span className="text-neutral-400 block text-[9px] uppercase">Adjustments</span>
-                          <strong className="text-neutral-500 text-sm block mt-1">$11,800.00</strong>
-                        </div>
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100">
-                          <span className="text-neutral-400 block text-[9px] uppercase font-bold">AR Cycles</span>
-                          <strong className="text-[#F56A00] text-sm block mt-1">13.2 Days</strong>
-                        </div>
-                      </div>
-
-                      <div className="bg-white rounded-xl border border-neutral-150 p-3 mt-2 text-[10px] font-mono space-y-2">
-                        <span className="font-bold text-neutral-600 uppercase text-[9px] block">Claim Intelligence View outstanding items:</span>
-                        <div className="flex justify-between border-b border-neutral-50 pb-1.5 text-neutral-600">
-                          <span>Claim #2491 (K. Smith)</span> <span className="bg-red-50 text-red-700 px-1.5 rounded font-bold uppercase text-[8.5px]">Zero-Paid Claim tracked ⚠</span>
-                        </div>
-                        <div className="flex justify-between border-b border-neutral-50 pb-1.5 text-neutral-600">
-                          <span>Claim #2348 (M. Reyes)</span> <span className="bg-[#F56A00]/10 text-[#F56A00] px-1.5 rounded font-bold uppercase text-[8.5px]">Underpaid Variance detected ⚠</span>
-                        </div>
-                        <div className="flex justify-between text-neutral-600">
-                          <span>Claim #2214 (J. Doe)</span> <span className="bg-emerald-50 text-emerald-700 px-1.5 rounded font-bold uppercase text-[8.5px]">Partially Paid Resolve Under appeal ✓</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeRole === 'executive' && (
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
-                        <div>
-                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Executive Overview Console</span>
-                          <h4 className="font-bold text-navy text-sm mt-1">Practice Performance Summary &amp; Payor Mix</h4>
-                        </div>
-                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Corporate</span>
-                      </div>
-                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
-                        Monitors aggregated collections efficiency index, accounts receivable (AR) aging categories, clean electronic claims submission ratios, and clinical coordinator performance overviews.
-                      </p>
-                      
-                      <div className="grid sm:grid-cols-2 gap-4 mt-4 font-mono text-xs">
-                        <div className="bg-white p-3.5 rounded-xl border border-neutral-150 space-y-2 text-neutral-700">
-                          <span className="text-neutral-400 font-bold block text-[9.5px] uppercase">Practice Performance Overview:</span>
-                          <div className="flex justify-between border-b border-neutral-50 pb-1">
-                            <span>First-Pass Fidelity:</span> <strong className="text-teal">99.2% Clear</strong>
-                          </div>
-                          <div className="flex justify-between border-b border-neutral-50 pb-1">
-                            <span>Net Collections Rate:</span> <strong className="text-teal">98.4% Net</strong>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Clinical wRVUs Today:</span> <strong className="text-navy">42.6 Out</strong>
-                          </div>
-                        </div>
-
-                        <div className="bg-white p-3.5 rounded-xl border border-neutral-150 space-y-2 text-neutral-700">
-                          <span className="text-neutral-400 font-bold block text-[9.5px] uppercase">Payor Mix Category Distribution:</span>
-                          <div className="flex justify-between border-b border-neutral-50 pb-1">
-                            <span>BlueCross Primary Care:</span> <strong className="text-neutral-600">42% Vol</strong>
-                          </div>
-                          <div className="flex justify-between border-b border-neutral-50 pb-1">
-                            <span>Medicare standard logic:</span> <strong className="text-neutral-600">30% Vol</strong>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Aetna &amp; Commercial mixes:</span> <strong className="text-neutral-600">28% Vol</strong>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Key Features Bullet List */}
-                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 pt-6 mt-6 border-t border-neutral-100">
-                  {[
-                    { title: 'Role-Based Dashboards', desc: 'Tailored views for patients, providers, front desk, billing teams, and executives' },
-                    { title: 'Real-Time Financial Analytics', desc: 'Track Billed, Paid, Adjustments/Write-offs, Collections, and AR Days' },
-                    { title: 'Claim Intelligence View', desc: 'Monitor outstanding, underpaid, zero-paid, and partially paid claims' },
-                    { title: 'Payor Mix Analysis', desc: 'Understand revenue distribution and performance by insurance category' },
-                    { title: 'Visit-Level Insights', desc: 'Analyze financial performance by visit type and encounter details' },
-                    { title: 'Clinical & Operational Analytics', desc: 'Review trends by chief complaint, provider, and service category' },
-                    { title: 'Practice Performance Overview', desc: 'Real-time visibility into overall practice health and revenue cycle metrics' }
-                  ].map((feat, idx) => (
-                    <div key={idx} className="flex items-start gap-1.5 text-xs text-neutral-600 font-sans">
-                      <Check className="size-3.5 text-teal mt-0.5 shrink-0" />
-                      <div>
-                        <strong className="text-navy block leading-snug">{feat.title}</strong>
-                        <span className="text-[10.5px] text-neutral-500 mt-0.5 block leading-relaxed">{feat.desc}</span>
-                      </div>
-                    </div>
-                  ))}
                 </div>
 
               </div>
