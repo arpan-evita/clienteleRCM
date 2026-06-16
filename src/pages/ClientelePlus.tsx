@@ -87,6 +87,9 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
   // 6. Dashboards Active view
   const [activeRole, setActiveRole] = useState<'patient' | 'provider' | 'front' | 'leadership'>('patient');
 
+  // 7. Pocket Interactive App Companion Switcher
+  const [pocketActiveTab, setPocketActiveTab] = useState<'provider' | 'patient'>('provider');
+
   // Active section tracker for the sticky left navigation tape
   const sections = [
     { id: 'vision', label: '01 · Vision & Shifts' },
@@ -1266,6 +1269,403 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
                   )}
                 </div>
               </div>
+            </section>
+
+
+            {/* NEW SECTION: CLIENTELE PULSE PRODUCT SUITE (PATIENT, CLINICIAN, BRIDGE) */}
+            <section id="product-suites" className="w-full bg-[#08121E] rounded-3xl border border-white/5 p-8 sm:p-12 text-white overflow-hidden relative shadow-2xl scroll-mt-24">
+              
+              {/* Corner Ambient Glow Effects */}
+              <div className="absolute -right-24 -top-24 size-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -left-20 -bottom-24 size-80 bg-[#F56A00]/5 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="text-center relative z-10">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-teal-400 uppercase">
+                  Clientele AI in your Pocket
+                </span>
+                <h2 className="font-sans text-3xl sm:text-4xl lg:text-5xl font-black text-white mt-2 leading-none">
+                  Two apps. <span className="font-serif italic text-neutral-300 font-light">One platform.</span>
+                </h2>
+                <p className="text-neutral-400 text-xs sm:text-sm mt-3 max-w-xl mx-auto font-sans">
+                  Real, functional mobile apps for the people who actually use them — not portals dressed up as apps.
+                </p>
+              </div>
+
+              {/* Dynamic Pill App Selector Switcher */}
+              <div className="flex justify-center mt-8 relative z-10">
+                <div className="inline-flex p-1 bg-[#122230]/80 rounded-full border border-white/5 shadow-inner">
+                  <button
+                    onClick={() => setPocketActiveTab('provider')}
+                    className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
+                      pocketActiveTab === 'provider'
+                        ? 'bg-teal-400 text-[#08121E] shadow-md font-semibold'
+                        : 'text-neutral-400 hover:text-white font-medium'
+                    }`}
+                  >
+                    Provider App
+                  </button>
+                  <button
+                    onClick={() => setPocketActiveTab('patient')}
+                    className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
+                      pocketActiveTab === 'patient'
+                        ? 'bg-teal-400 text-[#08121E] shadow-md font-semibold'
+                        : 'text-neutral-400 hover:text-white font-medium'
+                    }`}
+                  >
+                    Patient App
+                  </button>
+                </div>
+              </div>
+
+              {/* Interactive Showcase Grid (Mockup & Content) */}
+              <div className="grid lg:grid-cols-12 gap-10 items-center mt-12 relative z-10">
+                
+                {/* LEFT: Phone Mockup Container */}
+                <div className="lg:col-span-5 flex justify-center">
+                  <div className="relative w-64 h-[520px] bg-neutral-900 rounded-[38px] p-2.5 shadow-2xl border-4 border-neutral-800 shadow-teal-500/5 flex flex-col overflow-hidden">
+                    
+                    {/* Speaker notch */}
+                    <div className="absolute top-0 inset-x-0 h-5 bg-transparent flex justify-center z-20">
+                      <div className="w-28 h-4 bg-neutral-950 rounded-b-xl flex items-center justify-between px-3">
+                        <div className="size-1 bg-neutral-800 rounded-full" />
+                        <div className="w-8 h-0.5 bg-neutral-900 rounded" />
+                      </div>
+                    </div>
+
+                    {/* Smartphone Screen Viewport */}
+                    <div className="flex-1 bg-[#0A141D] rounded-[28px] p-3.5 font-sans text-white border border-white/5 relative flex flex-col justify-between overflow-y-auto scrollbar-thin select-none">
+                      
+                      <div className="h-2" />
+
+                      {pocketActiveTab === 'provider' ? (
+                        /* Provider App Mini UI */
+                        <div className="space-y-3.5 flex-1 flex flex-col justify-between pt-1">
+                          <div>
+                            <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                              <div>
+                                <span className="text-[8px] font-mono uppercase tracking-wider text-teal-400">Clientele AI</span>
+                                <h4 className="text-[11px] font-bold leading-none mt-0.5">Provider App</h4>
+                              </div>
+                              <span className="flex h-2 w-2 relative">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-400 font-semibold text-teal-400"></span>
+                              </span>
+                            </div>
+
+                            <div className="space-y-2 mt-3 font-sans">
+                              <div className="bg-[#122230]/70 p-2.5 rounded-lg border border-white/5 space-y-0.5">
+                                <span className="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Next Patient</span>
+                                <span className="text-[11px] font-bold block text-white">M. Reyes — 9:30</span>
+                              </div>
+
+                              <div className="bg-[#122230]/70 p-2.5 rounded-lg border border-white/5 space-y-0.5">
+                                <div className="text-[8px] font-mono text-neutral-400 uppercase tracking-widest flex items-center gap-1">
+                                  Eligibility <span className="text-teal-400 font-semibold">✓</span>
+                                </div>
+                                <span className="text-[11px] font-semibold text-teal-300 block">Verified - BCBS PPO</span>
+                              </div>
+
+                              <div className="bg-[#122230]/70 p-2.5 rounded-lg border border-white/5 space-y-0.5">
+                                <span className="text-[8px] font-mono text-[#F56A00] uppercase tracking-widest block">Ambient Note</span>
+                                <span className="text-[11px] font-bold flex items-center gap-1.5 text-white">
+                                  <span className="size-1.5 rounded-full bg-red-500 animate-pulse" />
+                                  Recording...
+                                </span>
+                              </div>
+
+                              <div className="bg-[#122230]/70 p-2.5 rounded-lg border border-white/5 space-y-0.5">
+                                <span className="text-[8px] font-mono text-neutral-450 uppercase tracking-widest block">wRVU Today</span>
+                                <span className="text-[11px] font-bold block text-white">42.6</span>
+                              </div>
+
+                              <div className="bg-[#122230]/70 p-2.5 rounded-lg border border-white/5 space-y-0.5">
+                                <span className="text-[8px] font-mono text-neutral-450 uppercase tracking-widest block">Sign-offs Pending</span>
+                                <span className="text-[11px] font-bold text-amber-500 block">3 claims</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="text-[8px] text-center text-neutral-500 font-mono pt-2 border-t border-white/5">
+                            🔒 HIPAA Compliant TLS Secure
+                          </div>
+                        </div>
+                      ) : (
+                        /* Patient App Mini UI */
+                        <div className="space-y-3.5 flex-1 flex flex-col justify-between pt-1">
+                          <div>
+                            <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                              <div>
+                                <span className="text-[8px] font-mono uppercase tracking-wider text-teal-400">Clientele AI</span>
+                                <h4 className="text-[11px] font-bold leading-none mt-0.5">Patient Companion</h4>
+                              </div>
+                              <span className="text-[8.5px] bg-teal-400/10 text-teal-400 px-1 py-0.5 rounded font-mono font-medium">Standard</span>
+                            </div>
+
+                            <div className="space-y-2 mt-3 font-sans">
+                              <div className="bg-[#122230]/70 p-2.5 rounded-lg border border-white/5">
+                                <span className="text-[7.5px] font-mono text-neutral-450 uppercase tracking-wider block mb-0.5">Anita Lopez</span>
+                                <span className="text-[10.5px] font-bold text-white block">Verified Record Holder</span>
+                              </div>
+
+                              <div className="bg-[#122230]/70 p-2.5 rounded-lg border border-white/5 space-y-1">
+                                <span className="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Upcoming Visits</span>
+                                <div className="text-[10.5px] font-bold text-white flex items-center gap-1.5">
+                                  <Calendar className="size-3 text-teal-400 shrink-0" />
+                                  Thursday – 10:30 AM
+                                </div>
+                                <span className="text-[9.5px] text-neutral-400 block pl-4.5">Dr. Park</span>
+                              </div>
+
+                              <div className="bg-[#122230]/70 p-2.5 rounded-lg border border-white/5 space-y-1.5">
+                                <span className="text-[8px] font-mono text-neutral-400 uppercase tracking-widest block">Insurance Snapshot</span>
+                                <div className="space-y-1 text-[9.5px]">
+                                  <div className="flex justify-between">
+                                    <span className="text-neutral-400">Deductible / Met:</span>
+                                    <span className="font-bold text-white">$5,000 / $3,500</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-neutral-400">Copay:</span>
+                                    <span className="font-bold text-teal-400">$20</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span className="text-neutral-400">Co-Insurance:</span>
+                                    <span className="font-light text-neutral-300">20%</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="bg-[#122230]/70 p-2 rounded-lg border border-white/5 text-[9px] text-neutral-300 flex items-center justify-between">
+                                <span className="text-neutral-400 font-medium">Refill companion:</span>
+                                <span className="text-teal-400 font-semibold bg-teal-500/10 px-1 py-0.5 rounded text-[8.5px]">1 Active Refill</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="text-[8px] text-center text-neutral-500 font-mono pt-2 border-t border-white/5">
+                            🔒 HIPAA Compliant TLS Secure
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Home Button Bar indicator */}
+                    <div className="h-3 flex items-center justify-center">
+                      <div className="w-16 h-1 bg-neutral-800 rounded-full" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* RIGHT: Selected App Feature Descriptions Grid */}
+                <div className="lg:col-span-7 space-y-5">
+                  <div>
+                    <span className="text-xs font-mono font-bold text-teal-400 uppercase tracking-widest block">
+                      {pocketActiveTab === 'provider' ? 'Provider Tagline' : 'Patient Tagline'}
+                    </span>
+                    <h3 className="font-display text-xl sm:text-2xl font-bold text-white leading-tight mt-1">
+                      {pocketActiveTab === 'provider'
+                        ? 'Everything your providers need to know before they enter the room.'
+                        : 'Complete control over your healthcare journey, right in your pocket.'}
+                    </h3>
+                    <p className="text-xs text-neutral-400 leading-relaxed mt-2 font-sans">
+                      {pocketActiveTab === 'provider'
+                        ? 'Clientele Pulse Clinician Visit Assistant empowers providers with a complete, real-time patient and revenue intelligence workspace inside their exam workflows.'
+                        : 'Clientele Pulse Patient App provides patients with a secure mobile and web companion that gives them control over their healthcare journey.'}
+                    </p>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-4 pt-2">
+                    {pocketActiveTab === 'provider' ? (
+                      /* Provider App 6 Core Feature Cards */
+                      [
+                        {
+                          icon: Activity,
+                          title: '30-Second Patient Snapshot',
+                          desc: 'Pre-loaded summary before every visit: eligibility, insurance, balance, prior visit notes, recent labs/imaging, chief complaint — one screen, under 30 seconds.'
+                        },
+                        {
+                          icon: Calendar,
+                          title: 'Daily Visit Dashboard',
+                          desc: 'Real-time schedule with status indicators: checked-in, arrived, no-show, cancelled, rescheduled. At-a-glance visibility for the entire day.'
+                        },
+                        {
+                          icon: Brain,
+                          title: 'Microsoft Nuance Ambient AI',
+                          desc: 'Real-time progress notes generated from the provider-patient conversation. AI listens, transcribes, structures notes with medical-necessity prompts. No dictation. No typing.'
+                        },
+                        {
+                          icon: FileText,
+                          title: 'Real-Time Order Entry',
+                          desc: 'Order X-rays, labs, and imaging directly from mobile during or after the visit. Orders push straight to the relevant departments.'
+                        },
+                        {
+                          icon: ShieldCheck,
+                          title: 'Coding & Billing Sign-Off',
+                          desc: 'Review coding suggestions, respond to coder queries, approve claims for submission — all from mobile. One-tap sign-off for standard cases.'
+                        },
+                        {
+                          icon: TrendingUp,
+                          title: 'Financial Intelligence Dashboard',
+                          desc: 'Provider-level analytics: encounters/visits billed, payments received, denial breakdowns by payor, wRVU tracking. Performance at a glance.'
+                        }
+                      ].map((item, idx) => (
+                        <div
+                          key={idx}
+                          className="bg-[#122230]/40 rounded-xl border border-white/5 p-4 hover:bg-[#122230]/70 transition-all flex flex-col justify-between"
+                        >
+                          <div>
+                            <span className="size-8 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center mb-3">
+                              <item.icon className="size-4 shrink-0" />
+                            </span>
+                            <h4 className="text-white text-xs font-bold font-sans">{item.title}</h4>
+                            <p className="text-[11px] text-neutral-400 mt-1.5 leading-relaxed font-sans">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      /* Patient App 6 Core Feature Cards */
+                      [
+                        {
+                          icon: UserCheck,
+                          title: 'Verified Patient Profile',
+                          desc: 'View and manage validated demographic information, personal email, contact details, and secure communications logs.'
+                        },
+                        {
+                          icon: Shield,
+                          title: 'Insurance & COB Management',
+                          desc: 'Upload active insurance medical and prescription cards, verify real-time coverage, and maintain coordination of benefits.'
+                        },
+                        {
+                          icon: DollarSign,
+                          title: 'Real-Time Benefit Visibility',
+                          desc: 'Instant access to copay, remaining deductibles, coinsurance levels, and estimated patient out-of-pocket responsibility.'
+                        },
+                        {
+                          icon: Calendar,
+                          title: 'Appointment Management',
+                          desc: 'View upcoming care visits, submit reschedule requests, secure instant walk-in scheduling, and control calendar availability.'
+                        },
+                        {
+                          icon: ClipboardList,
+                          title: 'Treatment & Care Plans',
+                          desc: 'Review doctor prescribed care plans, review recommended clinical procedures, and view secure diagnostic reports and laboratory findings.'
+                        },
+                        {
+                          icon: RefreshCw,
+                          title: 'Prescription Refill Requests',
+                          desc: 'Submit pharmacy prescription refill requests directly through the secure companion companion app to avoid manual wait lines.'
+                        }
+                      ].map((item, idx) => (
+                        <div
+                          key={idx}
+                          className="bg-[#122230]/40 rounded-xl border border-white/5 p-4 hover:bg-[#122230]/70 transition-all flex flex-col justify-between"
+                        >
+                          <div>
+                            <span className="size-8 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center mb-3">
+                              <item.icon className="size-4 shrink-0" />
+                            </span>
+                            <h4 className="text-white text-xs font-bold font-sans">{item.title}</h4>
+                            <p className="text-[11px] text-neutral-400 mt-1.5 leading-relaxed font-sans">
+                              {item.desc}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  {/* Android / iOS App Store Logos Badges */}
+                  <div className="flex flex-wrap gap-3 pt-4 select-none">
+                    <div className="bg-[#122230] border border-white/5 px-3.5 py-1.5 rounded-xl flex items-center gap-2 text-left cursor-not-allowed text-stone-300">
+                      <Smartphone className="size-4 text-teal-400 shrink-0" />
+                      <div>
+                        <span className="block text-[8px] font-mono text-neutral-400 font-medium leading-none">COMING SOON</span>
+                        <span className="text-[11px] font-bold text-white tracking-tight">App Store</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-[#122230] border border-white/5 px-3.5 py-1.5 rounded-xl flex items-center gap-2 text-left cursor-not-allowed text-stone-300">
+                      <Smartphone className="size-4 text-teal-400 shrink-0" />
+                      <div>
+                        <span className="block text-[8px] font-mono text-neutral-400 font-medium leading-none">COMING SOON</span>
+                        <span className="text-[11px] font-bold text-white tracking-tight">Google Play</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Connected Front Office Portal - Clientele Pulse Bridge Card Block */}
+              <div className="mt-12 pt-10 border-t border-white/5 relative z-10">
+                <div className="grid lg:grid-cols-12 gap-8 items-center bg-[#122230]/20 rounded-2xl border border-white/5 p-8">
+                  <div className="lg:col-span-8 space-y-4">
+                    <div>
+                      <span className="text-[10.5px] font-mono font-bold text-teal-400 uppercase tracking-widest block mb-0.5">
+                        System Interconnect / Admin Console
+                      </span>
+                      <h3 className="font-display text-xl sm:text-2xl font-bold text-white mt-1">
+                        Front Office Portal – Clientele Pulse Bridge
+                      </h3>
+                      <p className="text-neutral-400 text-xs mt-2 leading-relaxed font-sans">
+                        Clientele Pulse Bridge connects the front office workflow with the Patient App, Provider App, Payor Network, and EMR/EHR/PM systems to automate and streamline the complete patient journey — from registration through check-out. The platform enables front desk teams to deliver faster, smoother, and more accurate patient interactions through digital workflows, real-time verification, and integrated care coordination.
+                      </p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-3.5 pt-2">
+                      {[
+                        'Unified System Connectivity – Seamlessly connects Patient App, Provider App, Payors, and EMR/EHR/PM platforms',
+                        'Automated Patient Registration – Captures and syncs patient demographics and registration details digitally',
+                        'Real-Time Insurance Verification – Validates insurance eligibility, benefits, copay, coinsurance, and deductible information',
+                        'Appointment Management – Enables appointment booking, rescheduling, and walk-in appointment scheduling',
+                        'Digital Check-In Experience – Allows patients to complete check-in remotely or at the front desk',
+                        'Digital Consent Management – Collects and stores HIPAA-compliant consent forms securely',
+                        'Digital Vital Tracking – Captures patient vitals and makes them available for the clinical team before visits',
+                        'Front Desk Visit Dashboard – Provides real-time visibility into patient flow, arrivals, pending tasks, and visit status',
+                        'Improved Check-In / Check-Out Workflow – Reduces wait times, minimizes manual entry, and improves patient satisfaction'
+                      ].map((feat, idx) => (
+                        <div key={idx} className="flex items-start gap-1.5 text-xs text-neutral-300 font-sans">
+                          <Check className="size-3.5 text-teal-400 mt-0.5 shrink-0" />
+                          <span className="leading-normal">{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-4 bg-[#0A141D] rounded-xl p-5 border border-white/5 space-y-4 shadow-xl">
+                    <div className="flex items-center justify-between pb-3 border-b border-white/5">
+                      <div>
+                        <span className="text-[8.5px] font-mono uppercase text-teal-400 font-bold block">Connectivity Portal</span>
+                        <h4 className="font-bold text-white text-xs mt-0.5">Unified System Linkages</h4>
+                      </div>
+                      <span className="inline-flex items-center gap-1.5 text-[9px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                        <span className="size-1 bg-emerald-400 rounded-full animate-ping" />
+                        ONLINE
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 text-[10px] font-mono text-neutral-300">
+                      <div className="flex justify-between items-center bg-[#122230]/60 p-2.5 rounded border border-white/5">
+                        <span className="text-neutral-400">Patient App Link:</span>
+                        <span className="text-emerald-400 font-bold uppercase text-[9px] bg-emerald-500/10 px-1.5 py-0.5 rounded">Connected</span>
+                      </div>
+                      <div className="flex justify-between items-center bg-[#122230]/60 p-2.5 rounded border border-white/5">
+                        <span className="text-neutral-400">Provider Sync Link:</span>
+                        <span className="text-emerald-400 font-bold uppercase text-[9px] bg-emerald-500/10 px-1.5 py-0.5 rounded">Connected</span>
+                      </div>
+                      <div className="flex justify-between items-center bg-[#122230]/60 p-2.5 rounded border border-white/5">
+                        <span className="text-neutral-400">Payor Network Link:</span>
+                        <span className="text-emerald-400 font-bold uppercase text-[9px] bg-emerald-500/10 px-1.5 py-0.5 rounded">Connected</span>
+                      </div>
+                      <div className="flex justify-between items-center bg-[#122230]/60 p-2.5 rounded border border-white/5">
+                        <span className="text-neutral-400">EMR / EHR Sync:</span>
+                        <span className="text-teal-400 font-bold uppercase text-[9px] bg-teal-500/10 px-1.5 py-0.5 rounded">Bilateral</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </section>
 
 
