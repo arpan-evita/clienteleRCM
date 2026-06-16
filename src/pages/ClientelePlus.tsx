@@ -85,10 +85,17 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
   ]);
 
   // 6. Dashboards Active view
-  const [activeRole, setActiveRole] = useState<'patient' | 'provider' | 'front' | 'leadership'>('patient');
+  const [activeRole, setActiveRole] = useState<'patient' | 'provider' | 'front' | 'billing' | 'executive'>('patient');
 
   // 7. Pocket Interactive App Companion Switcher
   const [pocketActiveTab, setPocketActiveTab] = useState<'provider' | 'patient'>('provider');
+
+  // 8. Automated Payment Posting Simulator states
+  const [postingStatus, setPostingStatus] = useState<'idle' | 'posting' | 'success'>('idle');
+
+  // 9. AR Automation Simulator states
+  const [arAction, setArAction] = useState<'pathway' | 'generating' | 'submitted'>('pathway');
+  const [arSelectedPath, setArSelectedPath] = useState<'correct' | 'appeal'>('correct');
 
   // Active section tracker for the sticky left navigation tape
   const sections = [
@@ -102,8 +109,10 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
     { id: 'clinician', label: '08 · Clinician Assist' },
     { id: 'rcm', label: '09 · Revenue Cycle' },
     { id: 'denial-prevention', label: '10 · Denial Prevention' },
-    { id: 'analytics', label: '11 · Live Dashboards' },
-    { id: 'outcomes', label: '12 · Core Benefits' },
+    { id: 'payment-posting', label: '11 · Payment Posting' },
+    { id: 'ar-automation', label: '12 · AR Automation' },
+    { id: 'analytics', label: '13 · Real-Time Dashboards' },
+    { id: 'outcomes', label: '14 · Core Benefits' },
   ];
 
   // Helper smooth scroll
@@ -1140,19 +1149,325 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
             </section>
 
 
-            {/* SECTION 11: ROLE-BASED LIVE DASHBOARDS */}
+            {/* SECTION 11: AUTOMATED PAYMENT POSTING */}
+            <section id="payment-posting" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
+              <div className="grid lg:grid-cols-12 gap-8 items-start">
+                
+                {/* Left Section content (7 cols) */}
+                <div className="lg:col-span-7 space-y-6">
+                  
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">11 · Automated Payment Posting</span>
+                      <span className="size-1 rounded-full bg-neutral-300" />
+                      <span className="text-xs font-mono text-neutral-400">Payer Cash Flows</span>
+                    </div>
+                    <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                      Automated Payment Posting & Outcome Analyzer
+                    </h2>
+                    <p className="text-xs sm:text-sm text-neutral-500 mt-2 leading-relaxed font-sans">
+                      Clientele Pulse automatically posts payer payments, analyzes claim outcomes, and identifies underpayments, zero-payment claims, and unpaid claims. Exceptions are organized into prioritized worklists and assigned to dedicated human-in-the-loop teams for timely resolution — preventing AR buildup and improving revenue recovery.
+                    </p>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-3.5 pb-2">
+                    {[
+                      { title: 'Automated Payment Posting', desc: 'Auto-post payer remittances and update patient accounts' },
+                      { title: 'Payment Variance Detection', desc: 'Identifies underpayments, short pays, and unexpected payment gaps' },
+                      { title: 'Zero & No-Pay Claim Tracking', desc: 'Separates unpaid claims for immediate follow-up' },
+                      { title: 'Priority AR Work Queue', desc: 'Routes high-impact cases to dedicated staff for action' },
+                      { title: 'Human-in-the-Loop Revenue Recovery', desc: 'Enables focused intervention before claims age' },
+                      { title: 'AR Aging Prevention', desc: 'Reduces claim backlog and improves cash flow' }
+                    ].map((feat, idx) => (
+                      <div key={idx} className="flex items-start gap-1.5 text-xs text-neutral-600 font-sans">
+                        <Check className="size-3.5 text-teal mt-0.5 shrink-0" />
+                        <div>
+                          <strong className="text-navy block">{feat.title}</strong>
+                          <span className="text-[11px] text-neutral-500 mt-0.5 block">{feat.desc}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+
+                {/* Right Interactive Simulator Panel (5 cols) */}
+                <div className="lg:col-span-5 bg-navy text-white p-6 rounded-2xl border border-white/5 flex flex-col justify-between shadow-xs relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full blur-2xl pointer-events-none" />
+                  
+                  <div className="space-y-4">
+                    <span className="text-[10px] font-mono text-teal uppercase font-bold block">Interactive Posting Hub</span>
+                    <h3 className="font-bold text-white text-sm">835 ERA Remittance Auto-Poster</h3>
+
+                    {postingStatus === 'idle' && (
+                      <div className="space-y-3">
+                        <div className="bg-white/5 p-3 rounded-xl border border-white/15 text-[11px] font-mono space-y-1.5 text-slate-350">
+                          <span className="text-[9px] text-[#F56A00] block mb-1">UNPOSTED PAYER REMITTANCES</span>
+                          <div className="flex justify-between border-b border-white/5 pb-1">
+                            <span>BlueCross standard care</span> <strong>$4,250.00</strong>
+                          </div>
+                          <div className="flex justify-between border-b border-white/5 pb-1">
+                            <span>Medicare Advantage</span> <strong>$6,105.00</strong>
+                          </div>
+                          <div className="flex justify-between border-b border-white/5 pb-1">
+                            <span>Aetna PPO Outpatient</span> <strong>$2,450.00</strong>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Pending Total:</span> <strong className="text-white">$12,805.00</strong>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            setPostingStatus('posting');
+                            setTimeout(() => setPostingStatus('success'), 1500);
+                          }}
+                          className="w-full text-xs font-bold rounded-xl bg-teal hover:bg-white text-navy py-3 flex items-center justify-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5"
+                        >
+                          <Zap className="size-3.5" />
+                          Auto-Post Remittances
+                        </button>
+                      </div>
+                    )}
+
+                    {postingStatus === 'posting' && (
+                      <div className="py-8 text-center text-xs text-neutral-400 font-mono space-y-3 bg-white/5 rounded-xl border border-white/10">
+                        <RefreshCw className="size-6 text-teal animate-spin mx-auto" />
+                        <p className="animate-pulse">Parsing payer ANSI-835 electronic files...</p>
+                        <p className="text-[10px] text-neutral-500">Matching patient database records...</p>
+                      </div>
+                    )}
+
+                    {postingStatus === 'success' && (
+                      <div className="space-y-3.5">
+                        <div className="bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-xl text-xs text-emerald-400 font-sans">
+                          <strong>✓ Succesfully Posted $12,805.00 Claims!</strong>
+                          <p className="text-[10.5px] mt-1 text-emerald-300">
+                            Remittances successfully processed and matched to corresponding EMR logs.
+                          </p>
+                        </div>
+
+                        <div className="bg-white/5 p-3 rounded-xl border border-white/15 text-[10.5px] font-mono space-y-2">
+                          <span className="text-[9px] text-teal block font-semibold">DETAILED OUTCOME DISPATCH:</span>
+                          <div className="flex justify-between items-center text-emerald-400">
+                            <span>BlueCross posted:</span>
+                            <span>$4,250.00 (Zero Variance) ✓</span>
+                          </div>
+                          <div className="flex justify-between items-center text-emerald-400">
+                            <span>Medicare posted:</span>
+                            <span>$6,105.00 (Zero Variance) ✓</span>
+                          </div>
+                          <div className="flex flex-col gap-0.5 bg-[#F56A00]/10 p-2 rounded border border-[#F56A00]/20 text-stone-200">
+                            <div className="flex justify-between text-[#F56A00] font-bold">
+                              <span>Aetna PPO posted:</span>
+                              <span>$2,010.00 Flagged ⚠</span>
+                            </div>
+                            <span className="text-[9px] text-stone-400 font-sans block">
+                              *Variance detected: Underpaid by -$440.00. Exception routed to Priority AR Queue.
+                            </span>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => setPostingStatus('idle')}
+                          className="text-xs font-semibold text-teal hover:text-white block mx-auto underline cursor-pointer"
+                        >
+                          Reset Remittance Poster
+                        </button>
+                      </div>
+                    )}
+
+                  </div>
+
+                  <div className="text-[9px] text-neutral-400 font-mono mt-4 leading-relaxed border-t border-white/5 pt-3">
+                    Reduces manual bank posting labor down of under 5 minutes. Autodetected payer variances prevent delayed AR aging metrics.
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+
+            {/* SECTION 12: ACCOUNTS RECEIVABLE AUTOMATION */}
+            <section id="ar-automation" className="bg-[#FAFBFD] rounded-2xl border border-neutral-200 p-8 shadow-xs scroll-mt-24">
+              <div className="grid lg:grid-cols-12 gap-8 items-start">
+                
+                {/* Left Interactive AR Assistant console (5 cols) */}
+                <div className="lg:col-span-5 bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono uppercase text-[#F56A00] font-bold block mb-2">AR Resolution Path Planner</span>
+                    <h3 className="font-bold text-navy text-sm font-sans mb-3">Unpaid Claim Exception Assistant</h3>
+
+                    {arAction === 'pathway' && (
+                      <div className="space-y-4">
+                        <div className="bg-[#FAFBFD] p-3 rounded-xl border border-neutral-250 font-mono text-[10.5px] space-y-1 text-slate-800">
+                          <span className="text-[9px] font-bold text-red-600 uppercase block mb-1">UNPAID CLAIM TARGET ISSUE</span>
+                          <div className="flex justify-between">
+                            <span>Claim ID:</span> <span className="font-bold">#2348 - M. Reyes</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Payer / Code:</span> <span className="text-red-600 font-bold">Aetna / CARC-97</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Reason:</span> <span>Benefit bundled (99214 + 20550)</span>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <span className="text-[9.5px] font-mono font-bold text-neutral-500 uppercase block">SELECT RESOLUTION PATH:</span>
+                          
+                          <div
+                            onClick={() => setArSelectedPath('correct')}
+                            className={`p-2.5 rounded-lg border text-xs cursor-pointer transition-colors ${
+                              arSelectedPath === 'correct'
+                                ? 'bg-teal/5 border-teal text-navy font-semibold'
+                                : 'bg-white border-neutral-200 hover:bg-neutral-50 text-neutral-600'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              readOnly
+                              checked={arSelectedPath === 'correct'}
+                              className="mr-2 text-teal border-neutral-300"
+                            />
+                            Correct Claim (Attach Modifier -25) <span className="text-teal font-sans ml-1 text-[10.5px] font-bold">[Recommended]</span>
+                          </div>
+
+                          <div
+                            onClick={() => setArSelectedPath('appeal')}
+                            className={`p-2.5 rounded-lg border text-xs cursor-pointer transition-colors ${
+                              arSelectedPath === 'appeal'
+                                ? 'bg-teal/5 border-teal text-navy font-semibold'
+                                : 'bg-white border-neutral-200 hover:bg-neutral-50 text-neutral-600'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              readOnly
+                              checked={arSelectedPath === 'appeal'}
+                              className="mr-2 text-teal border-neutral-300"
+                            />
+                            Generate AI appealing letter &amp; clinical charts packet
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            setArAction('generating');
+                            setTimeout(() => setArAction('submitted'), 1500);
+                          }}
+                          className="w-full text-xs font-bold rounded-xl bg-navy hover:bg-navy-deep text-white py-3 flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                          <FileText className="size-3.5" />
+                          Execute Recommended Path
+                        </button>
+                      </div>
+                    )}
+
+                    {arAction === 'generating' && (
+                      <div className="py-8 text-center text-xs text-neutral-500 font-mono space-y-2 bg-neutral-50 rounded-xl border border-neutral-200">
+                        <RefreshCw className="size-6 text-[#F56A00] animate-spin mx-auto" />
+                        <p className="animate-pulse">Evaluating EMR medical documentation logs...</p>
+                        <p className="text-[10px] text-neutral-400">Mapping CPT RARC/CARC codes...</p>
+                      </div>
+                    )}
+
+                    {arAction === 'submitted' && (
+                      <div className="space-y-3.5">
+                        <div className="bg-emerald-50 text-emerald-800 border border-emerald-200 p-3 rounded-xl text-xs font-sans">
+                          <strong>✓ Action Dispatched &amp; Resubmitted!</strong>
+                          <p className="text-[10.5px] mt-1 text-emerald-700">
+                            {arSelectedPath === 'correct'
+                              ? 'Modifier -25 attached to consulted evaluation billing. Corrected Claim submitted to payer clearinghouse.'
+                              : 'AI appealed packet generated with clinical notes and orthopedic guidelines. Letter delivered to Aetna appeals.'}
+                          </p>
+                        </div>
+
+                        <div className="bg-[#FAFBFD] p-3 rounded-xl border border-neutral-200 text-[10.5px] font-mono space-y-1 text-neutral-700">
+                          <span className="text-[9px] text-[#F56A00] uppercase block font-semibold mb-1">REAL-TIME TRAFFIC STATE:</span>
+                          <div className="flex justify-between bg-white p-1.5 rounded border border-neutral-100">
+                            <span>Resolution target:</span> <strong className="text-emerald-500">Resolved</strong>
+                          </div>
+                          <div className="flex justify-between bg-white p-1.5 rounded border border-neutral-100">
+                            <span>Response expectation:</span> <strong className="text-teal">&lt; 48 Hours</strong>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            setArAction('pathway');
+                            setArSelectedPath('correct');
+                          }}
+                          className="text-xs font-bold text-neutral-500 hover:text-navy block mx-auto underline cursor-pointer"
+                        >
+                          Resolve Another Exception
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="text-[10px] text-neutral-450 text-neutral-500 font-mono mt-4 pt-4 border-t border-neutral-150">
+                    *Maintains a continuous loop ensuring claims do not age past 60 days on accounts receivable registries.
+                  </div>
+                </div>
+
+                {/* Right Section Content (7 cols) */}
+                <div className="lg:col-span-7 space-y-6 text-left">
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">12 · Accounts Receivable Automation</span>
+                      <span className="size-1 rounded-full bg-neutral-300" />
+                      <span className="text-xs font-mono text-neutral-400">Aging Prevention</span>
+                    </div>
+                    <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
+                      Intelligent Real-Time Claim Recovery Loops
+                    </h2>
+                    <p className="text-xs sm:text-sm text-neutral-500 mt-2 leading-relaxed font-sans">
+                      Clientele Pulse continuously monitors claim status in real time through integrated payer networks and analyzes claim history from EMR/EHR data, payer policies, and specialty-specific billing guidelines to identify root causes of claim delays and denials.
+                    </p>
+                    <p className="text-xs text-neutral-500 mt-1.5 leading-relaxed font-sans">
+                      The platform recommends the optimal resolution path — whether to submit a corrected claim or initiate an appeal with supporting documentation. It maps RARC and CARC codes, automates appeal workflows, and enables one-click claim resubmission to accelerate payment recovery.
+                    </p>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-3.5 pb-2">
+                    {[
+                      { title: 'Real-Time Claim Status Monitoring', desc: 'Tracks claim lifecycle through integrated payor connectivity' },
+                      { title: 'Root Cause Analysis', desc: 'Reviews EMR/EHR history, payor rules, and specialty guidelines to identify denial drivers' },
+                      { title: 'Corrected Claim vs Appeal Guidance', desc: 'Recommends the right action pathway with required documentation' },
+                      { title: 'RARC & CARC Code Intelligence', desc: 'Maps adjustment and denial codes to automate resolution workflows' },
+                      { title: 'Automated Appeal Generation', desc: 'Creates documentation-driven appeals with one-click submission' },
+                      { title: 'AI Revenue Learning Loop', desc: 'Learns from domain expert actions to continuously improve recommendations' },
+                      { title: '60-Day AR Prevention Goal', desc: 'Prioritizes workflows to prevent claims from aging beyond 60 days from date of service' }
+                    ].map((feat, idx) => (
+                      <div key={idx} className="flex items-start gap-1.5 text-xs text-neutral-600 font-sans">
+                        <Check className="size-3.5 text-teal mt-0.5 shrink-0" />
+                        <div>
+                          <strong className="text-navy block">{feat.title}</strong>
+                          <span className="text-[11px] text-neutral-500 mt-0.5 block">{feat.desc}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+
+            {/* SECTION 13: REAL-TIME DASHBOARDS */}
             <section id="analytics" className="bg-white rounded-2xl border border-neutral-100 p-8 shadow-xs scroll-mt-24">
               <div className="max-w-3xl mb-8">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">11 · Specialized Portals</span>
+                  <span className="text-xs font-bold text-[#F56A00] font-mono uppercase tracking-wider">13 · Real-Time Dashboards</span>
                   <span className="size-1 rounded-full bg-neutral-300" />
-                  <span className="text-xs font-mono text-neutral-450 text-neutral-400">Section 11</span>
+                  <span className="text-xs font-mono text-neutral-400">Section 13</span>
                 </div>
                 <h2 className="font-display text-2xl sm:text-3xl font-bold text-navy leading-tight">
-                  Role-Based Intelligence: Everyone Sees What Matters to Them
+                  Role-Based Intelligence: Real-Time Performance &amp; Operations
                 </h2>
-                <p className="text-sm text-neutral-500 mt-2 font-sans">
-                  Segmented layouts representing real-time synchronization loops for clinical, scheduling, billing, and practice leadership teams.
+                <p className="text-sm text-neutral-500 mt-2 font-sans leading-relaxed">
+                  Clientele Pulse delivers real-time, role-based dashboards across patients, providers, front desk teams, billing managers, and executives — providing complete visibility into practice performance, revenue cycle health, and operational insights.
                 </p>
               </div>
 
@@ -1162,8 +1477,9 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
                   {[
                     { id: 'patient', label: 'Patient View' },
                     { id: 'provider', label: 'Clinician Portal' },
-                    { id: 'front', label: 'Front Office Console' },
-                    { id: 'leadership', label: 'Practice Management' }
+                    { id: 'front', label: 'Front Office' },
+                    { id: 'billing', label: 'Billing Manager' },
+                    { id: 'executive', label: 'Executive Board' }
                   ].map((role) => (
                     <button
                       key={role.id}
@@ -1182,9 +1498,12 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
                 <div className="bg-[#FAFBFD] border border-neutral-200 p-6 rounded-2xl text-left shadow-xs">
                   {activeRole === 'patient' && (
                     <div className="space-y-4">
-                      <div>
-                        <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Secure Access Mobile Companion</span>
-                        <h4 className="font-bold text-navy text-sm mt-1">Anita Lopez · Standard Records Companion</h4>
+                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
+                        <div>
+                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Secure Access Mobile Companion</span>
+                          <h4 className="font-bold text-navy text-sm mt-1">Anita Lopez · Patient Companion View</h4>
+                        </div>
+                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Standard</span>
                       </div>
                       <p className="text-xs text-neutral-600 leading-relaxed font-sans">
                         Allows patients to view their verified demographic profile, check upcoming appointments, upload new intake driver license documents, and pay co-insurance claims from home.
@@ -1196,7 +1515,7 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
                         </div>
                         <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
                           <span className="text-neutral-500">Self-Service Deductible Met:</span>
-                          <strong className="text-teal">$1,200.00 OOP Met</strong>
+                          <strong className="text-teal">$3,500.00 / $5,000 OOP Copay Met</strong>
                         </div>
                       </div>
                     </div>
@@ -1204,9 +1523,12 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
 
                   {activeRole === 'provider' && (
                     <div className="space-y-4">
-                      <div>
-                        <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Clinician Chart Assistant</span>
-                        <h4 className="font-bold text-navy text-sm mt-1">Dr. Park · Internal Specialty Entry Panel</h4>
+                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
+                        <div>
+                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Clinician Chart Assistant</span>
+                          <h4 className="font-bold text-navy text-sm mt-1">Dr. Park · Internal Specialty Entry Panel</h4>
+                        </div>
+                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Active Room</span>
                       </div>
                       <p className="text-xs text-neutral-600 leading-relaxed font-sans">
                         Equips medical providers with pre-visit charts briefings, direct integration to diagnostic lab logs, in-room voice scribe controls, and diagnostic CPT modifier recommends.
@@ -1218,7 +1540,7 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
                         </div>
                         <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
                           <span className="text-neutral-500">Modifier modifier indicators:</span>
-                          <strong className="text-teal font-semibold">Pre-verified -25 Checked</strong>
+                          <strong className="text-teal font-semibold font-mono">Pre-verified -25 Checked</strong>
                         </div>
                       </div>
                     </div>
@@ -1226,9 +1548,12 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
 
                   {activeRole === 'front' && (
                     <div className="space-y-4">
-                      <div>
-                        <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Administrative Ledger</span>
-                        <h4 className="font-bold text-navy text-sm mt-1">Practice Scheduling &amp; Intake List</h4>
+                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
+                        <div>
+                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Administrative Ledger</span>
+                          <h4 className="font-bold text-navy text-sm mt-1">Practice Scheduling &amp; Intake List</h4>
+                        </div>
+                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Synced</span>
                       </div>
                       <p className="text-xs text-neutral-600 leading-relaxed font-sans">
                         Gives front-office staff immediate validation on pending patient check-ins, card uploads discrepancy warning items, real-time eligibility updates, and unified message threads routing.
@@ -1246,28 +1571,117 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
                     </div>
                   )}
 
-                  {activeRole === 'leadership' && (
+                  {activeRole === 'billing' && (
                     <div className="space-y-4">
-                      <div>
-                        <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Practice Leadership View</span>
-                        <h4 className="font-bold text-navy text-sm mt-1">Operations KPI &amp; Financial Ledger Monitoring</h4>
+                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
+                        <div>
+                          <span className="text-[10px] font-mono text-teal uppercase font-bold tracking-wider">RCM &amp; Outstanding Claims Management</span>
+                          <h4 className="font-bold text-navy text-sm mt-1">Live Billing Ledger &amp; AR Analytics</h4>
+                        </div>
+                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Bilateral Sync</span>
                       </div>
                       <p className="text-xs text-neutral-600 leading-relaxed font-sans">
-                        Monitors aggregated collections efficiency index, cuentas por cobrar (AR) aging categories, clean electronic claims submission ratios, and clinical coordinator performance overviews.
+                        Enables RCM experts to track billed amounts, adjustments, underpayments, zero-payment claims, and unpaid claims in a high-priority AR worklist.
                       </p>
-                      <div className="grid sm:grid-cols-2 gap-3 mt-4 text-[11px] font-mono">
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
-                          <span className="text-neutral-500">Collections Rate Efficiency:</span>
-                          <strong className="text-teal">99.2% First-pass</strong>
+                      <div className="grid sm:grid-cols-4 gap-3 mt-4 text-[11px] font-mono">
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100">
+                          <span className="text-neutral-400 block text-[9px] uppercase">Billed Charges</span>
+                          <strong className="text-navy text-sm block mt-1">$248,500.00</strong>
                         </div>
-                        <div className="bg-white p-3 rounded-xl border border-neutral-100 flex items-center justify-between">
-                          <span className="text-neutral-500">Average accounts receivable:</span>
-                          <strong className="text-teal">13.2 Days Sales Outstanding (DSO)</strong>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100">
+                          <span className="text-neutral-400 block text-[9px] uppercase">Payments Received</span>
+                          <strong className="text-teal text-sm block mt-1">$192,200.00</strong>
+                        </div>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100">
+                          <span className="text-neutral-400 block text-[9px] uppercase">Adjustments</span>
+                          <strong className="text-neutral-500 text-sm block mt-1">$11,800.00</strong>
+                        </div>
+                        <div className="bg-white p-3 rounded-xl border border-neutral-100">
+                          <span className="text-neutral-400 block text-[9px] uppercase font-bold">AR Cycles</span>
+                          <strong className="text-[#F56A00] text-sm block mt-1">13.2 Days</strong>
+                        </div>
+                      </div>
+
+                      <div className="bg-white rounded-xl border border-neutral-150 p-3 mt-2 text-[10px] font-mono space-y-2">
+                        <span className="font-bold text-neutral-600 uppercase text-[9px] block">Claim Intelligence View outstanding items:</span>
+                        <div className="flex justify-between border-b border-neutral-50 pb-1.5 text-neutral-600">
+                          <span>Claim #2491 (K. Smith)</span> <span className="bg-red-50 text-red-700 px-1.5 rounded font-bold uppercase text-[8.5px]">Zero-Paid Claim tracked ⚠</span>
+                        </div>
+                        <div className="flex justify-between border-b border-neutral-50 pb-1.5 text-neutral-600">
+                          <span>Claim #2348 (M. Reyes)</span> <span className="bg-[#F56A00]/10 text-[#F56A00] px-1.5 rounded font-bold uppercase text-[8.5px]">Underpaid Variance detected ⚠</span>
+                        </div>
+                        <div className="flex justify-between text-neutral-600">
+                          <span>Claim #2214 (J. Doe)</span> <span className="bg-emerald-50 text-emerald-700 px-1.5 rounded font-bold uppercase text-[8.5px]">Partially Paid Resolve Under appeal ✓</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {activeRole === 'executive' && (
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-start border-b border-neutral-100 pb-2">
+                        <div>
+                          <span className="text-[10px] font-mono text-[#F56A00] uppercase font-bold tracking-wider">Executive Overview Console</span>
+                          <h4 className="font-bold text-navy text-sm mt-1">Practice Performance Summary &amp; Payor Mix</h4>
+                        </div>
+                        <span className="text-[10px] bg-teal/10 text-teal px-2 py-0.5 rounded font-mono font-medium">Corporate</span>
+                      </div>
+                      <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+                        Monitors aggregated collections efficiency index, accounts receivable (AR) aging categories, clean electronic claims submission ratios, and clinical coordinator performance overviews.
+                      </p>
+                      
+                      <div className="grid sm:grid-cols-2 gap-4 mt-4 font-mono text-xs">
+                        <div className="bg-white p-3.5 rounded-xl border border-neutral-150 space-y-2 text-neutral-700">
+                          <span className="text-neutral-400 font-bold block text-[9.5px] uppercase">Practice Performance Overview:</span>
+                          <div className="flex justify-between border-b border-neutral-50 pb-1">
+                            <span>First-Pass Fidelity:</span> <strong className="text-teal">99.2% Clear</strong>
+                          </div>
+                          <div className="flex justify-between border-b border-neutral-50 pb-1">
+                            <span>Net Collections Rate:</span> <strong className="text-teal">98.4% Net</strong>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Clinical wRVUs Today:</span> <strong className="text-navy">42.6 Out</strong>
+                          </div>
+                        </div>
+
+                        <div className="bg-white p-3.5 rounded-xl border border-neutral-150 space-y-2 text-neutral-700">
+                          <span className="text-neutral-400 font-bold block text-[9.5px] uppercase">Payor Mix Category Distribution:</span>
+                          <div className="flex justify-between border-b border-neutral-50 pb-1">
+                            <span>BlueCross Primary Care:</span> <strong className="text-neutral-600">42% Vol</strong>
+                          </div>
+                          <div className="flex justify-between border-b border-neutral-50 pb-1">
+                            <span>Medicare standard logic:</span> <strong className="text-neutral-600">30% Vol</strong>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Aetna &amp; Commercial mixes:</span> <strong className="text-neutral-600">28% Vol</strong>
+                          </div>
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
+
+                {/* Key Features Bullet List */}
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 pt-6 mt-6 border-t border-neutral-100">
+                  {[
+                    { title: 'Role-Based Dashboards', desc: 'Tailored views for patients, providers, front desk, billing teams, and executives' },
+                    { title: 'Real-Time Financial Analytics', desc: 'Track Billed, Paid, Adjustments/Write-offs, Collections, and AR Days' },
+                    { title: 'Claim Intelligence View', desc: 'Monitor outstanding, underpaid, zero-paid, and partially paid claims' },
+                    { title: 'Payor Mix Analysis', desc: 'Understand revenue distribution and performance by insurance category' },
+                    { title: 'Visit-Level Insights', desc: 'Analyze financial performance by visit type and encounter details' },
+                    { title: 'Clinical & Operational Analytics', desc: 'Review trends by chief complaint, provider, and service category' },
+                    { title: 'Practice Performance Overview', desc: 'Real-time visibility into overall practice health and revenue cycle metrics' }
+                  ].map((feat, idx) => (
+                    <div key={idx} className="flex items-start gap-1.5 text-xs text-neutral-600 font-sans">
+                      <Check className="size-3.5 text-teal mt-0.5 shrink-0" />
+                      <div>
+                        <strong className="text-navy block leading-snug">{feat.title}</strong>
+                        <span className="text-[10.5px] text-neutral-500 mt-0.5 block leading-relaxed">{feat.desc}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
               </div>
             </section>
 
