@@ -1873,58 +1873,73 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
                 <div className="lg:col-span-7 space-y-5">
                   <div>
                     <span className="text-xs font-mono font-bold text-teal-400 uppercase tracking-widest block">
-                      {pocketActiveTab === 'provider' ? 'Provider Tagline' : 'Patient Tagline'}
+                      {pocketActiveTab === 'provider' ? 'Provider App – Clinician Visit Assistant' : 'Patient App – Secure Mobile & Web Companion'}
                     </span>
                     <h3 className="font-display text-xl sm:text-2xl font-bold text-white leading-tight mt-1">
                       {pocketActiveTab === 'provider'
-                        ? 'Everything your providers need to know before they enter the room.'
-                        : 'Complete control over your healthcare journey, right in your pocket.'}
+                        ? 'Empowering providers with real-time patient and revenue intelligence.'
+                        : 'Anita Lopez • Patient Companion View'}
                     </h3>
                     <p className="text-xs text-neutral-400 leading-relaxed mt-2 font-sans">
                       {pocketActiveTab === 'provider'
-                        ? 'Clientele Pulse Clinician Visit Assistant empowers providers with a complete, real-time patient and revenue intelligence workspace inside their exam workflows.'
-                        : 'Clientele Pulse Patient App provides patients with a secure mobile and web companion that gives them control over their healthcare journey.'}
+                        ? 'Clientele Pulse Clinician Visit Assistant empowers providers with a complete, real-time patient and revenue intelligence workspace. It delivers a 30-second pre-visit snapshot, clinical history, diagnostics, AI-powered documentation, coding guidance, and practice performance insights — helping clinicians focus on patient care while reducing administrative burden.'
+                        : 'Clientele Pulse provides patients with a secure mobile and web companion that gives them control over their healthcare journey. Patients can access verified demographic information, manage insurance details, review benefits, schedule visits, communicate with care teams, and stay connected with their treatment plans — anytime, anywhere.'}
                     </p>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-4 pt-2">
+                  <div className="grid sm:grid-cols-2 gap-3.5 pt-2">
                     {pocketActiveTab === 'provider' ? (
-                      /* Provider App 6 Core Feature Cards */
+                      /* Provider App 9 Core Feature Cards */
                       [
                         {
                           icon: Activity,
-                          title: '30-Second Patient Snapshot',
-                          desc: 'Pre-loaded summary before every visit: eligibility, insurance, balance, prior visit notes, recent labs/imaging, chief complaint — one screen, under 30 seconds.'
+                          title: '30-Second Patient Pre-Visit Snapshot',
+                          desc: 'Quickly review patient history, active conditions, previous visits, medications, allergies, and care context before entering the exam room'
                         },
                         {
-                          icon: Calendar,
-                          title: 'Daily Visit Dashboard',
-                          desc: 'Real-time schedule with status indicators: checked-in, arrived, no-show, cancelled, rescheduled. At-a-glance visibility for the entire day.'
+                          icon: ClipboardList,
+                          title: 'Clinical Records at Point of Care',
+                          desc: 'Access related X-rays, lab reports, diagnostic results, medical records, and medication history based on visit reason/chief complaint'
+                        },
+                        {
+                          icon: Activity,
+                          title: 'Digital Vital Tracking',
+                          desc: 'Capture and monitor patient vitals digitally with visit-level visibility'
                         },
                         {
                           icon: Brain,
-                          title: 'Microsoft Nuance Ambient AI',
-                          desc: 'Real-time progress notes generated from the provider-patient conversation. AI listens, transcribes, structures notes with medical-necessity prompts. No dictation. No typing.'
+                          title: 'AI Ambient Voice Scribing',
+                          desc: 'Convert patient-provider conversations into structured clinical notes in real time'
                         },
                         {
                           icon: FileText,
-                          title: 'Real-Time Order Entry',
-                          desc: 'Order X-rays, labs, and imaging directly from mobile during or after the visit. Orders push straight to the relevant departments.'
+                          title: 'Medical Necessity Documentation Guidance',
+                          desc: 'Provide intelligent documentation suggestions to support compliant billing'
                         },
                         {
                           icon: ShieldCheck,
-                          title: 'Coding & Billing Sign-Off',
-                          desc: 'Review coding suggestions, respond to coder queries, approve claims for submission — all from mobile. One-tap sign-off for standard cases.'
+                          title: 'Coding Intelligence',
+                          desc: 'Recommend ICD-10, CPT codes, modifiers, and estimated average billed amount based on encounter details'
                         },
                         {
                           icon: TrendingUp,
-                          title: 'Financial Intelligence Dashboard',
-                          desc: 'Provider-level analytics: encounters/visits billed, payments received, denial breakdowns by payor, wRVU tracking. Performance at a glance.'
+                          title: 'Visit & Revenue Dashboard',
+                          desc: 'Analyze provider performance by payor mix, billed amount, paid amount, denied claims, and collections'
+                        },
+                        {
+                          icon: Eye,
+                          title: 'Claim & Financial Visibility',
+                          desc: 'View billing outcomes connected to clinical encounters'
+                        },
+                        {
+                          icon: Zap,
+                          title: 'Integrated Care Workflow',
+                          desc: 'Connect clinical documentation, coding, billing, and revenue cycle insights in one provider workspace'
                         }
                       ].map((item, idx) => (
                         <div
                           key={idx}
-                          className="bg-[#122230]/40 rounded-xl border border-white/5 p-4 hover:bg-[#122230]/70 transition-all flex flex-col justify-between"
+                          className="bg-[#122230]/40 rounded-xl border border-white/5 p-4.5 hover:bg-[#122230]/70 transition-all flex flex-col justify-between"
                         >
                           <div>
                             <span className="size-8 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center mb-3">
@@ -1938,42 +1953,52 @@ export default function ClientelePlus({ navigate }: ClientelePlusProps) {
                         </div>
                       ))
                     ) : (
-                      /* Patient App 6 Core Feature Cards */
+                      /* Patient App 8 Core Feature Cards */
                       [
                         {
                           icon: UserCheck,
                           title: 'Verified Patient Profile',
-                          desc: 'View and manage validated demographic information, personal email, contact details, and secure communications logs.'
+                          desc: 'View and manage validated demographic and contact information'
                         },
                         {
                           icon: Shield,
                           title: 'Insurance & COB Management',
-                          desc: 'Upload active insurance medical and prescription cards, verify real-time coverage, and maintain coordination of benefits.'
+                          desc: 'Upload active insurance cards, verify coverage, and maintain coordination of benefits'
                         },
                         {
                           icon: DollarSign,
                           title: 'Real-Time Benefit Visibility',
-                          desc: 'Instant access to copay, remaining deductibles, coinsurance levels, and estimated patient out-of-pocket responsibility.'
+                          desc: 'View copay, coinsurance, deductible status, and estimated patient responsibility'
                         },
                         {
                           icon: Calendar,
                           title: 'Appointment Management',
-                          desc: 'View upcoming care visits, submit reschedule requests, secure instant walk-in scheduling, and control calendar availability.'
+                          desc: 'View upcoming visits, reschedule appointments, and manage availability'
                         },
                         {
                           icon: ClipboardList,
-                          title: 'Treatment & Care Plans',
-                          desc: 'Review doctor prescribed care plans, review recommended clinical procedures, and view secure diagnostic reports and laboratory findings.'
+                          title: 'Treatment & Diagnostic Plans',
+                          desc: 'Review care plans, recommended treatments, and diagnostic reports'
                         },
                         {
                           icon: RefreshCw,
                           title: 'Prescription Refill Requests',
-                          desc: 'Submit pharmacy prescription refill requests directly through the secure companion companion app to avoid manual wait lines.'
+                          desc: 'Submit refill requests directly through the secure portal'
+                        },
+                        {
+                          icon: MessageSquare,
+                          title: 'Secure Care Team Communication',
+                          desc: 'Chat with front desk, providers, and billing teams through encrypted messaging'
+                        },
+                        {
+                          icon: Smartphone,
+                          title: 'Mobile-First Access',
+                          desc: 'Available through secure portal or mobile companion app'
                         }
                       ].map((item, idx) => (
                         <div
                           key={idx}
-                          className="bg-[#122230]/40 rounded-xl border border-white/5 p-4 hover:bg-[#122230]/70 transition-all flex flex-col justify-between"
+                          className="bg-[#122230]/40 rounded-xl border border-white/5 p-4.5 hover:bg-[#122230]/70 transition-all flex flex-col justify-between"
                         >
                           <div>
                             <span className="size-8 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center mb-3">
